@@ -1,0 +1,37 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "experience": "Experience",
+    "skills": "Skills",
+    "projects": "Projects",
+    "certifications": "Certifications",
+    "contact": "Contact"
+  },
+  "hero": {
+    "eyebrow": "Dubai, UAE",
+    "value": "Building resilient fintech and AI-powered products that scale globally.",
+    "viewProjects": "View Projects",
+    "downloadResume": "Download Resume (PDF)",
+    "contact": "Contact"
+  },
+  "sections": {
+    "about": "About",
+    "experience": "Experience",
+    "skills": "Skills",
+    "projects": "Projects",
+    "certifications": "Certifications",
+    "education": "Education",
+    "contact": "Contact Me"
+  },
+  "contact": {
+    "name": "Name",
+    "email": "Email",
+    "subject": "Subject",
+    "message": "Message",
+    "submit": "Send Message",
+    "success": "Message sent successfully. I will get back to you soon.",
+    "error": "Unable to send message. Please try again.",
+    "captcha": "Bot protection failed. Please refresh and retry."
+  }
+}
