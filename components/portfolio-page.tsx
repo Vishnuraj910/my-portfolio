@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { Locale } from "@/lib/i18n";
 import { profile } from "@/content/profile";
 
@@ -24,8 +24,26 @@ type Messages = {
 
 const navKeys = ["home", "about", "experience", "skills", "projects", "certifications", "contact"];
 
+function CurrentYear() {
+  const [year, setYear] = useState<number>(new Date().getFullYear());
+  
+  useEffect(() => {
+    setYear(new Date().getFullYear());
+  }, []);
+  
+  return <>{year}</>;
+}
+
 function ThemeToggle() {
-  const [theme, setTheme] = useState<string>(typeof document !== "undefined" ? document.documentElement.dataset.theme || "light" : "light");
+  const [theme, setTheme] = useState<string>("light");
+
+  useEffect(() => {
+    // Only run on client to avoid hydration mismatch
+    const stored = localStorage.getItem("theme");
+    const initial = stored || "light";
+    setTheme(initial);
+    document.documentElement.dataset.theme = initial;
+  }, []);
 
   const toggle = () => {
     const next = theme === "dark" ? "light" : "dark";
@@ -35,7 +53,13 @@ function ThemeToggle() {
   };
 
   return (
-    <button className="btn" onClick={toggle} aria-label="Toggle theme" type="button">
+    <button 
+      className="btn" 
+      onClick={toggle} 
+      aria-label="Toggle theme" 
+      type="button"
+      suppressHydrationWarning
+    >
       {theme === "dark" ? "☀️" : "🌙"}
     </button>
   );
@@ -241,7 +265,7 @@ export function PortfolioPage({ locale, messages }: { locale: Locale; messages: 
       </main>
       <footer className="footer">
         <div className="container footer-wrap">
-          <p>© {new Date().getFullYear()} {profile.name}</p>
+          <p>© <CurrentYear /> {profile.name}</p>
           <div className="chips">
             <a className="chip" href={profile.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
             <a className="chip" href={profile.github} target="_blank" rel="noreferrer">GitHub</a>
