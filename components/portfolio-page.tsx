@@ -1,10 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import type { Locale } from "@/lib/i18n";
 import { profile } from "@/content/profile";
-
 
 declare global {
   interface Window {
@@ -156,15 +156,28 @@ export function PortfolioPage({ locale, messages }: { locale: Locale; messages: 
         </div>
       </header>
       <main className="container stack">
-        <section id="home" className="hero">
-          <p className="muted">{messages.hero.eyebrow}</p>
-          <h1>{profile.name}</h1>
-          <h2>{profile.title}</h2>
-          <p className="hero-copy">{messages.hero.value}</p>
-          <div className="cta-row">
-            <a href="#projects" className="btn btn-primary">{messages.hero.viewProjects}</a>
-            <a href="/resume-vishnuraj.pdf" className="btn" download>{messages.hero.downloadResume}</a>
-            <a href="#contact" className="btn">{messages.hero.contact}</a>
+        <section id="home" className="hero hero-layout card">
+          <div className="hero-content">
+            <p className="muted">{messages.hero.eyebrow}</p>
+            <h1>{profile.name}</h1>
+            <h2>{profile.title}</h2>
+            <p className="hero-copy">{messages.hero.value}</p>
+            <div className="cta-row">
+              <a href="#projects" className="btn btn-primary">{messages.hero.viewProjects}</a>
+              <a href="/resume-vishnuraj.pdf" className="btn" download>{messages.hero.downloadResume}</a>
+              <a href="#contact" className="btn">{messages.hero.contact}</a>
+            </div>
+          </div>
+          <div className="hero-art">
+            <div className="hero-photo-wrap">
+              <Image src="/globe.svg" alt="Decorative shape" width={40} height={40} className="floating-icon floating-icon-top" />
+              <Image src="/window.svg" alt="Decorative shape" width={36} height={36} className="floating-icon floating-icon-right" />
+              <Image src="/file.svg" alt="Decorative shape" width={30} height={30} className="floating-icon floating-icon-bottom" />
+              <div className="portrait-frame">
+                <div className="portrait-overlay" />
+                <p className="portrait-label">Creative Engineering</p>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -215,7 +228,8 @@ export function PortfolioPage({ locale, messages }: { locale: Locale; messages: 
           <h3>{messages.sections.projects}</h3>
           <div className="grid">
             {profile.projects.map((project) => (
-              <article className="card reveal" key={project.title}>
+              <article className="card reveal project-card" key={project.title}>
+                <Image src="/globe.svg" alt="Decorative project icon" width={18} height={18} className="project-icon" />
                 <h4>{project.title}</h4>
                 <p>{project.summary}</p>
                 <div className="chips">{project.stack.map((tech) => <span key={tech} className="chip">{tech}</span>)}</div>
