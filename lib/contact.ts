@@ -3,7 +3,7 @@ export type ContactPayload = {
   email: string;
   subject: string;
   message: string;
-  recaptchaToken: string;
+  altchaPayload: string;
   locale?: string;
 };
 
@@ -20,7 +20,7 @@ export function validateContactPayload(input: unknown): { data?: ContactPayload;
     email: sanitize(String(payload.email ?? "")).toLowerCase(),
     subject: sanitize(String(payload.subject ?? "")),
     message: sanitize(String(payload.message ?? "")),
-    recaptchaToken: String(payload.recaptchaToken ?? ""),
+    altchaPayload: String(payload.altchaPayload ?? ""),
     locale: sanitize(String(payload.locale ?? "en"))
   };
 
@@ -29,7 +29,7 @@ export function validateContactPayload(input: unknown): { data?: ContactPayload;
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) errors.push("Invalid email");
   if (data.subject.length < 3 || data.subject.length > 140) errors.push("Invalid subject");
   if (data.message.length < 10 || data.message.length > 2000) errors.push("Invalid message");
-  if (!data.recaptchaToken) errors.push("Missing captcha token");
+  if (!data.altchaPayload) errors.push("Missing captcha token");
 
   return errors.length ? { errors } : { data };
 }

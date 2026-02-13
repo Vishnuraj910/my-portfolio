@@ -1,18 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { Locale } from "@/lib/i18n";
 import { profile } from "@/content/profile";
-
-declare global {
-  interface Window {
-    grecaptcha?: {
-      execute: (siteKey: string, options: { action: string }) => Promise<string>;
-      ready: (cb: () => void) => void;
-    };
-  }
-}
 
 type Messages = {
   nav: Record<string, string>;
@@ -62,53 +53,51 @@ function LanguageToggle({ locale }: { locale: Locale }) {
 function ContactForm({ locale, labels }: { locale: Locale; labels: Record<string, string> }) {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [error, setError] = useState<string>("");
-  const [recaptchaReady, setRecaptchaReady] = useState<boolean | null>(null);
+  const [captchaReady, setCaptchaReady] = useState(false);
+  const [captchaVerified, setCaptchaVerified] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
 
-  // Check if recaptcha is available on mount
   useEffect(() => {
-    const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
-    if (!siteKey) {
-      setRecaptchaReady(false);
-      return;
-    }
-
-    // Wait for grecaptcha to be available
-    const checkRecaptcha = () => {
-      if (window.grecaptcha) {
-        setRecaptchaReady(true);
-      } else {
-        // Retry after a short delay
-        setTimeout(checkRecaptcha, 100);
+    let timer: ReturnType<typeof setInterval> | null = null;
+    const checkReady = () => {
+      const widget = formRef.current?.querySelector("altcha-widget");
+      if (!widget) return;
+      setCaptchaReady(customElements.get("altcha-widget") !== undefined);
+      if (customElements.get("altcha-widget") !== undefined && timer) {
+        clearInterval(timer);
       }
     };
-    checkRecaptcha();
+
+    checkReady();
+    timer = setInterval(checkReady, 250);
+
+    const form = formRef.current;
+    const widget = form?.querySelector("altcha-widget");
+    const onStateChange = (event: Event) => {
+      const detail = (event as CustomEvent<{ state?: string }>).detail;
+      setCaptchaVerified(detail?.state === "verified");
+    };
+    widget?.addEventListener("statechange", onStateChange);
+
+    return () => {
+      if (timer) clearInterval(timer);
+      widget?.removeEventListener("statechange", onStateChange);
+    };
   }, []);
-
-  async function getRecaptchaToken() {
-    const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
-    if (!siteKey || !window.grecaptcha) {
-      throw new Error(labels.captcha);
-    }
-
-    const grecaptcha = window.grecaptcha;
-    return new Promise<string>((resolve, reject) => {
-      grecaptcha.ready(async () => {
-        try {
-          const token = await grecaptcha.execute(siteKey, { action: "contact" });
-          resolve(token);
-        } catch {
-          reject(new Error(labels.captcha));
-        }
-      });
-    });
-  }
 
   async function onSubmit(formData: FormData) {
     setStatus("loading");
     setError("");
 
     try {
-      const token = await getRecaptchaToken();
+      if (!captchaReady) {
+        throw new Error(labels.captcha);
+      }
+
+      const altchaPayload = String(formData.get("altcha") || "");
+      if (!captchaVerified || !altchaPayload) {
+        throw new Error(labels.captcha);
+      }
 
       const response = await fetch("/api/contact", {
         method: "POST",
@@ -118,7 +107,7 @@ function ContactForm({ locale, labels }: { locale: Locale; labels: Record<string
           email: formData.get("email"),
           subject: formData.get("subject"),
           message: formData.get("message"),
-          recaptchaToken: token,
+          altchaPayload,
           locale
         })
       });
@@ -127,6 +116,8 @@ function ContactForm({ locale, labels }: { locale: Locale; labels: Record<string
       if (!response.ok) throw new Error(data.error || labels.error);
 
       setStatus("success");
+      setCaptchaVerified(false);
+      formRef.current?.reset();
     } catch (submissionError) {
       setStatus("error");
       setError(submissionError instanceof Error ? submissionError.message : labels.error);
@@ -135,6 +126,7 @@ function ContactForm({ locale, labels }: { locale: Locale; labels: Record<string
 
   return (
     <form
+      ref={formRef}
       className="card form-grid"
       action={(formData) => {
         void onSubmit(formData);
@@ -144,6 +136,8 @@ function ContactForm({ locale, labels }: { locale: Locale; labels: Record<string
       <input required type="email" name="email" placeholder={labels.email} className="input" maxLength={120} />
       <input required name="subject" placeholder={labels.subject} className="input" maxLength={140} />
       <textarea required name="message" placeholder={labels.message} className="input min-h-32" maxLength={2000} />
+      {/* @ts-expect-error Custom element provided by ALTCHA script */}
+      <altcha-widget challengeurl="/api/altcha/challenge" hidelogo hidefooter />
       <button className="btn btn-primary" type="submit" disabled={status === "loading"}>
         {status === "loading" ? "..." : labels.submit}
       </button>
@@ -162,13 +156,9 @@ export function PortfolioPage({ locale, messages }: { locale: Locale; messages: 
     return { [skillFilter]: profile.skills[skillFilter as keyof typeof profile.skills] };
   }, [skillFilter]);
 
-  const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
-
   return (
     <>
-      {recaptchaSiteKey && (
-        <script src={`https://www.google.com/recaptcha/api.js?render=${recaptchaSiteKey}`} async defer />
-      )}
+      <script src="https://cdn.jsdelivr.net/npm/altcha/dist/altcha.min.js" type="module" async defer />
       <header className="header">
         <div className="container nav-wrap">
           <a href="#home" className="logo">YR</a>
