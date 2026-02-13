@@ -33,20 +33,16 @@ function hashChallenge(algorithm: string, salt: string, number: number) {
   return createHash(cryptoAlgorithm(algorithm)).update(`${salt}${number}`).digest("hex");
 }
 
-function createSignature({ algorithm, challenge, salt, maxnumber, expires, hmacKey, includeExpires = true }: {
+function createSignature({ algorithm, challenge, salt, maxnumber, hmacKey }: {
   algorithm: string;
   challenge: string;
   salt: string;
   maxnumber: number;
-  expires: number;
   hmacKey: string;
-  includeExpires?: boolean;
 }) {
-  // ALTCHA widget doesn't send 'expires' back in the payload, so we don't include it in the signature
-  // The signature is verified using only the fields that are sent back
-  const payload = includeExpires 
-    ? `${algorithm}|${challenge}|${salt}|${maxnumber}|${expires}`
-    : `${algorithm}|${challenge}|${salt}|${maxnumber}`;
+  // ALTCHA protocol: signature is HMAC of algorithm|challenge|salt|maxnumber
+  // Note: expires is NOT included in the signature as it's not sent back by the widget
+  const payload = `${algorithm}|${challenge}|${salt}|${maxnumber}`;
   return createHmac(cryptoAlgorithm(algorithm), hmacKey).update(payload).digest("hex");
 }
 
@@ -61,7 +57,7 @@ export function createAltchaChallenge() {
   const challenge = hashChallenge(algorithm, salt, number);
   const expires = Math.floor(Date.now() / 1000) + expiresInSeconds;
   // Don't include expires in the signature since the widget doesn't send it back
-  const signature = createSignature({ algorithm, challenge, salt, maxnumber: maxNumber, expires, hmacKey, includeExpires: false });
+  const signature = createSignature({ algorithm, challenge, salt, maxnumber: maxNumber, hmacKey });
 
   return {
     algorithm,
@@ -84,7 +80,7 @@ function decodePayload(payload: string) {
 }
 
 export function verifyAltchaPayload(payload: string): boolean {
-  const { hmacKey, algorithm: configuredAlgorithm, maxNumber, expiresInSeconds } = getConfig();
+  const { hmacKey, algorithm: configuredAlgorithm, maxNumber } = getConfig();
   if (!hmacKey) {
     console.error("[ALTCHA] Missing HMAC key");
     return false;
@@ -101,22 +97,7 @@ export function verifyAltchaPayload(payload: string): boolean {
   const salt = String(decoded.salt || "");
   const signature = String(decoded.signature || "");
   const number = Number(decoded.number);
-  // The ALTCHA widget doesn't include 'expires' in the payload, so we calculate it from the challenge creation time
-  // The challenge is valid for expiresInSeconds from when it was created
   const maxnumber = Number(decoded.maxnumber || maxNumber);
-
-  // For verification, we need to reconstruct the signature with the original expiry
-  // Since the widget doesn't send 'expires', we need to use the challenge's embedded expiry
-  // We'll try the payload expires first, then fall back to a reasonable window
-  let expires = Number(decoded.expires || 0);
-  
-  // If expires is 0 or not provided, calculate expected expiry from challenge creation time
-  // The challenge contains a salt which is generated at challenge creation time
-  // We use expiresInSeconds as the window of validity
-  if (!expires || expires === 0) {
-    // The challenge was created recently, so we calculate expiry from now
-    expires = Math.floor(Date.now() / 1000) + expiresInSeconds;
-  }
 
   if (!algorithm || !challenge || !salt || !signature || !Number.isFinite(number)) {
     console.error("[ALTCHA] Missing required fields");
@@ -141,8 +122,8 @@ export function verifyAltchaPayload(payload: string): boolean {
     return false;
   }
 
-  // Verify signature without expires since the widget doesn't send it back
-  const expectedSignature = createSignature({ algorithm, challenge, salt, maxnumber, expires, hmacKey, includeExpires: false });
+  // Verify signature - using same fields that were used to create it
+  const expectedSignature = createSignature({ algorithm, challenge, salt, maxnumber, hmacKey });
 
   const receivedBuffer = Buffer.from(signature, "hex");
   const expectedBuffer = Buffer.from(expectedSignature, "hex");
