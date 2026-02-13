@@ -9,6 +9,14 @@ type Messages = {
   nav: Record<string, string>;
   hero: Record<string, string>;
   sections: Record<string, string>;
+  stats: Record<string, string>;
+  skills: Record<string, string>;
+  projects: Record<string, string>;
+  certifications: Record<string, string>;
+  languages: Record<string, string>;
+  education: Record<string, string>;
+  quickLinks: Record<string, string>;
+  common: Record<string, string>;
   contact: Record<string, string>;
 };
 
@@ -148,15 +156,15 @@ function ContactForm({ locale, labels }: { locale: Locale; labels: Record<string
 }
 
 export function PortfolioPage({ locale, messages }: { locale: Locale; messages: Messages }) {
-  const [skillFilter, setSkillFilter] = useState<string>("All");
+  const [skillFilter, setSkillFilter] = useState<string>(messages.skills.all);
   const [activeExperience, setActiveExperience] = useState<number | null>(0);
-  const [certFilter, setCertFilter] = useState<string>("All");
+  const [certFilter, setCertFilter] = useState<string>(messages.certifications.all);
   const [certSort, setCertSort] = useState<"desc" | "asc">("desc");
 
   const filteredSkills = useMemo(() => {
-    if (skillFilter === "All") return profile.skills;
+    if (skillFilter === messages.skills.all) return profile.skills;
     return { [skillFilter]: profile.skills[skillFilter as keyof typeof profile.skills] };
-  }, [skillFilter]);
+  }, [skillFilter, messages.skills.all]);
 
   const filteredCerts = useMemo(() => {
     let certs = profile.certifications;
@@ -191,7 +199,9 @@ export function PortfolioPage({ locale, messages }: { locale: Locale; messages: 
       <script src="https://cdn.jsdelivr.net/npm/altcha/dist/altcha.min.js" type="module" async defer />
       <header className="header">
         <div className="container nav-wrap">
-          <a href="#home" className="logo">VR</a>
+          <a href="#home" className="logo">
+            <img src="/icon.png" alt="Vishnuraj" width={40} height={40} />
+          </a>
           <nav className="nav-desktop">
             <ul className="nav-list">
               {navKeys.map((key) => (
@@ -237,12 +247,12 @@ export function PortfolioPage({ locale, messages }: { locale: Locale; messages: 
 
         <section className="quick-links-section">
           <div className="quick-links">
-            <a href={profile.linkedin} target="_blank" rel="noreferrer">LinkedIn ↗</a>
-            <a href={profile.github} target="_blank" rel="noreferrer">GitHub ↗</a>
-            <a href={profile.aboutMe} target="_blank" rel="noreferrer">About.Me ↗</a>
+            <a href={profile.linkedin} target="_blank" rel="noreferrer">{messages.quickLinks.linkedIn}</a>
+            <a href={profile.github} target="_blank" rel="noreferrer">{messages.quickLinks.gitHub}</a>
+            <a href={profile.aboutMe} target="_blank" rel="noreferrer">{messages.quickLinks.aboutMe}</a>
             <a href={`mailto:${profile.email}`}>{profile.email}</a>
-            <span className="social-badge">AWS Certified</span>
-            <span className="social-badge">CSM®</span>
+            <span className="social-badge">{messages.quickLinks.awsCertified}</span>
+            <span className="social-badge">{messages.quickLinks.csm}</span>
           </div>
         </section>
 
@@ -253,23 +263,23 @@ export function PortfolioPage({ locale, messages }: { locale: Locale; messages: 
         </section>
 
         <section id="stats" className="section">
-          <h3>Career Highlights</h3>
+          <h3>{messages.sections.stats}</h3>
           <div className="stats-grid">
             <div className="stat-card card">
               <span className="stat-number">{profile.stats.yearsExperience}</span>
-              <span className="stat-label">Years Experience</span>
+              <span className="stat-label">{messages.stats.yearsExperience}</span>
             </div>
             <div className="stat-card card">
               <span className="stat-number">{profile.stats.certifications}</span>
-              <span className="stat-label">Certifications</span>
+              <span className="stat-label">{messages.stats.certifications}</span>
             </div>
             <div className="stat-card card">
               <span className="stat-number">{profile.stats.companies}</span>
-              <span className="stat-label">Companies</span>
+              <span className="stat-label">{messages.stats.companies}</span>
             </div>
             <div className="stat-card card">
               <span className="stat-number">{profile.projects.length}</span>
-              <span className="stat-label">Projects Delivered</span>
+              <span className="stat-label">{messages.stats.projectsDelivered}</span>
             </div>
           </div>
         </section>
@@ -312,7 +322,7 @@ export function PortfolioPage({ locale, messages }: { locale: Locale; messages: 
         <section id="skills" className="section">
           <h3>{messages.sections.skills}</h3>
           <div className="chips skill-filters">
-            {["All", ...Object.keys(profile.skills)].map((category) => (
+            {[messages.skills.all, ...Object.keys(profile.skills)].map((category) => (
               <button key={category} type="button" onClick={() => setSkillFilter(category)} className={`chip ${skillFilter === category ? "chip-active" : ""}`}>
                 {category}
               </button>
@@ -343,7 +353,7 @@ export function PortfolioPage({ locale, messages }: { locale: Locale; messages: 
                 </div>
                 {project.href && (
                   <a href={project.href} target="_blank" rel="noreferrer" className="project-link">
-                    View Project →
+                    {messages.projects.viewProject}
                   </a>
                 )}
               </article>
@@ -357,7 +367,7 @@ export function PortfolioPage({ locale, messages }: { locale: Locale; messages: 
             <div className="cert-filters">
               {certFilters.map((filter) => (
                 <button key={filter} type="button" onClick={() => setCertFilter(filter)} className={`chip ${certFilter === filter ? "chip-active" : ""}`}>
-                  {filter}
+                  {messages.certifications[filter.toLowerCase() as keyof typeof messages.certifications] || filter}
                 </button>
               ))}
             </div>
@@ -367,8 +377,8 @@ export function PortfolioPage({ locale, messages }: { locale: Locale; messages: 
                 onChange={(e) => setCertSort(e.target.value as "desc" | "asc")}
                 className="chip sort-select"
               >
-                <option value="desc">Newest First</option>
-                <option value="asc">Oldest First</option>
+                <option value="desc">{messages.certifications.newestFirst}</option>
+                <option value="asc">{messages.certifications.oldestFirst}</option>
               </select>
             </div>
           </div>
@@ -396,7 +406,7 @@ export function PortfolioPage({ locale, messages }: { locale: Locale; messages: 
                     <p className="cert-authority-text">{cert.authority}</p>
                   )}
                   <h4 className="cert-name">{cert.name}</h4>
-                  {cert.expires && <p className="cert-expires">Expires: {cert.expires}</p>}
+                  {cert.expires && <p className="cert-expires">{messages.certifications.expires} {cert.expires}</p>}
                 </div>
               </div>
             ))}
@@ -404,7 +414,7 @@ export function PortfolioPage({ locale, messages }: { locale: Locale; messages: 
         </section>
 
         <section id="languages" className="section">
-          <h3>Languages</h3>
+          <h3>{messages.sections.languages}</h3>
           <div className="languages-grid">
             {profile.languages.map((lang, index) => (
               <div key={`${lang.name}-${index}`} className="card language-card">
@@ -428,7 +438,7 @@ export function PortfolioPage({ locale, messages }: { locale: Locale; messages: 
                 <div className="education-icon">🎓</div>
                 <div className="education-content">
                   <h4>{edu.school}</h4>
-                  <p className="education-degree">{edu.degree} in {edu.field}</p>
+                  <p className="education-degree">{edu.degree} {messages.education.in} {edu.field}</p>
                   <p className="muted">{edu.period}</p>
                   {edu.notes && <p className="education-notes">{edu.notes}</p>}
                 </div>
@@ -450,9 +460,9 @@ export function PortfolioPage({ locale, messages }: { locale: Locale; messages: 
         <div className="container footer-wrap">
           <p>© <CurrentYear /> {profile.name}</p>
           <div className="chips">
-            <a className="chip" href={profile.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
-            <a className="chip" href={profile.github} target="_blank" rel="noreferrer">GitHub</a>
-            <a className="chip" href={`mailto:${profile.email}`}>Email</a>
+            <a className="chip" href={profile.linkedin} target="_blank" rel="noreferrer">{messages.quickLinks.linkedIn.replace(" ↗", "")}</a>
+            <a className="chip" href={profile.github} target="_blank" rel="noreferrer">{messages.quickLinks.gitHub.replace(" ↗", "")}</a>
+            <a className="chip" href={`mailto:${profile.email}`}>{messages.contact.email}</a>
             <span className="chip">{profile.location}</span>
           </div>
         </div>

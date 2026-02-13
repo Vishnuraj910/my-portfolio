@@ -4,7 +4,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: {
     default: "Vishnuraj Rajagopal | Full Stack + AI Engineering Lead",
-    template: "%s | Vishnuraj Rajagopal"
+    template: "%s | Full Stack + AI Engineering Lead"
   },
   description:
     "Modern portfolio of Vishnuraj Rajagopal - Full Stack + AI Engineering Lead based in Dubai, UAE.",

@@ -29,6 +29,52 @@
     "education": "Education",
     "contact": "Contact Me"
   },
+  "stats": {
+    "yearsExperience": "Years Experience",
+    "certifications": "Certifications",
+    "companies": "Companies",
+    "projectsDelivered": "Projects Delivered"
+  },
+  "skills": {
+    "all": "All",
+    "cloudDevOps": "Cloud & DevOps",
+    "frontend": "Frontend",
+    "backend": "Backend",
+    "aiMachineLearning": "AI & Machine Learning",
+    "security": "Security",
+    "fintech": "FinTech",
+    "professional": "Professional",
+    "toolsOthers": "Tools & Others"
+  },
+  "projects": {
+    "viewProject": "View Project →"
+  },
+  "certifications": {
+    "all": "All",
+    "aws": "AWS",
+    "security": "Security",
+    "aiMl": "AI/ML",
+    "architecture": "Architecture",
+    "newestFirst": "Newest First",
+    "oldestFirst": "Oldest First",
+    "expires": "Expires:"
+  },
+  "languages": {
+    "title": "Languages"
+  },
+  "education": {
+    "in": "in"
+  },
+  "quickLinks": {
+    "linkedIn": "LinkedIn ↗",
+    "gitHub": "GitHub ↗",
+    "aboutMe": "About.Me ↗",
+    "awsCertified": "AWS Certified",
+    "csm": "CSM®"
+  },
+  "common": {
+    "years": "years"
+  },
   "contact": {
     "name": "Name",
     "email": "Email",

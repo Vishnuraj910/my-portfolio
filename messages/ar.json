@@ -20,7 +20,7 @@
   },
   "sections": {
     "about": "نبذة",
-    "stats": "إنجازات المسيرة",
+    "stats": "أبرز الإنجازات",
     "experience": "الخبرات",
     "skills": "المهارات",
     "projects": "المشاريع",
@@ -28,6 +28,52 @@
     "languages": "اللغات",
     "education": "التعليم",
     "contact": "تواصل معي"
+  },
+  "stats": {
+    "yearsExperience": "سنوات الخبرة",
+    "certifications": "شهادات",
+    "companies": "شركات",
+    "projectsDelivered": "مشاريع منفذة"
+  },
+  "skills": {
+    "all": "الكل",
+    "cloudDevOps": "الحوسبة السحابية والديف أوبس",
+    "frontend": "الواجهة الأمامية",
+    "backend": "الخلفية",
+    "aiMachineLearning": "الذكاء الاصطناعي والتعلم الآلي",
+    "security": "الأمان",
+    "fintech": "التقنية المالية",
+    "professional": "المهارات المهنية",
+    "toolsOthers": "الأدوات الأخرى"
+  },
+  "projects": {
+    "viewProject": "عرض المشروع ←"
+  },
+  "certifications": {
+    "all": "الكل",
+    "aws": "أ.و.س",
+    "security": "الأمان",
+    "aiMl": "ذ.ا/ت.آ",
+    "architecture": "الهندسة",
+    "newestFirst": "الأحدث أولاً",
+    "oldestFirst": "الأقدم أولاً",
+    "expires": "ينتهي:"
+  },
+  "languages": {
+    "title": "اللغات"
+  },
+  "education": {
+    "in": "في"
+  },
+  "quickLinks": {
+    "linkedIn": "لينكد إن ↗",
+    "gitHub": "جيثب ↗",
+    "aboutMe": "عني ↗",
+    "awsCertified": "معتمد من أ.و.س",
+    "csm": "مScrum®"
+  },
+  "common": {
+    "years": "سنوات"
   },
   "contact": {
     "name": "الاسم",
