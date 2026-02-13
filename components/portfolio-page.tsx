@@ -12,7 +12,7 @@ type Messages = {
   contact: Record<string, string>;
 };
 
-const navKeys = ["home", "about", "experience", "skills", "projects", "certifications", "contact"];
+const navKeys = ["home", "about", "stats", "experience", "skills", "projects", "certifications", "languages", "education", "contact"];
 
 function CurrentYear() {
   return <>{new Date().getFullYear()}</>;
@@ -150,19 +150,49 @@ function ContactForm({ locale, labels }: { locale: Locale; labels: Record<string
 export function PortfolioPage({ locale, messages }: { locale: Locale; messages: Messages }) {
   const [skillFilter, setSkillFilter] = useState<string>("All");
   const [activeExperience, setActiveExperience] = useState<number | null>(0);
+  const [certFilter, setCertFilter] = useState<string>("All");
+  const [certSort, setCertSort] = useState<"desc" | "asc">("desc");
 
   const filteredSkills = useMemo(() => {
     if (skillFilter === "All") return profile.skills;
     return { [skillFilter]: profile.skills[skillFilter as keyof typeof profile.skills] };
   }, [skillFilter]);
 
+  const filteredCerts = useMemo(() => {
+    let certs = profile.certifications;
+    if (certFilter === "All") {
+      certs = profile.certifications;
+    } else if (certFilter === "AWS") {
+      certs = profile.certifications.filter(c => c.name.includes("AWS"));
+    } else if (certFilter === "Security") {
+      certs = profile.certifications.filter(c => c.name.includes("Security") || c.name.includes("ISO") || c.name.includes("PCI"));
+    } else if (certFilter === "AI/ML") {
+      certs = profile.certifications.filter(c => c.name.includes("AI") || c.name.includes("ML") || c.name.includes("LangChain") || c.name.includes("MongoDB"));
+    } else if (certFilter === "Architecture") {
+      certs = profile.certifications.filter(c => c.name.includes("Architecture") || c.name.includes("Software"));
+    }
+    
+    // Sort by date (default descending - newest first)
+    return [...certs].sort((a, b) => {
+      const dateA = a.date || "";
+      const dateB = b.date || "";
+      if (certSort === "desc") {
+        return dateB.localeCompare(dateA);
+      } else {
+        return dateA.localeCompare(dateB);
+      }
+    });
+  }, [certFilter, certSort]);
+
+  const certFilters = ["All", "AWS", "Security", "AI/ML", "Architecture"];
+
   return (
     <>
       <script src="https://cdn.jsdelivr.net/npm/altcha/dist/altcha.min.js" type="module" async defer />
       <header className="header">
         <div className="container nav-wrap">
-          <a href="#home" className="logo">YR</a>
-          <nav>
+          <a href="#home" className="logo">VR</a>
+          <nav className="nav-desktop">
             <ul className="nav-list">
               {navKeys.map((key) => (
                 <li key={key}>
@@ -173,6 +203,13 @@ export function PortfolioPage({ locale, messages }: { locale: Locale; messages: 
               ))}
             </ul>
           </nav>
+          <div className="nav-mobile">
+            <button className="mobile-menu-btn" aria-label="Menu">
+              <span></span>
+              <span></span>
+              <span></span>
+            </button>
+          </div>
           <div className="actions">
             <LanguageToggle locale={locale} />
             <ThemeToggle />
@@ -182,47 +219,91 @@ export function PortfolioPage({ locale, messages }: { locale: Locale; messages: 
 
       <main className="container stack">
         <section id="home" className="hero section">
-          <div>
-            <p className="muted uppercase">{messages.hero.eyebrow}</p>
+          <div className="hero-left">
+            <div className="hero-image"></div>
+          </div>
+          <div className="hero-right">
+            <p className="muted uppercase">{profile.location}</p>
             <h1>{profile.name}</h1>
             <h2>{profile.title}</h2>
-            <p className="hero-copy">{messages.hero.value}</p>
+            <p className="hero-copy">{profile.headline}</p>
             <div className="cta-row">
               <a href="#projects" className="btn btn-primary">{messages.hero.viewProjects}</a>
               <a href="/resume-vishnuraj.pdf" className="btn" download>{messages.hero.downloadResume}</a>
               <a href="#contact" className="btn">{messages.hero.contact}</a>
             </div>
           </div>
-          <aside className="hero-panel card">
-            <h3>Quick Links</h3>
-            <div className="hero-links">
-              <a href={profile.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
-              <a href={profile.github} target="_blank" rel="noreferrer">GitHub</a>
-              <a href={`mailto:${profile.email}`}>{profile.email}</a>
-              <a href={`tel:${profile.phone}`}>{profile.phone}</a>
-            </div>
-          </aside>
+        </section>
+
+        <section className="quick-links-section">
+          <div className="quick-links">
+            <a href={profile.linkedin} target="_blank" rel="noreferrer">LinkedIn ↗</a>
+            <a href={profile.github} target="_blank" rel="noreferrer">GitHub ↗</a>
+            <a href={profile.aboutMe} target="_blank" rel="noreferrer">About.Me ↗</a>
+            <a href={`mailto:${profile.email}`}>{profile.email}</a>
+            <span className="social-badge">AWS Certified</span>
+            <span className="social-badge">CSM®</span>
+          </div>
         </section>
 
         <section id="about" className="section">
           <h3>{messages.sections.about}</h3>
-          <p>{profile.summary}</p>
-          <div className="chips">{profile.highlights.map((item) => <span className="chip" key={item}>{item}</span>)}</div>
+          <p className="about-summary">{profile.summary}</p>
+          <div className="chips">{profile.highlights.map((item) => <span className="chip chip-highlight" key={item}>{item}</span>)}</div>
+        </section>
+
+        <section id="stats" className="section">
+          <h3>Career Highlights</h3>
+          <div className="stats-grid">
+            <div className="stat-card card">
+              <span className="stat-number">{profile.stats.yearsExperience}</span>
+              <span className="stat-label">Years Experience</span>
+            </div>
+            <div className="stat-card card">
+              <span className="stat-number">{profile.stats.certifications}</span>
+              <span className="stat-label">Certifications</span>
+            </div>
+            <div className="stat-card card">
+              <span className="stat-number">{profile.stats.companies}</span>
+              <span className="stat-label">Companies</span>
+            </div>
+            <div className="stat-card card">
+              <span className="stat-number">{profile.projects.length}</span>
+              <span className="stat-label">Projects Delivered</span>
+            </div>
+          </div>
         </section>
 
         <section id="experience" className="section">
           <h3>{messages.sections.experience}</h3>
           <div className="timeline">
             {profile.experiences.map((item, index) => (
-              <article key={item.company} className="card reveal">
+              <article key={`${item.company}-${index}`} className="card timeline-card reveal">
                 <button className="timeline-head" type="button" onClick={() => setActiveExperience(activeExperience === index ? null : index)}>
-                  <div>
-                    <h4>{item.role} · {item.company}</h4>
-                    <p className="muted">{item.period}</p>
+                  {item.logo && (
+                    <img 
+                      src={item.logo} 
+                      alt={`${item.company} logo`}
+                      className="company-logo"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).style.display = 'none';
+                      }}
+                    />
+                  )}
+                  <div className="timeline-header-content">
+                    <div className="timeline-company">{item.company}</div>
+                    <h4>{item.role}</h4>
+                    <p className="muted timeline-period">{item.period} · {item.location}</p>
                   </div>
-                  <span>{activeExperience === index ? "−" : "+"}</span>
+                  <span className="timeline-icon">{activeExperience === index ? "−" : "+"}</span>
                 </button>
-                {activeExperience === index ? <ul>{item.achievements.map((achievement) => <li key={achievement}>{achievement}</li>)}</ul> : null}
+                {activeExperience === index && (
+                  <div className="timeline-content">
+                    <ul>
+                      {item.achievements.map((achievement, i) => <li key={i}>{achievement}</li>)}
+                    </ul>
+                  </div>
+                )}
               </article>
             ))}
           </div>
@@ -230,17 +311,17 @@ export function PortfolioPage({ locale, messages }: { locale: Locale; messages: 
 
         <section id="skills" className="section">
           <h3>{messages.sections.skills}</h3>
-          <div className="chips">
+          <div className="chips skill-filters">
             {["All", ...Object.keys(profile.skills)].map((category) => (
               <button key={category} type="button" onClick={() => setSkillFilter(category)} className={`chip ${skillFilter === category ? "chip-active" : ""}`}>
                 {category}
               </button>
             ))}
           </div>
-          <div className="grid">
+          <div className="grid skills-grid">
             {Object.entries(filteredSkills).map(([category, values]) => (
-              <article key={category} className="card">
-                <h4>{category}</h4>
+              <article key={category} className="card skill-card">
+                <h4 className="skill-category">{category}</h4>
                 <div className="chips">{values.map((skill) => <span key={skill} className="chip">{skill}</span>)}</div>
               </article>
             ))}
@@ -249,12 +330,22 @@ export function PortfolioPage({ locale, messages }: { locale: Locale; messages: 
 
         <section id="projects" className="section">
           <h3>{messages.sections.projects}</h3>
-          <div className="grid">
-            {profile.projects.map((project) => (
-              <article className="card project-card reveal" key={project.title}>
-                <h4>{project.title}</h4>
-                <p>{project.summary}</p>
-                <div className="chips">{project.stack.map((tech) => <span key={tech} className="chip">{tech}</span>)}</div>
+          <div className="grid projects-grid">
+            {profile.projects.map((project, index) => (
+              <article className="card project-card reveal" key={`${project.title}-${index}`}>
+                <div className="project-header">
+                  <h4>{project.title}</h4>
+                  <span className="project-year">{project.year}</span>
+                </div>
+                <p className="project-summary">{project.summary}</p>
+                <div className="chips project-stack">
+                  {project.stack.map((tech) => <span key={tech} className="chip chip-small">{tech}</span>)}
+                </div>
+                {project.href && (
+                  <a href={project.href} target="_blank" rel="noreferrer" className="project-link">
+                    View Project →
+                  </a>
+                )}
               </article>
             ))}
           </div>
@@ -262,17 +353,96 @@ export function PortfolioPage({ locale, messages }: { locale: Locale; messages: 
 
         <section id="certifications" className="section">
           <h3>{messages.sections.certifications}</h3>
-          <div className="card"><ul>{profile.certifications.map((cert) => <li key={cert}>{cert}</li>)}</ul></div>
+          <div className="cert-filters-wrap">
+            <div className="cert-filters">
+              {certFilters.map((filter) => (
+                <button key={filter} type="button" onClick={() => setCertFilter(filter)} className={`chip ${certFilter === filter ? "chip-active" : ""}`}>
+                  {filter}
+                </button>
+              ))}
+            </div>
+            <div className="cert-sort">
+              <select 
+                value={certSort} 
+                onChange={(e) => setCertSort(e.target.value as "desc" | "asc")}
+                className="chip sort-select"
+              >
+                <option value="desc">Newest First</option>
+                <option value="asc">Oldest First</option>
+              </select>
+            </div>
+          </div>
+          <div className="cert-grid">
+            {filteredCerts.map((cert, index) => (
+              <div key={`${cert.name}-${index}`} className="card cert-card">
+                {cert.logo ? (
+                  <img 
+                    src={cert.logo} 
+                    alt={`${cert.authority} logo`}
+                    className="cert-logo"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).style.display = 'none';
+                    }}
+                  />
+                ) : (
+                  <span className="cert-icon">🏆</span>
+                )}
+                <div className="cert-text-content">
+                  {cert.url ? (
+                    <a href={cert.url} target="_blank" rel="noreferrer" className="cert-authority-link">
+                      {cert.authority}
+                    </a>
+                  ) : (
+                    <p className="cert-authority-text">{cert.authority}</p>
+                  )}
+                  <h4 className="cert-name">{cert.name}</h4>
+                  {cert.expires && <p className="cert-expires">Expires: {cert.expires}</p>}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section id="languages" className="section">
+          <h3>Languages</h3>
+          <div className="languages-grid">
+            {profile.languages.map((lang, index) => (
+              <div key={`${lang.name}-${index}`} className="card language-card">
+                <div className="language-icon">
+                  {lang.name === 'English' ? '🇬🇧' : lang.name === 'Malayalam' ? '🇮🇳' : lang.name === 'Tamil' ? '🇮🇳' : lang.name === 'Hindi' ? '🇮🇳' : '🇪🇸'}
+                </div>
+                <div className="language-content">
+                  <div className="language-name">{lang.name}</div>
+                  <div className="language-proficiency">{lang.proficiency}</div>
+                </div>
+              </div>
+            ))}
+          </div>
         </section>
 
         <section id="education" className="section">
           <h3>{messages.sections.education}</h3>
-          <div className="card"><ul>{profile.education.map((item) => <li key={item}>{item}</li>)}</ul></div>
+          <div className="education-grid">
+            {profile.education.map((edu, index) => (
+              <div key={`${edu.school}-${index}`} className="card education-card">
+                <div className="education-icon">🎓</div>
+                <div className="education-content">
+                  <h4>{edu.school}</h4>
+                  <p className="education-degree">{edu.degree} in {edu.field}</p>
+                  <p className="muted">{edu.period}</p>
+                  {edu.notes && <p className="education-notes">{edu.notes}</p>}
+                </div>
+              </div>
+            ))}
+          </div>
         </section>
 
         <section id="contact" className="section">
           <h3>{messages.sections.contact}</h3>
-          <ContactForm locale={locale} labels={messages.contact} />
+          <div className="contact-grid">
+            <div className="contact-bg-image"></div>
+            <ContactForm locale={locale} labels={messages.contact} />
+          </div>
         </section>
       </main>
 
@@ -282,7 +452,7 @@ export function PortfolioPage({ locale, messages }: { locale: Locale; messages: 
           <div className="chips">
             <a className="chip" href={profile.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
             <a className="chip" href={profile.github} target="_blank" rel="noreferrer">GitHub</a>
-            <a className="chip" href={`mailto:${profile.email}`}>{profile.email}</a>
+            <a className="chip" href={`mailto:${profile.email}`}>Email</a>
             <span className="chip">{profile.location}</span>
           </div>
         </div>

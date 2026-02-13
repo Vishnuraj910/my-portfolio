@@ -2,10 +2,13 @@
   "nav": {
     "home": "الرئيسية",
     "about": "نبذة",
+    "stats": "إنجازات",
     "experience": "الخبرات",
     "skills": "المهارات",
     "projects": "المشاريع",
     "certifications": "الشهادات",
+    "languages": "اللغات",
+    "education": "التعليم",
     "contact": "تواصل"
   },
   "hero": {
@@ -17,10 +20,12 @@
   },
   "sections": {
     "about": "نبذة",
+    "stats": "إنجازات المسيرة",
     "experience": "الخبرات",
     "skills": "المهارات",
     "projects": "المشاريع",
     "certifications": "الشهادات",
+    "languages": "اللغات",
     "education": "التعليم",
     "contact": "تواصل معي"
   },

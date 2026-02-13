@@ -2,10 +2,13 @@
   "nav": {
     "home": "Home",
     "about": "About",
+    "stats": "Highlights",
     "experience": "Experience",
     "skills": "Skills",
     "projects": "Projects",
     "certifications": "Certifications",
+    "languages": "Languages",
+    "education": "Education",
     "contact": "Contact"
   },
   "hero": {
@@ -17,10 +20,12 @@
   },
   "sections": {
     "about": "About",
+    "stats": "Career Highlights",
     "experience": "Experience",
     "skills": "Skills",
     "projects": "Projects",
     "certifications": "Certifications",
+    "languages": "Languages",
     "education": "Education",
     "contact": "Contact Me"
   },
