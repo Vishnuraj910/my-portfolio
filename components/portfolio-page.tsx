@@ -236,7 +236,7 @@ export function PortfolioPage({ locale, messages }: { locale: Locale; messages: 
             <p className="muted uppercase">{profile.location}</p>
             <h1>{profile.name}</h1>
             <h2>{profile.title}</h2>
-            <p className="hero-copy">{profile.headline}</p>
+            <p className="hero-copy">{messages.hero.headline}</p>
             <div className="cta-row">
               <a href="#projects" className="btn btn-primary">{messages.hero.viewProjects}</a>
               <a href="/resume-vishnuraj.pdf" className="btn" download>{messages.hero.downloadResume}</a>
@@ -258,7 +258,7 @@ export function PortfolioPage({ locale, messages }: { locale: Locale; messages: 
 
         <section id="about" className="section">
           <h3>{messages.sections.about}</h3>
-          <p className="about-summary">{profile.summary}</p>
+          <p className="about-summary">{messages.hero.summary}</p>
           <div className="chips">{profile.highlights.map((item) => <span className="chip chip-highlight" key={item}>{item}</span>)}</div>
         </section>
 
