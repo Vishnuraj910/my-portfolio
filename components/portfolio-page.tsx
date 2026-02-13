@@ -62,15 +62,35 @@ function LanguageToggle({ locale }: { locale: Locale }) {
 function ContactForm({ locale, labels }: { locale: Locale; labels: Record<string, string> }) {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [error, setError] = useState<string>("");
+  const [recaptchaReady, setRecaptchaReady] = useState<boolean | null>(null);
+
+  // Check if recaptcha is available on mount
+  useEffect(() => {
+    const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+    if (!siteKey) {
+      setRecaptchaReady(false);
+      return;
+    }
+
+    // Wait for grecaptcha to be available
+    const checkRecaptcha = () => {
+      if (window.grecaptcha) {
+        setRecaptchaReady(true);
+      } else {
+        // Retry after a short delay
+        setTimeout(checkRecaptcha, 100);
+      }
+    };
+    checkRecaptcha();
+  }, []);
 
   async function getRecaptchaToken() {
     const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
     if (!siteKey || !window.grecaptcha) {
-      return "missing-recaptcha";
+      throw new Error(labels.captcha);
     }
 
     const grecaptcha = window.grecaptcha;
-    if (!grecaptcha) throw new Error(labels.captcha);
     return new Promise<string>((resolve, reject) => {
       grecaptcha.ready(async () => {
         try {
@@ -142,9 +162,13 @@ export function PortfolioPage({ locale, messages }: { locale: Locale; messages: 
     return { [skillFilter]: profile.skills[skillFilter as keyof typeof profile.skills] };
   }, [skillFilter]);
 
+  const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+
   return (
     <>
-      <script src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""}`} async defer />
+      {recaptchaSiteKey && (
+        <script src={`https://www.google.com/recaptcha/api.js?render=${recaptchaSiteKey}`} async defer />
+      )}
       <header className="header">
         <div className="container nav-wrap">
           <a href="#home" className="logo">YR</a>
