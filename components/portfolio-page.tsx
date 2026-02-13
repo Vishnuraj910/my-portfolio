@@ -5,7 +5,6 @@ import { useEffect, useMemo, useState } from "react";
 import type { Locale } from "@/lib/i18n";
 import { profile } from "@/content/profile";
 
-
 declare global {
   interface Window {
     grecaptcha?: {
@@ -25,25 +24,18 @@ type Messages = {
 const navKeys = ["home", "about", "experience", "skills", "projects", "certifications", "contact"];
 
 function CurrentYear() {
-  const [year, setYear] = useState<number>(new Date().getFullYear());
-  
-  useEffect(() => {
-    setYear(new Date().getFullYear());
-  }, []);
-  
-  return <>{year}</>;
+  return <>{new Date().getFullYear()}</>;
 }
 
 function ThemeToggle() {
-  const [theme, setTheme] = useState<string>("light");
+  const [theme, setTheme] = useState<string>(() => {
+    if (typeof window === "undefined") return "dark";
+    return localStorage.getItem("theme") || "dark";
+  });
 
   useEffect(() => {
-    // Only run on client to avoid hydration mismatch
-    const stored = localStorage.getItem("theme");
-    const initial = stored || "light";
-    setTheme(initial);
-    document.documentElement.dataset.theme = initial;
-  }, []);
+    document.documentElement.dataset.theme = theme;
+  }, [theme]);
 
   const toggle = () => {
     const next = theme === "dark" ? "light" : "dark";
@@ -53,14 +45,8 @@ function ThemeToggle() {
   };
 
   return (
-    <button 
-      className="btn" 
-      onClick={toggle} 
-      aria-label="Toggle theme" 
-      type="button"
-      suppressHydrationWarning
-    >
-      {theme === "dark" ? "☀️" : "🌙"}
+    <button className="btn" onClick={toggle} aria-label="Toggle theme" type="button" suppressHydrationWarning>
+      {theme === "dark" ? "☀" : "☾"}
     </button>
   );
 }
@@ -76,15 +62,35 @@ function LanguageToggle({ locale }: { locale: Locale }) {
 function ContactForm({ locale, labels }: { locale: Locale; labels: Record<string, string> }) {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [error, setError] = useState<string>("");
+  const [recaptchaReady, setRecaptchaReady] = useState<boolean | null>(null);
+
+  // Check if recaptcha is available on mount
+  useEffect(() => {
+    const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+    if (!siteKey) {
+      setRecaptchaReady(false);
+      return;
+    }
+
+    // Wait for grecaptcha to be available
+    const checkRecaptcha = () => {
+      if (window.grecaptcha) {
+        setRecaptchaReady(true);
+      } else {
+        // Retry after a short delay
+        setTimeout(checkRecaptcha, 100);
+      }
+    };
+    checkRecaptcha();
+  }, []);
 
   async function getRecaptchaToken() {
     const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
     if (!siteKey || !window.grecaptcha) {
-      return "missing-recaptcha";
+      throw new Error(labels.captcha);
     }
 
     const grecaptcha = window.grecaptcha;
-    if (!grecaptcha) throw new Error(labels.captcha);
     return new Promise<string>((resolve, reject) => {
       grecaptcha.ready(async () => {
         try {
@@ -156,12 +162,16 @@ export function PortfolioPage({ locale, messages }: { locale: Locale; messages: 
     return { [skillFilter]: profile.skills[skillFilter as keyof typeof profile.skills] };
   }, [skillFilter]);
 
+  const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+
   return (
     <>
-      <script src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ""}`} async defer />
+      {recaptchaSiteKey && (
+        <script src={`https://www.google.com/recaptcha/api.js?render=${recaptchaSiteKey}`} async defer />
+      )}
       <header className="header">
         <div className="container nav-wrap">
-          <a href="#home" className="logo">VR</a>
+          <a href="#home" className="logo">YR</a>
           <nav>
             <ul className="nav-list">
               {navKeys.map((key) => (
@@ -179,17 +189,29 @@ export function PortfolioPage({ locale, messages }: { locale: Locale; messages: 
           </div>
         </div>
       </header>
+
       <main className="container stack">
-        <section id="home" className="hero">
-          <p className="muted">{messages.hero.eyebrow}</p>
-          <h1>{profile.name}</h1>
-          <h2>{profile.title}</h2>
-          <p className="hero-copy">{messages.hero.value}</p>
-          <div className="cta-row">
-            <a href="#projects" className="btn btn-primary">{messages.hero.viewProjects}</a>
-            <a href="/resume-vishnuraj.pdf" className="btn" download>{messages.hero.downloadResume}</a>
-            <a href="#contact" className="btn">{messages.hero.contact}</a>
+        <section id="home" className="hero section">
+          <div>
+            <p className="muted uppercase">{messages.hero.eyebrow}</p>
+            <h1>{profile.name}</h1>
+            <h2>{profile.title}</h2>
+            <p className="hero-copy">{messages.hero.value}</p>
+            <div className="cta-row">
+              <a href="#projects" className="btn btn-primary">{messages.hero.viewProjects}</a>
+              <a href="/resume-vishnuraj.pdf" className="btn" download>{messages.hero.downloadResume}</a>
+              <a href="#contact" className="btn">{messages.hero.contact}</a>
+            </div>
           </div>
+          <aside className="hero-panel card">
+            <h3>Quick Links</h3>
+            <div className="hero-links">
+              <a href={profile.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
+              <a href={profile.github} target="_blank" rel="noreferrer">GitHub</a>
+              <a href={`mailto:${profile.email}`}>{profile.email}</a>
+              <a href={`tel:${profile.phone}`}>{profile.phone}</a>
+            </div>
+          </aside>
         </section>
 
         <section id="about" className="section">
@@ -210,7 +232,7 @@ export function PortfolioPage({ locale, messages }: { locale: Locale; messages: 
                   </div>
                   <span>{activeExperience === index ? "−" : "+"}</span>
                 </button>
-                {activeExperience === index ? <ul>{item.achievements.map((a) => <li key={a}>{a}</li>)}</ul> : null}
+                {activeExperience === index ? <ul>{item.achievements.map((achievement) => <li key={achievement}>{achievement}</li>)}</ul> : null}
               </article>
             ))}
           </div>
@@ -239,7 +261,7 @@ export function PortfolioPage({ locale, messages }: { locale: Locale; messages: 
           <h3>{messages.sections.projects}</h3>
           <div className="grid">
             {profile.projects.map((project) => (
-              <article className="card reveal" key={project.title}>
+              <article className="card project-card reveal" key={project.title}>
                 <h4>{project.title}</h4>
                 <p>{project.summary}</p>
                 <div className="chips">{project.stack.map((tech) => <span key={tech} className="chip">{tech}</span>)}</div>
@@ -255,7 +277,7 @@ export function PortfolioPage({ locale, messages }: { locale: Locale; messages: 
 
         <section id="education" className="section">
           <h3>{messages.sections.education}</h3>
-          <div className="card"><ul>{profile.education.map((e) => <li key={e}>{e}</li>)}</ul></div>
+          <div className="card"><ul>{profile.education.map((item) => <li key={item}>{item}</li>)}</ul></div>
         </section>
 
         <section id="contact" className="section">
@@ -263,6 +285,7 @@ export function PortfolioPage({ locale, messages }: { locale: Locale; messages: 
           <ContactForm locale={locale} labels={messages.contact} />
         </section>
       </main>
+
       <footer className="footer">
         <div className="container footer-wrap">
           <p>© <CurrentYear /> {profile.name}</p>

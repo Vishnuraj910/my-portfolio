@@ -63,6 +63,11 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: parsed.errors?.join(", ") || "Validation failed" }, { status: 400 });
     }
 
+    // Reject placeholder tokens that indicate recaptcha failed to initialize
+    if (!parsed.data.recaptchaToken || parsed.data.recaptchaToken === "missing-recaptcha") {
+      return NextResponse.json({ error: "reCAPTCHA verification failed. Please enable JavaScript and try again." }, { status: 400 });
+    }
+
     const captchaValid = await verifyRecaptcha(parsed.data.recaptchaToken);
     if (!captchaValid) {
       return NextResponse.json({ error: "reCAPTCHA verification failed" }, { status: 400 });
