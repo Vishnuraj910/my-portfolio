@@ -63,7 +63,12 @@ function ContactForm({ locale, labels }: { locale: Locale; labels: Record<string
   const [error, setError] = useState<string>("");
   const [captchaReady, setCaptchaReady] = useState(false);
   const [captchaVerified, setCaptchaVerified] = useState(false);
+  const [isClient, setIsClient] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   useEffect(() => {
     let timer: ReturnType<typeof setInterval> | null = null;
@@ -145,7 +150,7 @@ function ContactForm({ locale, labels }: { locale: Locale; labels: Record<string
       <input required name="subject" placeholder={labels.subject} className="input" maxLength={140} />
       <textarea required name="message" placeholder={labels.message} className="input min-h-32" maxLength={2000} />
       {/* @ts-expect-error Custom element provided by ALTCHA script */}
-      <altcha-widget challengeurl="/api/altcha/challenge" hidelogo hidefooter />
+      {isClient && <altcha-widget challengeurl="/api/altcha/challenge" hidelogo hidefooter />}
       <button className="btn btn-primary" type="submit" disabled={status === "loading"}>
         {status === "loading" ? "..." : labels.submit}
       </button>
