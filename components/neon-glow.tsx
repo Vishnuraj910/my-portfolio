@@ -3,23 +3,20 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import { motion, useSpring, useMotionValue, useTransform } from "framer-motion";
 
-// Custom hook for device orientation (gyroscope)
+const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
+
 function useDeviceOrientation() {
   const [orientation, setOrientation] = useState({ gamma: 0, beta: 0 });
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
   const [isSupported, setIsSupported] = useState(false);
 
   useEffect(() => {
-    // Check if DeviceOrientationEvent is supported
     const deviceOrientationSupported = typeof DeviceOrientationEvent !== "undefined";
     setIsSupported(deviceOrientationSupported);
 
-    // Check if we need to request permission (iOS 13+)
     if (deviceOrientationSupported && typeof (DeviceOrientationEvent as unknown as { requestPermission?: () => Promise<string> }).requestPermission === "function") {
-      // iOS requires permission - will be requested on user interaction
       setHasPermission(false);
     } else if (deviceOrientationSupported) {
-      // Non-iOS or older iOS - try to use directly
       setHasPermission(true);
     }
   }, []);
@@ -27,7 +24,6 @@ function useDeviceOrientation() {
   const requestPermission = useCallback(async () => {
     if (!isSupported) return false;
 
-    // iOS 13+ requires permission
     const DeviceOrientationEventTyped = DeviceOrientationEvent as unknown as { requestPermission?: () => Promise<string> };
     if (typeof DeviceOrientationEventTyped.requestPermission === "function") {
       try {
@@ -47,11 +43,10 @@ function useDeviceOrientation() {
     if (!isSupported || hasPermission === false) return;
 
     const handleOrientation = (event: DeviceOrientationEvent) => {
-      // Gamma: left/right tilt (-90 to 90)
-      // Beta: front/back tilt (-180 to 180)
-      const gamma = event.gamma ?? 0;
-      const beta = event.beta ?? 0;
-      setOrientation({ gamma, beta });
+      setOrientation({
+        gamma: event.gamma ?? 0,
+        beta: event.beta ?? 0,
+      });
     };
 
     window.addEventListener("deviceorientation", handleOrientation);
@@ -61,7 +56,6 @@ function useDeviceOrientation() {
   return { orientation, hasPermission, isSupported, requestPermission };
 }
 
-// Custom hook for touch position (mobile fallback)
 function useTouchPosition() {
   const touchX = useMotionValue(0);
   const touchY = useMotionValue(0);
@@ -86,24 +80,51 @@ function useTouchPosition() {
 export default function NeonGlow() {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-  const [isMounted, setIsMounted] = useState(false);
+  const inputX = useMotionValue(0);
+  const inputY = useMotionValue(0);
 
-  // Device orientation hook (gyroscope)
+  const [isMounted, setIsMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  const viewportRef = useRef({ centerX: 0, centerY: 0 });
+
   const { orientation, hasPermission, isSupported: gyroSupported, requestPermission } = useDeviceOrientation();
   const { touchX, touchY, hasTouch } = useTouchPosition();
 
-  // Detect if device is mobile/touch
-  const [isMobile, setIsMobile] = useState(false);
-  const heroLeftRef = useRef<HTMLDivElement>(null);
+  const useGyro = gyroSupported && hasPermission === true;
+  const useTouch = isMobile && hasTouch && !useGyro;
 
   useEffect(() => {
-    setIsMobile(typeof window !== "undefined" && (
-      "ontouchstart" in window ||
-      navigator.maxTouchPoints > 0
-    ));
-  }, []);
+    setIsMounted(true);
+    setIsMobile(typeof window !== "undefined" && ("ontouchstart" in window || navigator.maxTouchPoints > 0));
 
-  // Request gyroscope permission on first touch (iOS requirement)
+    const updateViewportCenter = () => {
+      viewportRef.current = {
+        centerX: window.innerWidth / 2,
+        centerY: window.innerHeight / 2,
+      };
+
+      if (!useTouch && !useGyro) {
+        inputX.set(viewportRef.current.centerX);
+        inputY.set(viewportRef.current.centerY);
+      }
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
+    };
+
+    updateViewportCenter();
+    window.addEventListener("resize", updateViewportCenter);
+    window.addEventListener("mousemove", handleMouseMove);
+
+    return () => {
+      window.removeEventListener("resize", updateViewportCenter);
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, [mouseX, mouseY, inputX, inputY, useTouch, useGyro]);
+
   useEffect(() => {
     if (!isMobile || !gyroSupported || hasPermission !== false) return;
 
@@ -121,143 +142,68 @@ export default function NeonGlow() {
   }, [isMobile, gyroSupported, hasPermission, requestPermission]);
 
   useEffect(() => {
-    setIsMounted(true);
+    const { centerX, centerY } = viewportRef.current;
+    if (!centerX && !centerY) return;
 
-    const handleMouseMove = (e: MouseEvent) => {
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
-    };
+    const maxShiftX = 280;
+    const maxShiftY = 220;
 
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [mouseX, mouseY]);
-
-  // Determine which input source to use
-  const useGyro = gyroSupported && hasPermission === true;
-  const useTouch = isMobile && hasTouch && !useGyro;
-
-  // Create motion values for the final input position
-  const inputX = useMotionValue(0);
-  const inputY = useMotionValue(0);
-
-  // Update input values based on selected source
-  useEffect(() => {
     if (useGyro) {
-      // Map gyroscope to viewport coordinates
-      const x = (orientation.gamma + 45) / 90 * window.innerWidth;
-      const y = (orientation.beta + 90) / 180 * window.innerHeight;
-      inputX.set(x);
-      inputY.set(y);
-    }
-    // For mouse and touch, the values are already set via event listeners
-  }, [useGyro, orientation, inputX, inputY]);
-
-  // Calculate hero-left position and set initial glow position
-  useEffect(() => {
-    const calculateInitialPosition = () => {
-      if (!heroLeftRef.current) return;
-
-      const heroRect = heroLeftRef.current.getBoundingClientRect();
-      const centerX = heroRect.left + heroRect.width / 2;
-      const centerY = heroRect.top + heroRect.height / 2;
-
-      // Set initial position to center of hero-left
-      inputX.set(centerX);
-      inputY.set(centerY);
-    };
-
-    calculateInitialPosition();
-
-    // Recalculate on resize only if heroLeftRef.current exists
-    if (heroLeftRef.current) {
-      const resizeObserver = new ResizeObserver(calculateInitialPosition);
-      resizeObserver.observe(heroLeftRef.current);
-
-      return () => resizeObserver.disconnect();
+      const normalizedGamma = clamp(orientation.gamma / 45, -1, 1);
+      const normalizedBeta = clamp(orientation.beta / 45, -1, 1);
+      inputX.set(centerX - normalizedGamma * maxShiftX);
+      inputY.set(centerY - normalizedBeta * maxShiftY);
+      return;
     }
 
-    return () => {};
-  }, [inputX, inputY]);
-
-// If not using gyro, copy from mouse/touch
-  useEffect(() => {
-    if (!useGyro) {
-      const sourceX = useTouch ? touchX : mouseX;
-      const sourceY = useTouch ? touchY : mouseY;
-
-      const unsubscribeX = sourceX.on("change", (v) => inputX.set(v));
-      const unsubscribeY = sourceY.on("change", (v) => inputY.set(v));
-
+    if (useTouch) {
+      const unsubscribeTouchX = touchX.on("change", (value) => inputX.set(value));
+      const unsubscribeTouchY = touchY.on("change", (value) => inputY.set(value));
       return () => {
-        unsubscribeX();
-        unsubscribeY();
+        unsubscribeTouchX();
+        unsubscribeTouchY();
       };
     }
-  }, [useGyro, useTouch, mouseX, mouseY, touchX, touchY, inputX, inputY]);
 
-  // Mouse repulsion logic
-  useEffect(() => {
-    if (isMobile || useGyro) return;
+    const unsubscribeMouseX = mouseX.on("change", (value) => {
+      const normalizedX = clamp((value - centerX) / centerX, -1, 1);
+      inputX.set(centerX - normalizedX * maxShiftX);
+    });
 
-    const handleRepulsion = () => {
-      const mouseXVal = mouseX.get();
-      const mouseYVal = mouseY.get();
+    const unsubscribeMouseY = mouseY.on("change", (value) => {
+      const normalizedY = clamp((value - centerY) / centerY, -1, 1);
+      inputY.set(centerY - normalizedY * maxShiftY);
+    });
 
-      // Calculate distance from mouse to glow center
-      const glowX = inputX.get();
-      const glowY = inputY.get();
-
-      const distanceX = mouseXVal - glowX;
-      const distanceY = mouseYVal - glowY;
-
-      const repulsionThreshold = 200; // Pixels
-      const maxRepulsion = 100; // Maximum repulsion distance
-
-      if (Math.abs(distanceX) < repulsionThreshold) {
-        // Calculate repulsion force (stronger when closer)
-        const force = (repulsionThreshold - Math.abs(distanceX)) / repulsionThreshold;
-        const repulsionX = (force * maxRepulsion) * Math.sign(distanceX);
-
-        // Apply repulsion to input position
-        inputX.set(glowX - repulsionX);
-      }
+    return () => {
+      unsubscribeMouseX();
+      unsubscribeMouseY();
     };
+  }, [useGyro, useTouch, orientation, mouseX, mouseY, touchX, touchY, inputX, inputY]);
 
-    const interval = setInterval(handleRepulsion, 16); // ~60fps
-    return () => clearInterval(interval);
-  }, [isMobile, useGyro, mouseX, mouseY, inputX, inputY]);
-
-  // Spring physics with gravity effect - lower stiffness = more weight/drag
-  // Each layer follows with different delay for natural gravitational feel
   const springConfigMain = { stiffness: 25, damping: 25 };
   const springConfigSecondary = { stiffness: 15, damping: 30 };
   const springConfigTertiary = { stiffness: 10, damping: 35 };
 
-  // Main glow follows cursor with offset to right
   const rawX = useSpring(inputX, springConfigMain);
   const rawY = useSpring(inputY, springConfigMain);
   const x = useTransform(rawX, (val) => val + 100);
   const y = rawY;
 
-  // Secondary layer follows with more delay (gravity effect)
   const rawX2 = useSpring(inputX, springConfigSecondary);
   const rawY2 = useSpring(inputY, springConfigSecondary);
   const x2 = useTransform(rawX2, (val) => val + 80);
   const y2 = rawY2;
 
-  // Tertiary layer has most delay (heaviest feel)
   const rawX3 = useSpring(inputX, springConfigTertiary);
   const rawY3 = useSpring(inputY, springConfigTertiary);
   const x3 = useTransform(rawX3, (val) => val + 120);
   const y3 = rawY3;
 
-  if (!isMounted) {
-    return null;
-  }
+  if (!isMounted) return null;
 
   return (
     <>
-      {/* Main animated glow - follows mouse/touch/gyroscope position */}
       <motion.div
         className="neon-glow"
         style={{
@@ -275,9 +221,6 @@ export default function NeonGlow() {
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
       >
-        {/* Add reference to hero-left for position calculation */}
-        <div ref={heroLeftRef} style={{ display: "none" }} />
-        {/* Animated gradient blob - main glow layer */}
         <motion.div
           className="glow-blob"
           style={{
@@ -307,7 +250,6 @@ export default function NeonGlow() {
           }}
         />
 
-        {/* Secondary glow layer - follows with gravity delay */}
         <motion.div
           className="glow-secondary"
           style={{
@@ -333,7 +275,6 @@ export default function NeonGlow() {
           }}
         />
 
-        {/* Third glow layer - follows with most gravity delay */}
         <motion.div
           className="glow-tertiary"
           style={{
@@ -360,7 +301,6 @@ export default function NeonGlow() {
         />
       </motion.div>
 
-      {/* Ambient background glow that extends below */}
       <div
         className="neon-glow-ambient"
         style={{
