@@ -46,7 +46,48 @@ Choose the smallest set that proves correctness:
 
 If a check cannot run due to environment constraints, report it explicitly.
 
-## 5) Definition of Done
+## 5) Agent Selection Guidelines
+
+Select the appropriate agent based on the specific skills required for the task:
+
+### Available Agents
+
+| Agent | Primary Skills | When to Use |
+|-------|----------------|-------------|
+| **Senior NextJS Developer** | Next.js, React, TypeScript, App Router, performance optimization, API routes, authentication, deployment | Building/fixing Next.js features, React components, API endpoints, performance issues, TypeScript problems |
+| **Personal Branding Expert** | Personal branding, portfolio curation, content strategy, storytelling, digital presence, career positioning | Creating portfolio content, crafting personal narratives, writing case studies, optimizing bio/about sections, brand messaging |
+| **Product Engineer** | Product development, system design, user experience, feature planning, requirements gathering | Product features, UX improvements, system architecture, feature specifications, user stories |
+
+### Agent Selection Rules
+
+1. **Technical Implementation Tasks**
+   - Frontend/Backend development → Senior NextJS Developer
+   - Code reviews and refactoring → Senior NextJS Developer
+   - Bug fixes and performance tuning → Senior NextJS Developer
+
+2. **Content & Branding Tasks**
+   - Portfolio content creation → Personal Branding Expert
+   - Personal story and narrative writing → Personal Branding Expert
+   - Bio, elevator pitch, testimonials → Personal Branding Expert
+   - Brand messaging and voice → Personal Branding Expert
+
+3. **Product & Design Tasks**
+   - Feature planning and specs → Product Engineer
+   - UX improvements and user research → Product Engineer
+   - System architecture and requirements → Product Engineer
+
+4. **Mixed Tasks**
+   - If task involves both technical and content work, determine the primary focus
+   - For portfolio website development: Technical → Senior NextJS Developer, Content → Personal Branding Expert
+
+### Using Multiple Agents
+
+For complex projects requiring multiple skill sets:
+1. Break down the task into components
+2. Use the primary agent for the main scope
+3. Consult other agents for specific expertise as needed
+
+## 6) Definition of Done
 
 A task is complete only when:
 - Requirements are implemented.
