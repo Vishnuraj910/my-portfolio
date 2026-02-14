@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { motion, useSpring, useMotionValue, useTransform } from "framer-motion";
 
 // Custom hook for device orientation (gyroscope)
@@ -94,6 +94,7 @@ export default function NeonGlow() {
 
   // Detect if device is mobile/touch
   const [isMobile, setIsMobile] = useState(false);
+  const heroLeftRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setIsMobile(typeof window !== "undefined" && (
@@ -151,21 +152,80 @@ export default function NeonGlow() {
     // For mouse and touch, the values are already set via event listeners
   }, [useGyro, orientation, inputX, inputY]);
 
-  // If not using gyro, copy from mouse/touch
+  // Calculate hero-left position and set initial glow position
+  useEffect(() => {
+    const calculateInitialPosition = () => {
+      if (!heroLeftRef.current) return;
+
+      const heroRect = heroLeftRef.current.getBoundingClientRect();
+      const centerX = heroRect.left + heroRect.width / 2;
+      const centerY = heroRect.top + heroRect.height / 2;
+
+      // Set initial position to center of hero-left
+      inputX.set(centerX);
+      inputY.set(centerY);
+    };
+
+    calculateInitialPosition();
+
+    // Recalculate on resize only if heroLeftRef.current exists
+    if (heroLeftRef.current) {
+      const resizeObserver = new ResizeObserver(calculateInitialPosition);
+      resizeObserver.observe(heroLeftRef.current);
+
+      return () => resizeObserver.disconnect();
+    }
+
+    return () => {};
+  }, [inputX, inputY]);
+
+// If not using gyro, copy from mouse/touch
   useEffect(() => {
     if (!useGyro) {
       const sourceX = useTouch ? touchX : mouseX;
       const sourceY = useTouch ? touchY : mouseY;
-      
+
       const unsubscribeX = sourceX.on("change", (v) => inputX.set(v));
       const unsubscribeY = sourceY.on("change", (v) => inputY.set(v));
-      
+
       return () => {
         unsubscribeX();
         unsubscribeY();
       };
     }
   }, [useGyro, useTouch, mouseX, mouseY, touchX, touchY, inputX, inputY]);
+
+  // Mouse repulsion logic
+  useEffect(() => {
+    if (isMobile || useGyro) return;
+
+    const handleRepulsion = () => {
+      const mouseXVal = mouseX.get();
+      const mouseYVal = mouseY.get();
+
+      // Calculate distance from mouse to glow center
+      const glowX = inputX.get();
+      const glowY = inputY.get();
+
+      const distanceX = mouseXVal - glowX;
+      const distanceY = mouseYVal - glowY;
+
+      const repulsionThreshold = 200; // Pixels
+      const maxRepulsion = 100; // Maximum repulsion distance
+
+      if (Math.abs(distanceX) < repulsionThreshold) {
+        // Calculate repulsion force (stronger when closer)
+        const force = (repulsionThreshold - Math.abs(distanceX)) / repulsionThreshold;
+        const repulsionX = (force * maxRepulsion) * Math.sign(distanceX);
+
+        // Apply repulsion to input position
+        inputX.set(glowX - repulsionX);
+      }
+    };
+
+    const interval = setInterval(handleRepulsion, 16); // ~60fps
+    return () => clearInterval(interval);
+  }, [isMobile, useGyro, mouseX, mouseY, inputX, inputY]);
 
   // Spring physics with gravity effect - lower stiffness = more weight/drag
   // Each layer follows with different delay for natural gravitational feel
@@ -215,6 +275,8 @@ export default function NeonGlow() {
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
       >
+        {/* Add reference to hero-left for position calculation */}
+        <div ref={heroLeftRef} style={{ display: "none" }} />
         {/* Animated gradient blob - main glow layer */}
         <motion.div
           className="glow-blob"
