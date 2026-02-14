@@ -6,7 +6,13 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "docker:build": "docker build -t my-portfolio:latest .",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:dev": "docker-compose --profile dev up",
+    "docker:logs": "docker-compose logs -f",
+    "docker:clean": "docker system prune -af"
   },
   "dependencies": {
     "framer-motion": "^12.34.0",
