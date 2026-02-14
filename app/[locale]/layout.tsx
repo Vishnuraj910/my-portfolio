@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { isLocale } from "@/lib/i18n";
 import NeonGlow from "@/components/neon-glow";
+import DeepSpaceBackground from "@/components/background/DeepSpaceBackground";
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
@@ -32,6 +33,7 @@ export default async function LocaleLayout({
 
   return (
     <div lang={locale} dir={locale === "ar" ? "rtl" : "ltr"} data-locale={locale}>
+      <DeepSpaceBackground />
       <NeonGlow />
       {children}
     </div>
