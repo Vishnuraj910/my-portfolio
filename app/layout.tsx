@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next"
+import ClarityProvider from "@/components/clarity-provider";
 
 export const metadata: Metadata = {
   title: {
@@ -35,7 +36,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             __html: `(() => { try { const stored = localStorage.getItem('theme'); const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches; const theme = stored || (systemDark ? 'dark' : 'light'); document.documentElement.dataset.theme = theme; } catch(e) {} })();`
           }}
         />
-        {children}
+        <ClarityProvider>
+          {children}
+        </ClarityProvider>
         <Analytics />
       </body>
     </html>
