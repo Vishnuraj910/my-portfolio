@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useRef, useCallback } from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import { useCallback, useEffect, useRef } from "react";
 
 /**
  * DeepSpaceBackground - A Canvas-based space depth and shooting stars background
- * 
+ *
  * Features:
  * - Depth starfield with 3 parallax layers
  * - Shooting stars with gravity-like motion, gradient tails, and subtle waving
@@ -24,7 +24,7 @@ const CONFIG = {
     baseAlpha: [0.3, 0.5, 0.7], // Base opacity per layer
     parallaxStrength: [0.02, 0.04, 0.06], // Movement strength per layer
   },
-  
+
   // Shooting stars settings
   shootingStars: {
     maxCount: 8,
@@ -40,7 +40,7 @@ const CONFIG = {
     wobbleFreq: 0.15, // Wobble frequency
     wobbleAmp: 1.5, // Wobble amplitude in pixels
   },
-  
+
   // Theme colors (will be overridden by CSS variables)
   colors: {
     dark: {
@@ -92,13 +92,14 @@ interface ThemeColors {
   shootingStarTail: string;
 }
 
-function getThemeColors(): ThemeColors {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function _getThemeColors(): ThemeColors {
   if (typeof window === "undefined") return CONFIG.colors.dark;
-  
+
   const isDark = document.documentElement.getAttribute("data-theme") === "dark" ||
-    (!document.documentElement.getAttribute("data-theme") && 
+    (!document.documentElement.getAttribute("data-theme") &&
      window.matchMedia("(prefers-color-scheme: dark)").matches);
-  
+
   return isDark ? CONFIG.colors.dark : CONFIG.colors.light;
 }
 
@@ -124,7 +125,7 @@ export default function DeepSpaceBackground() {
   const createStarsForLayer = useCallback((layer: number, width: number, height: number): Star[] => {
     const count = CONFIG.starfield.starsPerLayer[layer];
     const stars: Star[] = [];
-    
+
     for (let i = 0; i < count; i++) {
       stars.push({
         x: Math.random() * width,
@@ -134,7 +135,7 @@ export default function DeepSpaceBackground() {
         layer,
       });
     }
-    
+
     return stars;
   }, []);
 
@@ -148,14 +149,14 @@ export default function DeepSpaceBackground() {
 
   // Create a new shooting star
   const createShootingStar = useCallback((width: number, height: number): ShootingStar => {
-    const speed = CONFIG.shootingStars.minSpeed + 
+    const speed = CONFIG.shootingStars.minSpeed +
       Math.random() * (CONFIG.shootingStars.maxSpeed - CONFIG.shootingStars.minSpeed);
-    
+
     // Spawn from random edge (0=top, 1=right, 2=bottom, 3=left)
     const edge = Math.floor(Math.random() * 4);
     let x: number, y: number;
     let angle: number;
-    
+
     switch (edge) {
       case 0: // Top - moving down-right
         x = Math.random() * width;
@@ -185,9 +186,9 @@ export default function DeepSpaceBackground() {
       y,
       vx: Math.cos(angle) * speed,
       vy: Math.sin(angle) * speed,
-      size: CONFIG.shootingStars.minSize + 
+      size: CONFIG.shootingStars.minSize +
         Math.random() * (CONFIG.shootingStars.maxSize - CONFIG.shootingStars.minSize),
-      tailLength: CONFIG.shootingStars.minTailLength + 
+      tailLength: CONFIG.shootingStars.minTailLength +
         Math.random() * (CONFIG.shootingStars.maxTailLength - CONFIG.shootingStars.minTailLength),
       life: 0,
       maxLife: Math.max(width, height) / speed + 50,
@@ -199,17 +200,17 @@ export default function DeepSpaceBackground() {
   }, []);
 
   // Draw a single star
-  const drawStar = useCallback((ctx: CanvasRenderingContext2D, star: Star, offsetX: number, offsetY: number) => {
+  const drawStar = useCallback((ctx: CanvasRenderingContext2D, star: Star, offsetX: number, offsetY: number, width: number, height: number) => {
     const { x, y, size, alpha, layer } = star;
     const parallax = CONFIG.starfield.parallaxStrength[layer];
-    
+
     const drawX = x + offsetX * parallax;
     const drawY = y + offsetY * parallax;
-    
+
     // Wrap around screen
-    const wrappedX = ((drawX % ctx.canvas.width) + ctx.canvas.width) % ctx.canvas.width;
-    const wrappedY = ((drawY % ctx.canvas.height) + ctx.canvas.height) % ctx.canvas.height;
-    
+    const wrappedX = ((drawX % width) + width) % width;
+    const wrappedY = ((drawY % height) + height) % height;
+
     ctx.beginPath();
     ctx.arc(wrappedX, wrappedY, size, 0, Math.PI * 2);
     ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
@@ -219,48 +220,49 @@ export default function DeepSpaceBackground() {
   // Draw shooting star with gradient tail and wobble
   const drawShootingStar = useCallback((ctx: CanvasRenderingContext2D, star: ShootingStar, time: number) => {
     if (!star.active) return;
-    
-    const { x, y, vx, vy, size, tailLength, color, tailColor, wobblePhase } = star;
-    
+
+    const { x, y, vx, vy, size, tailLength, color, wobblePhase } = star;
+    // tailColor is intentionally unused - using white for tail segments
+
     // Calculate velocity magnitude and direction
     const speed = Math.sqrt(vx * vx + vy * vy);
     const dirX = vx / speed;
     const dirY = vy / speed;
-    
+
     // Perpendicular direction for wobble
     const perpX = -dirY;
     const perpY = dirX;
-    
+
     // Draw tail with gradient and wobble
     const segments = 20;
     const segmentLength = tailLength / segments;
-    
+
     for (let i = segments - 1; i >= 0; i--) {
       const t = i / segments; // 0 at tail end, 1 at head
       const progress = 1 - t; // 1 at head, 0 at tail
-      
+
       // Position along tail
       const baseX = x - dirX * segmentLength * i;
       const baseY = y - dirY * segmentLength * i;
-      
+
       // Add wobble (only visible closer to head for more natural look)
-      const wobbleAmount = Math.sin(time * CONFIG.shootingStars.wobbleFreq + wobblePhase + i * 0.3) 
+      const wobbleAmount = Math.sin(time * CONFIG.shootingStars.wobbleFreq + wobblePhase + i * 0.3)
         * CONFIG.shootingStars.wobbleAmp * progress;
       const wobbleX = perpX * wobbleAmount;
       const wobbleY = perpY * wobbleAmount;
-      
+
       const drawX = baseX + wobbleX;
       const drawY = baseY + wobbleY;
-      
+
       // Opacity gradient: 0.6 near head → 0 at tail
       const alpha = progress * 0.6;
-      
+
       ctx.beginPath();
       ctx.arc(drawX, drawY, size * progress * 0.8 + 0.5, 0, Math.PI * 2);
       ctx.fillStyle = `rgba(255, 255, 255, ${alpha * 0.8})`;
       ctx.fill();
     }
-    
+
     // Draw head (bright point)
     ctx.beginPath();
     ctx.arc(x, y, size, 0, Math.PI * 2);
@@ -279,7 +281,7 @@ export default function DeepSpaceBackground() {
 
     const width = canvas.width;
     const height = canvas.height;
-    
+
     // Calculate mouse offset for parallax (centered at 0)
     const offsetX = (mouseRef.current.x - width / 2) / width;
     const offsetY = (mouseRef.current.y - height / 2) / height;
@@ -290,7 +292,7 @@ export default function DeepSpaceBackground() {
 
     // Draw depth starfield
     for (const star of starsRef.current) {
-      drawStar(ctx, star, offsetX * 100, offsetY * 100);
+      drawStar(ctx, star, offsetX * 100, offsetY * 100, width, height);
     }
 
     // Spawn new shooting stars
@@ -301,15 +303,15 @@ export default function DeepSpaceBackground() {
       if (Math.random() < 0.3 / spawnMultiplier) {
         shootingStarsRef.current.push(createShootingStar(width, height));
         lastSpawnRef.current = now;
-        nextSpawnRef.current = now + 
-          (CONFIG.shootingStars.minSpawnInterval + 
+        nextSpawnRef.current = now +
+          (CONFIG.shootingStars.minSpawnInterval +
            Math.random() * (CONFIG.shootingStars.maxSpawnInterval - CONFIG.shootingStars.minSpawnInterval)) * spawnMultiplier;
       }
     }
 
     // Update and draw shooting stars
     const gravity = reducedMotion ? 0 : CONFIG.shootingStars.gravity;
-    
+
     shootingStarsRef.current = shootingStarsRef.current.filter(star => {
       if (!star.active) return false;
 
@@ -322,10 +324,10 @@ export default function DeepSpaceBackground() {
       // Check if out of bounds (all four sides) or expired
       const margin = 50;
       if (
-        star.x < -margin || 
-        star.x > width + margin || 
-        star.y < -margin || 
-        star.y > height + margin || 
+        star.x < -margin ||
+        star.x > width + margin ||
+        star.y < -margin ||
+        star.y > height + margin ||
         star.life > star.maxLife
       ) {
         return false;
@@ -344,18 +346,13 @@ export default function DeepSpaceBackground() {
     const container = containerRef.current;
     if (!canvas || !container) return;
 
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
     const rect = container.getBoundingClientRect();
-    
-    canvas.width = rect.width * dpr;
-    canvas.height = rect.height * dpr;
+
+    // Use logical dimensions (no DPR scaling) to match coordinate system with stars
+    canvas.width = rect.width;
+    canvas.height = rect.height;
     canvas.style.width = `${rect.width}px`;
     canvas.style.height = `${rect.height}px`;
-    
-    const ctx = canvas.getContext("2d");
-    if (ctx) {
-      ctx.scale(dpr, dpr);
-    }
 
     // Reinitialize stars for new dimensions
     initializeStars(rect.width, rect.height);
@@ -369,11 +366,11 @@ export default function DeepSpaceBackground() {
   // Update colors based on theme
   const updateColors = useCallback(() => {
     const isDark = document.documentElement.getAttribute("data-theme") === "dark" ||
-      (!document.documentElement.getAttribute("data-theme") && 
+      (!document.documentElement.getAttribute("data-theme") &&
        window.matchMedia("(prefers-color-scheme: dark)").matches);
-    
+
     const themeColors = isDark ? CONFIG.colors.dark : CONFIG.colors.light;
-    
+
     // Try to get colors from CSS variables
     colorsRef.current = {
       background: getComputedStyleColor("--bg", themeColors.background),
@@ -388,7 +385,7 @@ export default function DeepSpaceBackground() {
   useEffect(() => {
     handleResize();
     updateColors();
-    
+
     // Initial spawn time
     nextSpawnRef.current = performance.now() + 2000;
 
@@ -398,12 +395,12 @@ export default function DeepSpaceBackground() {
     // Event listeners
     window.addEventListener("resize", handleResize);
     window.addEventListener("mousemove", handleMouseMove);
-    
+
     // Theme change listener
     const themeObserver = new MutationObserver(updateColors);
-    themeObserver.observe(document.documentElement, { 
-      attributes: true, 
-      attributeFilter: ["data-theme"] 
+    themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"]
     });
 
     // Color scheme change listener
