@@ -200,7 +200,7 @@ export default function DeepSpaceBackground() {
   }, []);
 
   // Draw a single star
-  const drawStar = useCallback((ctx: CanvasRenderingContext2D, star: Star, offsetX: number, offsetY: number) => {
+  const drawStar = useCallback((ctx: CanvasRenderingContext2D, star: Star, offsetX: number, offsetY: number, width: number, height: number) => {
     const { x, y, size, alpha, layer } = star;
     const parallax = CONFIG.starfield.parallaxStrength[layer];
 
@@ -208,8 +208,8 @@ export default function DeepSpaceBackground() {
     const drawY = y + offsetY * parallax;
 
     // Wrap around screen
-    const wrappedX = ((drawX % ctx.canvas.width) + ctx.canvas.width) % ctx.canvas.width;
-    const wrappedY = ((drawY % ctx.canvas.height) + ctx.canvas.height) % ctx.canvas.height;
+    const wrappedX = ((drawX % width) + width) % width;
+    const wrappedY = ((drawY % height) + height) % height;
 
     ctx.beginPath();
     ctx.arc(wrappedX, wrappedY, size, 0, Math.PI * 2);
@@ -292,7 +292,7 @@ export default function DeepSpaceBackground() {
 
     // Draw depth starfield
     for (const star of starsRef.current) {
-      drawStar(ctx, star, offsetX * 100, offsetY * 100);
+      drawStar(ctx, star, offsetX * 100, offsetY * 100, width, height);
     }
 
     // Spawn new shooting stars
@@ -346,18 +346,13 @@ export default function DeepSpaceBackground() {
     const container = containerRef.current;
     if (!canvas || !container) return;
 
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
     const rect = container.getBoundingClientRect();
 
-    canvas.width = rect.width * dpr;
-    canvas.height = rect.height * dpr;
+    // Use logical dimensions (no DPR scaling) to match coordinate system with stars
+    canvas.width = rect.width;
+    canvas.height = rect.height;
     canvas.style.width = `${rect.width}px`;
     canvas.style.height = `${rect.height}px`;
-
-    const ctx = canvas.getContext("2d");
-    if (ctx) {
-      ctx.scale(dpr, dpr);
-    }
 
     // Reinitialize stars for new dimensions
     initializeStars(rect.width, rect.height);
