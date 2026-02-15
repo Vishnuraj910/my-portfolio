@@ -1,9 +1,9 @@
 "use client";
 
+import { profile } from "@/content/profile";
+import { type Locale } from "@/lib/i18n";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { type Locale } from "@/lib/i18n";
-import { profile } from "@/content/profile";
 
 type Messages = {
   nav: Record<string, string>;
@@ -67,11 +67,11 @@ function LanguageToggle({ locale }: { locale: Locale }) {
   if (locale === "en") {
     const targetLocale = previousLocale || "ar";
     const label = targetLocale === "ar" ? "AR" : targetLocale.toUpperCase();
-    
+
     return (
-      <Link 
-        href={`/${targetLocale}`} 
-        className="btn" 
+      <Link
+        href={`/${targetLocale}`}
+        className="btn"
         aria-label={`Switch to ${targetLocale}`}
         onClick={() => {
           localStorage.setItem("previousLocale", "en");
@@ -84,9 +84,9 @@ function LanguageToggle({ locale }: { locale: Locale }) {
 
   // For all other languages (ar, es, fr, hi, ml), save current locale and toggle to English
   return (
-    <Link 
-      href="/en" 
-      className="btn" 
+    <Link
+      href="/en"
+      className="btn"
       aria-label="Switch to English"
       onClick={() => {
         localStorage.setItem("previousLocale", locale);
@@ -223,7 +223,7 @@ export function PortfolioPage({ locale, messages }: { locale: Locale; messages: 
     } else if (certFilter === "Architecture") {
       certs = profile.certifications.filter(c => c.name.includes("Architecture") || c.name.includes("Software"));
     }
-    
+
     // Sort by date (default descending - newest first)
     return [...certs].sort((a, b) => {
       const dateA = a.date || "";
@@ -335,8 +335,8 @@ export function PortfolioPage({ locale, messages }: { locale: Locale; messages: 
               <article key={`${item.company}-${index}`} className="card timeline-card reveal">
                 <button className="timeline-head" type="button" onClick={() => setActiveExperience(activeExperience === index ? null : index)}>
                   {item.logo && (
-                    <img 
-                      src={item.logo} 
+                    <img
+                      src={item.logo}
                       alt={`${item.company} logo`}
                       className="company-logo"
                       onError={(e) => {
@@ -416,8 +416,8 @@ export function PortfolioPage({ locale, messages }: { locale: Locale; messages: 
               ))}
             </div>
             <div className="cert-sort">
-              <select 
-                value={certSort} 
+              <select
+                value={certSort}
                 onChange={(e) => setCertSort(e.target.value as "desc" | "asc")}
                 className="chip sort-select"
               >
@@ -430,8 +430,8 @@ export function PortfolioPage({ locale, messages }: { locale: Locale; messages: 
             {filteredCerts.map((cert, index) => (
               <div key={`${cert.name}-${index}`} className="card cert-card">
                 {cert.logo ? (
-                  <img 
-                    src={cert.logo} 
+                  <img
+                    src={cert.logo}
                     alt={`${cert.authority} logo`}
                     className="cert-logo"
                     onError={(e) => {
@@ -507,7 +507,7 @@ export function PortfolioPage({ locale, messages }: { locale: Locale; messages: 
             <a className="chip" href={profile.linkedin} target="_blank" rel="noreferrer">{messages.quickLinks.linkedIn.replace(" ↗", "")}</a>
             <a className="chip" href={profile.github} target="_blank" rel="noreferrer">{messages.quickLinks.gitHub.replace(" ↗", "")}</a>
             <a className="chip" href={`mailto:${profile.email}`}>{messages.contact.email}</a>
-            <a className="chip" href="/llms.txt" target="_blank" rel="noreferrer">LLMs.txt</a>
+            <a className="chip" href="/llm.txt" target="_blank" rel="noreferrer">LLMs.txt</a>
             <span className="chip">{profile.location}</span>
           </div>
         </div>
