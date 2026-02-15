@@ -14,7 +14,11 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       canonical: `/${locale}`,
       languages: {
         en: "/en",
-        ar: "/ar"
+        ar: "/ar",
+        es: "/es",
+        fr: "/fr",
+        hi: "/hi",
+        ml: "/ml"
       }
     }
   };
@@ -41,5 +45,12 @@ export default async function LocaleLayout({
 }
 
 export function generateStaticParams() {
-  return [{ locale: "en" }, { locale: "ar" }];
+  return [
+    { locale: "en" },
+    { locale: "ar" },
+    { locale: "es" },
+    { locale: "fr" },
+    { locale: "hi" },
+    { locale: "ml" }
+  ];
 }

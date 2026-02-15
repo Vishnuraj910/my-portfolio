@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
-import type { Locale } from "@/lib/i18n";
+import { type Locale } from "@/lib/i18n";
 import { profile } from "@/content/profile";
 
 type Messages = {
@@ -51,9 +51,48 @@ function ThemeToggle() {
 }
 
 function LanguageToggle({ locale }: { locale: Locale }) {
+  const [previousLocale, setPreviousLocale] = useState<Locale | null>(null);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+    // Get previous locale from localStorage on mount
+    const saved = localStorage.getItem("previousLocale");
+    if (saved && saved !== locale) {
+      setPreviousLocale(saved as Locale);
+    }
+  }, [locale]);
+
+  // When on English, show button to switch to the previous language (or Arabic as fallback)
+  if (locale === "en") {
+    const targetLocale = previousLocale || "ar";
+    const label = targetLocale === "ar" ? "AR" : targetLocale.toUpperCase();
+    
+    return (
+      <Link 
+        href={`/${targetLocale}`} 
+        className="btn" 
+        aria-label={`Switch to ${targetLocale}`}
+        onClick={() => {
+          localStorage.setItem("previousLocale", "en");
+        }}
+      >
+        {label}
+      </Link>
+    );
+  }
+
+  // For all other languages (ar, es, fr, hi, ml), save current locale and toggle to English
   return (
-    <Link href={locale === "en" ? "/ar" : "/en"} className="btn" aria-label="Switch language">
-      {locale === "en" ? "AR" : "EN"}
+    <Link 
+      href="/en" 
+      className="btn" 
+      aria-label="Switch to English"
+      onClick={() => {
+        localStorage.setItem("previousLocale", locale);
+      }}
+    >
+      EN
     </Link>
   );
 }

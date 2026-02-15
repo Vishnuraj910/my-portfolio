@@ -1,0 +1,90 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "about": "Sobre mí",
+    "stats": "Aspectos destacados",
+    "experience": "Experiencia",
+    "skills": "Habilidades",
+    "projects": "Proyectos",
+    "certifications": "Certificaciones",
+    "languages": "Idiomas",
+    "education": "Formación",
+    "contact": "Contacto"
+  },
+  "hero": {
+    "eyebrow": "Dubái, EAU",
+    "headline": "Arquitecto de Soluciones Cloud FinTech e Ingeniero MERN Stack, especializado en diseñar e implementar soluciones empresariales seguras y escalables alineadas con necesidades comerciales complejas. Experto en arquitectura orientada a la seguridad, gestión de proveedores y liderazgo de equipos multifuncionales. Amplia experiencia en la definición de hojas de ruta técnicas estratégicas y en la ejecución de despliegues por fases de plataformas críticas.",
+    "summary": "Líder de ingeniería con más de 13 años de experiencia en el desarrollo y entrega de plataformas seguras, nativas en la nube y potenciadas por IA en los sectores de FinTech, operaciones aeronáuticas y sistemas empresariales. Experiencia comprobada en el escalado de equipos de alto rendimiento, la creación de productos críticos y la generación de impacto empresarial medible.",
+    "value": "Construcción de productos FinTech resilientes e impulsados por IA que escalan a nivel global.",
+    "viewProjects": "Ver proyectos",
+    "downloadResume": "Descargar currículum (PDF)",
+    "contact": "Contacto"
+  },
+  "sections": {
+    "about": "Sobre mí",
+    "stats": "Logros profesionales",
+    "experience": "Experiencia",
+    "skills": "Habilidades",
+    "projects": "Proyectos",
+    "certifications": "Certificaciones",
+    "languages": "Idiomas",
+    "education": "Formación",
+    "contact": "Contáctame"
+  },
+  "stats": {
+    "yearsExperience": "Años de experiencia",
+    "certifications": "Certificaciones",
+    "companies": "Empresas",
+    "projectsDelivered": "Proyectos entregados"
+  },
+  "skills": {
+    "all": "Todos",
+    "cloudDevOps": "Cloud y DevOps",
+    "frontend": "Front-end",
+    "backend": "Back-end",
+    "aiMachineLearning": "IA y Aprendizaje Automático",
+    "security": "Seguridad",
+    "fintech": "FinTech",
+    "professional": "Competencias profesionales",
+    "toolsOthers": "Herramientas y otras tecnologías"
+  },
+  "projects": {
+    "viewProject": "Ver proyecto →"
+  },
+  "certifications": {
+    "all": "Todas",
+    "aws": "AWS",
+    "security": "Seguridad",
+    "aiMl": "IA / ML",
+    "architecture": "Arquitectura",
+    "newestFirst": "Más recientes primero",
+    "oldestFirst": "Más antiguos primero",
+    "expires": "Expira el:"
+  },
+  "languages": {
+    "title": "Idiomas"
+  },
+  "education": {
+    "in": "en"
+  },
+  "quickLinks": {
+    "linkedIn": "LinkedIn ↗",
+    "gitHub": "GitHub ↗",
+    "aboutMe": "About.Me ↗",
+    "awsCertified": "Certificado AWS",
+    "csm": "CSM®"
+  },
+  "common": {
+    "years": "años"
+  },
+  "contact": {
+    "name": "Nombre",
+    "email": "Correo electrónico",
+    "subject": "Asunto",
+    "message": "Mensaje",
+    "submit": "Enviar mensaje",
+    "success": "Mensaje enviado correctamente. Me pondré en contacto contigo pronto.",
+    "error": "No se pudo enviar el mensaje. Por favor, inténtalo nuevamente.",
+    "captcha": "La verificación de seguridad falló. Por favor, actualiza la página e inténtalo de nuevo."
+  }
+}
