@@ -1,0 +1,456 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Vishnuraj910/my-portfolio/main/public/llm.json",
+  "profile": {
+    "canonical": {
+      "website": "https://vishnuraj.me",
+      "linkedin": "https://www.linkedin.com/in/vishnuraj910",
+      "github": "https://github.com/Vishnuraj910",
+      "aboutme": "https://about.me/vishnurajrajagopal",
+      "resume": "https://vishnuraj.me/resume-vishnuraj.pdf"
+    },
+    "candidate": {
+      "name": "Vishnuraj Rajagopal",
+      "headline": "Solutions Architect | Full Stack Lead | FinTech | AI | CSM®",
+      "location": "Dubai, UAE",
+      "email": "vishnuraj910@gmail.com",
+      "yearsOfExperience": "13+"
+    },
+    "overview": {
+      "title": "Solutions Architect | Full Stack Lead | FinTech | AI | CSM®",
+      "location": "Dubai, UAE",
+      "email": "vishnuraj910@gmail.com",
+      "linkedin": "https://www.linkedin.com/in/vishnuraj910",
+      "github": "https://github.com/Vishnuraj910",
+      "aboutMe": "https://about.me/vishnurajrajagopal"
+    },
+    "professionalSummary": "FinTech Cloud Solution Architect & MEAN Stack Engineering designing and delivering secure, scalable enterprise solutions that align with complex business needs. Expert in security-first architecture design, vendor management, and leading cross-functional teams. Adept at developing strategic technical roadmaps and executing phased deployments of mission-critical platforms.",
+    "keyStatistics": {
+      "yearsOfExperience": "13+",
+      "certifications": 32,
+      "countriesWorkedIn": 3,
+      "companiesWorkedAt": 5
+    },
+    "areasOfExpertise": [
+      "Leadership",
+      "Full Stack Architecture",
+      "AWS Solutions Architect",
+      "GenAI + RAG",
+      "Security + PCI-DSS",
+      "Platform Engineering",
+      "FinTech",
+      "Cloud-Native"
+    ],
+    "technicalSkills": {
+      "cloudDevops": [
+        "Amazon Web Services (AWS)",
+        "Cloud Computing",
+        "Cloud Security",
+        "Cloud-Native Architecture",
+        "Serverless",
+        "Docker",
+        "Kubernetes",
+        "Terraform",
+        "CI/CD",
+        "Jenkins",
+        "Observability"
+      ],
+      "frontend": [
+        "React.js",
+        "Next.js",
+        "TypeScript",
+        "Angular",
+        "AngularJS",
+        "React Native",
+        "Flutter",
+        "Ionic Framework",
+        "HTML5",
+        "CSS3",
+        "SASS",
+        "Bootstrap",
+        "jQuery"
+      ],
+      "backend": [
+        "Node.js",
+        "Java",
+        "Python",
+        "PHP",
+        "C++",
+        "REST APIs",
+        "GraphQL",
+        "Microservices",
+        "MongoDB",
+        "MySQL",
+        "NoSQL"
+      ],
+      "aiMachineLearning": [
+        "Artificial Intelligence (AI)",
+        "Machine Learning",
+        "GenAI",
+        "RAG",
+        "LangChain",
+        "LangGraph",
+        "TensorFlow",
+        "Prompt Engineering",
+        "Chatbot Development",
+        "Dialogflow"
+      ],
+      "security": [
+        "Cybersecurity",
+        "ISO 27001",
+        "PCI DSS",
+        "Secure SDLC",
+        "Cloud Security",
+        "Penetration Testing",
+        "Identity & Access Management",
+        "Threat Modeling"
+      ],
+      "fintech": [
+        "FinTech",
+        "Payment Solutions",
+        "Blockchain",
+        "Digital Banking",
+        "Mobile Payments",
+        "Tokenization",
+        "Payment APIs"
+      ],
+      "professional": [
+        "Solution Architecture",
+        "System Architecture",
+        "Technical Architecture",
+        "Scrum",
+        "Agile Methodologies",
+        "Project Management",
+        "Team Leadership",
+        "Stakeholder Management",
+        "Vendor Management"
+      ]
+    },
+    "workExperience": [
+      {
+        "company": "Zeqi",
+        "title": "Consultant",
+        "location": "Dubai, UAE",
+        "startDate": "January 2026",
+        "endDate": "Present",
+        "description": "Building the next generation of e-commerce solutions with Gen AI. Connecting merchants' Shopify or WooCommerce stores to Zeqi for holistic analysis and recommendations."
+      },
+      {
+        "company": "Sokin",
+        "title": "Staff Engineer",
+        "location": "Dubai, UAE",
+        "startDate": "August 2025",
+        "endDate": "December 2025",
+        "description": "Building solutions to help businesses move money cross-border seamlessly. Developing fintech super-app capabilities with resilient APIs and robust frontend architecture."
+      },
+      {
+        "company": "Etihad Airways",
+        "title": "Technical Leader",
+        "location": "Abu Dhabi, UAE",
+        "startDate": "April 2025",
+        "endDate": "July 2025",
+        "description": "Designed and delivered Phase 1 of Flight Operations Platform. Built real-time event streaming from 80+ telemetry data sources for airport operations. Helped airport operations team handle disruptions effectively."
+      },
+      {
+        "company": "VISA Inc",
+        "title": "Staff Software Engineer",
+        "location": "Dubai, UAE",
+        "startDate": "August 2023",
+        "endDate": "January 2025",
+        "description": "Designing and developing custom low-level fintech cloud and mobile solutions. Providing end-to-end planning, implementation, and support to VPs and Senior Directors."
+      },
+      {
+        "company": "VISA Inc",
+        "title": "Senior Software Engineer",
+        "location": "Dubai, UAE",
+        "startDate": "April 2019",
+        "endDate": "August 2023",
+        "description": "Collaborating with internal and external client teams to design software solutions. Ensuring security best practices, code quality, and test coverage. Ensuring application availability and disaster recovery."
+      },
+      {
+        "company": "VISA Inc",
+        "title": "Software Engineer",
+        "location": "Dubai, UAE",
+        "startDate": "July 2016",
+        "endDate": "March 2019",
+        "description": "Built innovative solutions with Visa products and partner solutions. Solved complex business needs to improve operational efficiency and consumer retention. Worked with cross-region teams to bring innovations to Dubai innovation center."
+      },
+      {
+        "company": "OASYS Information Technology L.L.C",
+        "title": "Mobile Application Developer",
+        "location": "Dubai, UAE",
+        "startDate": "May 2014",
+        "endDate": "June 2016",
+        "description": "Led frontend development team of 4-6 engineers. Architectured solutions with focus on maintainability and coding best practices. Presented proof of concepts to CTO for iOS and Android applications. Incorporated latest UI/UX into OASYS HR Software Suite."
+      },
+      {
+        "company": "Reubro International",
+        "title": "Software Programmer",
+        "location": "Cochin, Kerala",
+        "startDate": "October 2012",
+        "endDate": "April 2014",
+        "description": "Built online multiplayer gaming platform with ~100k active monthly users. Designed load testing plans for multiple backend solutions. Generated application and system metrics with actionable insights. Developed hybrid mobile applications and released on Google Play and App Store."
+      }
+    ],
+    "projects": [
+      {
+        "name": "ConnectedOps: Operations and Disruption Portal",
+        "year": 2025,
+        "description": "End-to-end event stream-based airport disruption management console with role-based access, delivering valuable insights and actionable notifications to airport staff.",
+        "techStack": ["Event Streaming", "Real-time Data", "AWS", "React", "Role-based Access"]
+      },
+      {
+        "name": "Visa Airport Companion",
+        "year": 2024,
+        "description": "Mobile app helping Visa cardholders access airport lounges across CEMEA region with seamless authentication and benefits tracking.",
+        "techStack": ["React Native", "FinTech", "Mobile", "API Integration"]
+      },
+      {
+        "name": "Shared Access",
+        "year": 2024,
+        "description": "Tokenized credential solution allowing family members to access funds with granular card controls and spending limits.",
+        "techStack": ["Tokenization", "Mobile", "FinTech", "AWS"]
+      },
+      {
+        "name": "Merchant On-boarding Messenger Bot",
+        "year": 2018,
+        "description": "Enabled merchants to complete KYC with document upload and start accepting payments within seconds via Facebook Messenger.",
+        "techStack": ["Messenger Bot", "KYC", "Payments", "API.ai"]
+      },
+      {
+        "name": "SetPlays",
+        "year": 2017,
+        "description": "Android application showcasing Visa Payment APIs in real-world scenarios with innovative payment experiences.",
+        "techStack": ["Android", "Visa APIs", "Mobile Payments"]
+      },
+      {
+        "name": "Visa Wallet",
+        "year": 2017,
+        "description": "Demo application built in React Native showcasing CTC (Consumer Transaction Controls) and VTS (Visa Tokenization Service).",
+        "techStack": ["React Native", "Tokenization", "Mobile Wallet"]
+      },
+      {
+        "name": "Visa Venue",
+        "year": 2016,
+        "description": "Chat-based interactive environment for reservation, booking, scorekeeping, fan activities, and seamless payment experience for stadium events.",
+        "techStack": ["Chat Platform", "Payments", "Real-time", "Stadium Solutions"]
+      },
+      {
+        "name": "Alfa Bank Chatbot",
+        "year": 2017,
+        "description": "Messenger banking chatbot for flight and hotel booking with nearby offers for travelers with Alfa Bank Russia Visa Credit Cards.",
+        "techStack": ["Chatbot", "Banking", "Travel", "NLP"]
+      },
+      {
+        "name": "Banking Chatbot",
+        "year": 2016,
+        "description": "Facebook Messenger chatbot powered by API.ai for banking services and customer support automation.",
+        "techStack": ["Messenger", "Chatbot", "API.ai", "Banking"]
+      },
+      {
+        "name": "Jiwok",
+        "year": 2013,
+        "description": "Multi-platform Android and iOS workout app with 200+ programs, 500+ workouts, and 1000 voice instructions from professional coaches.",
+        "techStack": ["iOS", "Android", "Mobile", "Audio Processing"],
+        "link": "https://play.google.com/store/apps/details?id=com.jiwok.jiwok"
+      },
+      {
+        "name": "Xplorepangaea.com",
+        "year": 2012,
+        "description": "MMO game developed using Flash + ActionScript 3 with Smartfox server and Apache web server.",
+        "techStack": ["Flash", "ActionScript", "Game Development", "Multiplayer"],
+        "link": "http://www.xplorepangaea.com"
+      }
+    ],
+    "certifications": {
+      "aws": [
+        {
+          "name": "AWS Certified Solutions Architect Associate",
+          "expires": "March 2028"
+        },
+        {
+          "name": "AWS Certified Cloud Practitioner CLF-C02",
+          "expires": "January 2028"
+        }
+      ],
+      "professional": [
+        {
+          "name": "Certified Scrum Master (CSM®) - Scrum Alliance",
+          "expires": "March 2027"
+        },
+        {
+          "name": "ISO 27001:2022-Compliant Cybersecurity - PMI",
+          "expires": null
+        },
+        {
+          "name": "ISO 27001:2022-Compliant Cybersecurity: The Annex A Controls - PMI",
+          "expires": null
+        }
+      ],
+      "aiMachineLearning": [
+        {
+          "name": "Building AI Agents with MongoDB",
+          "expires": "February 2026"
+        },
+        {
+          "name": "Data Resilience in MongoDB Self-Managed Deployments",
+          "expires": "February 2026"
+        },
+        {
+          "name": "From Relational Model (SQL) to MongoDB's Document Model",
+          "expires": "February 2026"
+        },
+        {
+          "name": "LangChain: Develop LLM powered applications with LangChain",
+          "expires": null
+        },
+        {
+          "name": "Generative AI for NodeJs: OpenAI, LangChain - TypeScript",
+          "expires": null
+        },
+        {
+          "name": "Database AI Agents: Complete Guide",
+          "expires": null
+        },
+        {
+          "name": "Model Context Protocol (MCP): Hands-On with Agentic AI",
+          "expires": null
+        },
+        {
+          "name": "Ultimate AWS Certified AI Practitioner AIF-C01",
+          "expires": null
+        },
+        {
+          "name": "AI-Driven Cybersecurity",
+          "expires": null
+        }
+      ],
+      "cloudDevops": [
+        {
+          "name": "Microservices Foundations Professional Certificate by Kong",
+          "expires": null
+        },
+        {
+          "name": "Docker Foundations Professional Certificate",
+          "expires": null
+        },
+        {
+          "name": "Learning Terraform",
+          "expires": null
+        },
+        {
+          "name": "KodeKloud - Kubernetes Crash Course",
+          "expires": null
+        }
+      ],
+      "security": [
+        {
+          "name": "Security Awareness Foundations (SAF) - KnowBe4",
+          "expires": null
+        }
+      ]
+    },
+    "education": [
+      {
+        "degree": "Master of Science (MSc) in Computer Science",
+        "institution": "Middlesex University Dubai",
+        "year": "2018 – 2020"
+      },
+      {
+        "degree": "Bachelor of Technology (B.Tech) in Computer Science & Engineering",
+        "institution": "Mahatma Gandhi University",
+        "year": "2008 – 2012",
+        "notes": "National Service Scheme"
+      },
+      {
+        "degree": "Higher Secondary School - Science",
+        "institution": "V.V.H.S.S",
+        "year": "2006 – 2008",
+        "notes": "Leader of National Service Scheme"
+      },
+      {
+        "degree": "Secondary School Leaving Certificate (SSLC)",
+        "institution": "M.S.S High School, Kerala State Board",
+        "year": "2000 – 2006"
+      }
+    ],
+    "languages": [
+      {
+        "language": "English",
+        "proficiency": "Full professional proficiency"
+      },
+      {
+        "language": "Malayalam",
+        "proficiency": "Native or bilingual proficiency"
+      },
+      {
+        "language": "Hindi",
+        "proficiency": "Elementary proficiency"
+      },
+      {
+        "language": "Tamil",
+        "proficiency": "Limited working proficiency"
+      },
+      {
+        "language": "Spanish",
+        "proficiency": "Elementary proficiency"
+      }
+    ],
+    "keywords": [
+      "Solutions Architect",
+      "Full Stack Lead",
+      "FinTech",
+      "AI",
+      "AWS",
+      "Cloud Architecture",
+      "Security",
+      "PCI-DSS",
+      "React",
+      "Node.js",
+      "MongoDB",
+      "TypeScript",
+      "Python",
+      "Java",
+      "Microservices",
+      "RAG",
+      "LangChain",
+      "GenAI",
+      "Machine Learning",
+      "Leadership",
+      "Team Management",
+      "Dubai",
+      "UAE",
+      "Visa",
+      "Etihad Airways",
+      "Sokin",
+      "Zeqi",
+      "Payment Solutions",
+      "Digital Banking",
+      "Mobile Development",
+      "Cloud-Native",
+      "Serverless",
+      "Kubernetes",
+      "Docker",
+      "Terraform",
+      "Agile",
+      "Scrum",
+      "Certified Scrum Master"
+    ],
+    "targetAudience": [
+      "Fintech startups",
+      "Banks and financial institutions",
+      "SaaS platforms",
+      "Enterprise digital transformation teams",
+      "AI and machine learning companies",
+      "Cloud service providers",
+      "Technology consulting firms",
+      "Recruiters and talent acquisition specialists in tech and fintech sectors"
+    ],
+    "contact": {
+      "email": "vishnuraj910@gmail.com",
+      "linkedin": "https://www.linkedin.com/in/vishnuraj910",
+      "github": "https://github.com/Vishnuraj910",
+      "website": "https://about.me/vishnurajrajagopal"
+    },
+    "lastUpdated": "February 2026"
+  }
+}

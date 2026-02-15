@@ -507,6 +507,7 @@ export function PortfolioPage({ locale, messages }: { locale: Locale; messages: 
             <a className="chip" href={profile.linkedin} target="_blank" rel="noreferrer">{messages.quickLinks.linkedIn.replace(" ↗", "")}</a>
             <a className="chip" href={profile.github} target="_blank" rel="noreferrer">{messages.quickLinks.gitHub.replace(" ↗", "")}</a>
             <a className="chip" href={`mailto:${profile.email}`}>{messages.contact.email}</a>
+            <a className="chip" href="/llms.txt" target="_blank" rel="noreferrer">LLMs.txt</a>
             <span className="chip">{profile.location}</span>
           </div>
         </div>
