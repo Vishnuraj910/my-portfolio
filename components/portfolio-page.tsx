@@ -52,10 +52,8 @@ function ThemeToggle() {
 
 function LanguageToggle({ locale }: { locale: Locale }) {
   const [previousLocale, setPreviousLocale] = useState<Locale | null>(null);
-  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    setIsClient(true);
     // Get previous locale from localStorage on mount
     const saved = localStorage.getItem("previousLocale");
     if (saved && saved !== locale) {
@@ -507,7 +505,7 @@ export function PortfolioPage({ locale, messages }: { locale: Locale; messages: 
             <a className="chip" href={profile.linkedin} target="_blank" rel="noreferrer">{messages.quickLinks.linkedIn.replace(" ↗", "")}</a>
             <a className="chip" href={profile.github} target="_blank" rel="noreferrer">{messages.quickLinks.gitHub.replace(" ↗", "")}</a>
             <a className="chip" href={`mailto:${profile.email}`}>{messages.contact.email}</a>
-            <a className="chip" href="/llm.txt" target="_blank" rel="noreferrer">LLMs.txt</a>
+            <a className="chip" href="/llm.txt" target="_blank" rel="noreferrer">LLM.txt</a>
             <span className="chip">{profile.location}</span>
           </div>
         </div>

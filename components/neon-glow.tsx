@@ -1,25 +1,28 @@
 "use client";
 
-import { useEffect, useState, useCallback, useRef } from "react";
-import { motion, useSpring, useMotionValue, useTransform } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
 
 function useDeviceOrientation() {
   const [orientation, setOrientation] = useState({ gamma: 0, beta: 0 });
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
-  const [isSupported, setIsSupported] = useState(false);
+  const [isSupported] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return typeof DeviceOrientationEvent !== "undefined";
+  });
 
   useEffect(() => {
-    const deviceOrientationSupported = typeof DeviceOrientationEvent !== "undefined";
-    setIsSupported(deviceOrientationSupported);
+    if (!isSupported) return;
 
-    if (deviceOrientationSupported && typeof (DeviceOrientationEvent as unknown as { requestPermission?: () => Promise<string> }).requestPermission === "function") {
+    const DeviceOrientationEventTyped = DeviceOrientationEvent as unknown as { requestPermission?: () => Promise<string> };
+    if (typeof DeviceOrientationEventTyped.requestPermission === "function") {
       setHasPermission(false);
-    } else if (deviceOrientationSupported) {
+    } else {
       setHasPermission(true);
     }
-  }, []);
+  }, [isSupported]);
 
   const requestPermission = useCallback(async () => {
     if (!isSupported) return false;

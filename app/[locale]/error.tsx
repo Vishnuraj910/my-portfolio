@@ -1,7 +1,6 @@
 'use client';
 
-import { useEffect, useLayoutEffect } from 'react';
-import { messages } from '@/lib/messages';
+import { useEffect } from 'react';
 
 interface ErrorProps {
   error: Error & { digest?: string };
@@ -16,7 +15,6 @@ function getLocaleFromHtml(): string {
 
 export default function Error({ error, reset }: ErrorProps) {
   const locale = typeof window !== 'undefined' ? getLocaleFromHtml() : 'en';
-  const t = messages[locale as 'en' | 'ar'];
 
   useEffect(() => {
     // Log the error to an error reporting service in production
