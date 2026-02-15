@@ -4,6 +4,10 @@ const nextConfig: NextConfig = {
   // Enable standalone output for Docker
   output: "standalone",
   
+  turbopack: {
+    root: __dirname,
+  },
+  
   poweredByHeader: false,
   
   async headers() {
