@@ -1,0 +1,15 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "bradlc.vscode-tailwindcss",
+    "csstools.postcss",
+    "styled-components.vscode-styled-components",
+    "dsznajder.es7-react-js-snippets",
+    "christian-kohler.path-intellisense",
+    "wix.vscode-import-cost",
+    "mikestead.dotenv",
+    "usernamehw.errorlens",
+    "eamodio.gitlens"
+  ]
+}
