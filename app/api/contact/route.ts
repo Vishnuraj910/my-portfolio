@@ -31,7 +31,7 @@ async function sendViaResend({ to, from, replyTo, subject, text }: { to: string;
       Authorization: `Bearer ${apiKey}`,
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({ to, from, reply_to: replyTo, subject, text })
+    body: JSON.stringify({ to, from, reply_to: replyTo, subject, html: text })
   });
 
   if (!response.ok) throw new Error("Email provider error");
@@ -66,41 +66,41 @@ export async function POST(request: NextRequest) {
 
     // Format browser data in a human-readable way
     const formattedBrowserData = `
-<table class="table-auto border-collapse border border-gray-300 w-full text-sm text-left text-gray-700">
-  <thead class="bg-gray-100">
+<table style="border-collapse: collapse; border: 1px solid #d1d5db; width: 100%; font-size: 0.875rem; text-align: left; color: #374151;">
+  <thead style="background-color: #f3f4f6;">
     <tr>
-      <th class="border border-gray-300 px-4 py-2">Property</th>
-      <th class="border border-gray-300 px-4 py-2">Value</th>
+      <th style="border: 1px solid #d1d5db; padding: 0.5rem;">Property</th>
+      <th style="border: 1px solid #d1d5db; padding: 0.5rem;">Value</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td class="border border-gray-300 px-4 py-2">User Agent</td>
-      <td class="border border-gray-300 px-4 py-2">${browserData.userAgent || 'N/A'}</td>
+      <td style="border: 1px solid #d1d5db; padding: 0.5rem;">User Agent</td>
+      <td style="border: 1px solid #d1d5db; padding: 0.5rem;">${browserData.userAgent || "N/A"}</td>
     </tr>
     <tr>
-      <td class="border border-gray-300 px-4 py-2">Screen Resolution</td>
-      <td class="border border-gray-300 px-4 py-2">${browserData.screenResolution || 'N/A'}</td>
+      <td style="border: 1px solid #d1d5db; padding: 0.5rem;">Screen Resolution</td>
+      <td style="border: 1px solid #d1d5db; padding: 0.5rem;">${browserData.screenResolution || "N/A"}</td>
     </tr>
     <tr>
-      <td class="border border-gray-300 px-4 py-2">Browser Language</td>
-      <td class="border border-gray-300 px-4 py-2">${browserData.browserLanguage || 'N/A'}</td>
+      <td style="border: 1px solid #d1d5db; padding: 0.5rem;">Browser Language</td>
+      <td style="border: 1px solid #d1d5db; padding: 0.5rem;">${browserData.browserLanguage || "N/A"}</td>
     </tr>
     <tr>
-      <td class="border border-gray-300 px-4 py-2">Timezone</td>
-      <td class="border border-gray-300 px-4 py-2">${browserData.timezone || 'N/A'}</td>
+      <td style="border: 1px solid #d1d5db; padding: 0.5rem;">Timezone</td>
+      <td style="border: 1px solid #d1d5db; padding: 0.5rem;">${browserData.timezone || "N/A"}</td>
     </tr>
     <tr>
-      <td class="border border-gray-300 px-4 py-2">Viewport</td>
-      <td class="border border-gray-300 px-4 py-2">${browserData.viewport || 'N/A'}</td>
+      <td style="border: 1px solid #d1d5db; padding: 0.5rem;">Viewport</td>
+      <td style="border: 1px solid #d1d5db; padding: 0.5rem;">${browserData.viewport || "N/A"}</td>
     </tr>
     <tr>
-      <td class="border border-gray-300 px-4 py-2">Platform</td>
-      <td class="border border-gray-300 px-4 py-2">${browserData.platform || 'N/A'}</td>
+      <td style="border: 1px solid #d1d5db; padding: 0.5rem;">Platform</td>
+      <td style="border: 1px solid #d1d5db; padding: 0.5rem;">${browserData.platform || "N/A"}</td>
     </tr>
     <tr>
-      <td class="border border-gray-300 px-4 py-2">Connection Type</td>
-      <td class="border border-gray-300 px-4 py-2">${browserData.connectionType || 'N/A'}</td>
+      <td style="border: 1px solid #d1d5db; padding: 0.5rem;">Connection Type</td>
+      <td style="border: 1px solid #d1d5db; padding: 0.5rem;">${browserData.connectionType || "N/A"}</td>
     </tr>
   </tbody>
 </table>
@@ -111,10 +111,10 @@ export async function POST(request: NextRequest) {
       to,
       replyTo: parsed.data.email,
       subject: `[Portfolio] ${parsed.data.subject}`,
-      text: `Name: ${parsed.data.name}
-Email: ${parsed.data.email}
+      text: `Name: <h2>${parsed.data.name}</h2>
+Email: <h2>${parsed.data.email}</h2>
 
-${parsed.data.message}
+Message: <h3>${parsed.data.message}</h3>
 
 ${formattedBrowserData}`
     });

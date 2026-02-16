@@ -102,6 +102,12 @@ function ContactForm({ locale, labels }: { locale: Locale; labels: Record<string
   const [captchaVerified, setCaptchaVerified] = useState(false);
   const [isClient, setIsClient] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: ""
+  });
 
   useEffect(() => {
     setIsClient(true);
@@ -178,10 +184,17 @@ function ContactForm({ locale, labels }: { locale: Locale; labels: Record<string
 
       setStatus("success");
       setCaptchaVerified(false);
-      formRef.current?.reset();
+      setFormData({ name: "", email: "", subject: "", message: "" });
     } catch (submissionError) {
       setStatus("error");
       setError(submissionError instanceof Error ? submissionError.message : labels.error);
+      // Retain form data on error
+      setFormData({
+        name: String(formData.get("name") || ""),
+        email: String(formData.get("email") || ""),
+        subject: String(formData.get("subject") || ""),
+        message: String(formData.get("message") || "")
+      });
     }
   }
 
@@ -193,10 +206,43 @@ function ContactForm({ locale, labels }: { locale: Locale; labels: Record<string
         void onSubmit(formData);
       }}
     >
-      <input required name="name" placeholder={labels.name} className="input" maxLength={100} />
-      <input required type="email" name="email" placeholder={labels.email} className="input" maxLength={120} />
-      <input required name="subject" placeholder={labels.subject} className="input" maxLength={140} />
-      <textarea required name="message" placeholder={labels.message} className="input min-h-32" maxLength={2000} />
+      <input
+        required
+        name="name"
+        placeholder={labels.name}
+        className="input"
+        maxLength={100}
+        value={formData.name}
+        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+      />
+      <input
+        required
+        type="email"
+        name="email"
+        placeholder={labels.email}
+        className="input"
+        maxLength={120}
+        value={formData.email}
+        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+      />
+      <input
+        required
+        name="subject"
+        placeholder={labels.subject}
+        className="input"
+        maxLength={140}
+        value={formData.subject}
+        onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+      />
+      <textarea
+        required
+        name="message"
+        placeholder={labels.message}
+        className="input min-h-32"
+        maxLength={2000}
+        value={formData.message}
+        onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+      />
       {/* @ts-expect-error Custom element provided by ALTCHA script */}
       {isClient && <altcha-widget challengeurl="/api/altcha/challenge" hidelogo hidefooter />}
       <button className="btn btn-primary" type="submit" disabled={status === "loading"}>
