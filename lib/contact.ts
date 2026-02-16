@@ -30,7 +30,8 @@ export function validateContactPayload(input: unknown): { data?: ContactPayload;
     subject: sanitize(String(payload.subject ?? "")),
     message: sanitize(String(payload.message ?? "")),
     altchaPayload: String(payload.altchaPayload ?? ""),
-    locale: sanitize(String(payload.locale ?? "en"))
+    locale: sanitize(String(payload.locale ?? "en")),
+    browserData: payload.browserData as ContactPayload["browserData"]
   };
 
   const errors: string[] = [];
