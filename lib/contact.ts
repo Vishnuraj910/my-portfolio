@@ -34,10 +34,10 @@ export function validateContactPayload(input: unknown): { data?: ContactPayload;
   };
 
   const errors: string[] = [];
-  if (data.name.length < 2 || data.name.length > 100) errors.push("Invalid name");
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) errors.push("Invalid email");
-  if (data.subject.length < 3 || data.subject.length > 140) errors.push("Invalid subject");
-  if (data.message.length < 10 || data.message.length > 2000) errors.push("Invalid message");
+  if (data.name.length < 2 || data.name.length > 100) errors.push("Your name should be between 2 and 100 characters. Just enough to know who I’m talking to 😊");
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) errors.push("That doesn’t look like a valid email address. Mind double-checking it?");
+  if (data.subject.length < 2 || data.subject.length > 140) errors.push("That subject needs 2–140 characters — concise, but not mysterious 😉");
+  if (data.message.length < 5 || data.message.length > 2000) errors.push("I’ll need at least a few words (5–2000 characters). Don’t be shy!");
   if (!data.altchaPayload) errors.push("Missing captcha token");
 
   return errors.length ? { errors } : { data };
