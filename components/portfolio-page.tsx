@@ -123,10 +123,10 @@ function ContactForm({ locale, labels }: { locale: Locale; labels: Record<string
 
     const form = formRef.current;
     const widget = form?.querySelector("altcha-widget");
-    const onStateChange = (event: Event) => {
-      const detail = (event as CustomEvent<{ state?: string }>).detail;
-      setCaptchaVerified(detail?.state === "verified");
-    };
+      const onStateChange = (event: Event) => {
+        const detail = (event as CustomEvent<{ state?: string }>).detail;
+        setCaptchaVerified(detail?.state === "verified");
+      };
     widget?.addEventListener("statechange", onStateChange);
 
     return () => {
@@ -140,14 +140,24 @@ function ContactForm({ locale, labels }: { locale: Locale; labels: Record<string
     setError("");
 
     try {
+      const altchaPayload = String(formData.get("altcha") || "");
       if (!captchaReady) {
         throw new Error(labels.captcha);
       }
-
-      const altchaPayload = String(formData.get("altcha") || "");
-      if (!captchaVerified || !altchaPayload) {
+      if (!altchaPayload) {
         throw new Error(labels.captcha);
       }
+
+      // Capture browser data
+      const browserData = {
+        userAgent: navigator.userAgent,
+        screenResolution: `${screen.width}×${screen.height}`,
+        browserLanguage: navigator.language,
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        viewport: `${window.innerWidth}×${window.innerHeight}`,
+        platform: navigator.platform,
+        connectionType: navigator.connection?.effectiveType || 'unknown'
+      };
 
       const response = await fetch("/api/contact", {
         method: "POST",
@@ -158,7 +168,8 @@ function ContactForm({ locale, labels }: { locale: Locale; labels: Record<string
           subject: formData.get("subject"),
           message: formData.get("message"),
           altchaPayload,
-          locale
+          locale,
+          browserData
         })
       });
 

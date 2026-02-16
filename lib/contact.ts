@@ -5,6 +5,15 @@ export type ContactPayload = {
   message: string;
   altchaPayload: string;
   locale?: string;
+  browserData?: {
+    userAgent?: string;
+    screenResolution?: string;
+    browserLanguage?: string;
+    timezone?: string;
+    viewport?: string;
+    platform?: string;
+    connectionType?: string;
+  };
 };
 
 function sanitize(value: string) {

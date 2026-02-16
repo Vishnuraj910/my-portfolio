@@ -1,6 +1,6 @@
-import { NextRequest, NextResponse } from "next/server";
-import { validateContactPayload } from "@/lib/contact";
 import { verifyAltchaPayload } from "@/lib/altcha";
+import { validateContactPayload } from "@/lib/contact";
+import { NextRequest, NextResponse } from "next/server";
 
 type Entry = { count: number; ts: number };
 
@@ -44,7 +44,9 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Too many requests. Please retry later." }, { status: 429 });
     }
 
-    const parsed = validateContactPayload(await request.json());
+    const rawBody = await request.json();
+    console.log("[DEBUG] Raw request body:", rawBody);
+    const parsed = validateContactPayload(rawBody);
     if (!parsed.data) {
       return NextResponse.json({ error: parsed.errors?.join(", ") || "Validation failed" }, { status: 400 });
     }
@@ -53,18 +55,68 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Captcha verification failed. Please try again." }, { status: 400 });
     }
 
+    console.log("[DEBUG] Received altchaPayload:", parsed.data.altchaPayload);
     const captchaValid = verifyAltchaPayload(parsed.data.altchaPayload);
     if (!captchaValid) {
       return NextResponse.json({ error: "Captcha verification failed" }, { status: 400 });
     }
 
     const to = process.env.CONTACT_TO_EMAIL || "vishnuraj910@gmail.com";
+    const browserData = parsed.data.browserData || {};
+
+    // Format browser data in a human-readable way
+    const formattedBrowserData = `
+<table class="table-auto border-collapse border border-gray-300 w-full text-sm text-left text-gray-700">
+  <thead class="bg-gray-100">
+    <tr>
+      <th class="border border-gray-300 px-4 py-2">Property</th>
+      <th class="border border-gray-300 px-4 py-2">Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="border border-gray-300 px-4 py-2">User Agent</td>
+      <td class="border border-gray-300 px-4 py-2">${browserData.userAgent || 'N/A'}</td>
+    </tr>
+    <tr>
+      <td class="border border-gray-300 px-4 py-2">Screen Resolution</td>
+      <td class="border border-gray-300 px-4 py-2">${browserData.screenResolution || 'N/A'}</td>
+    </tr>
+    <tr>
+      <td class="border border-gray-300 px-4 py-2">Browser Language</td>
+      <td class="border border-gray-300 px-4 py-2">${browserData.browserLanguage || 'N/A'}</td>
+    </tr>
+    <tr>
+      <td class="border border-gray-300 px-4 py-2">Timezone</td>
+      <td class="border border-gray-300 px-4 py-2">${browserData.timezone || 'N/A'}</td>
+    </tr>
+    <tr>
+      <td class="border border-gray-300 px-4 py-2">Viewport</td>
+      <td class="border border-gray-300 px-4 py-2">${browserData.viewport || 'N/A'}</td>
+    </tr>
+    <tr>
+      <td class="border border-gray-300 px-4 py-2">Platform</td>
+      <td class="border border-gray-300 px-4 py-2">${browserData.platform || 'N/A'}</td>
+    </tr>
+    <tr>
+      <td class="border border-gray-300 px-4 py-2">Connection Type</td>
+      <td class="border border-gray-300 px-4 py-2">${browserData.connectionType || 'N/A'}</td>
+    </tr>
+  </tbody>
+</table>
+`;
+
     await sendViaResend({
       from: "Portfolio Contact <onboarding@resend.dev>",
       to,
       replyTo: parsed.data.email,
       subject: `[Portfolio] ${parsed.data.subject}`,
-      text: `Name: ${parsed.data.name}\nEmail: ${parsed.data.email}\n\n${parsed.data.message}`
+      text: `Name: ${parsed.data.name}
+Email: ${parsed.data.email}
+
+${parsed.data.message}
+
+${formattedBrowserData}`
     });
 
     return NextResponse.json({ ok: true });
