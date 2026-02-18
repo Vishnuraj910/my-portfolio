@@ -19,9 +19,9 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/background-removed-background-removed.png",
-        width: 1200,
-        height: 1200,
+        url: "/open-graph-banner.jpg",
+        width: 1280,
+        height: 720,
         alt: "Vishnuraj Rajagopal"
       }
     ]
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Vishnuraj Rajagopal Portfolio",
     description: "Full Stack + AI Engineering Lead | Dubai, UAE",
-    images: ["/background-removed-background-removed.png"]
+    images: ["/open-graph-banner.jpg"]
   },
   robots: {
     index: true,
