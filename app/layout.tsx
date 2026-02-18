@@ -10,7 +10,9 @@ export const metadata: Metadata = {
   },
   description:
     "Modern portfolio of Vishnuraj Rajagopal - Full Stack + AI Engineering Lead based in Dubai, UAE.",
-  metadataBase: new URL("https://portfolio.example.com"),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL || "https://vishnuraj.me"
+  ),
   openGraph: {
     title: "Vishnuraj Rajagopal Portfolio",
     description: "Full Stack + AI Engineering Lead | Dubai, UAE",
