@@ -1,7 +1,7 @@
+import ClarityProvider from "@/components/clarity-provider";
+import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import "./globals.css";
-import { Analytics } from "@vercel/analytics/next"
-import ClarityProvider from "@/components/clarity-provider";
 
 export const metadata: Metadata = {
   title: {
@@ -14,12 +14,21 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Vishnuraj Rajagopal Portfolio",
     description: "Full Stack + AI Engineering Lead | Dubai, UAE",
-    type: "website"
+    type: "website",
+    images: [
+      {
+        url: "/background-removed-background-removed.png",
+        width: 1200,
+        height: 1200,
+        alt: "Vishnuraj Rajagopal"
+      }
+    ]
   },
   twitter: {
     card: "summary_large_image",
     title: "Vishnuraj Rajagopal Portfolio",
-    description: "Full Stack + AI Engineering Lead | Dubai, UAE"
+    description: "Full Stack + AI Engineering Lead | Dubai, UAE",
+    images: ["/background-removed-background-removed.png"]
   },
   robots: {
     index: true,
