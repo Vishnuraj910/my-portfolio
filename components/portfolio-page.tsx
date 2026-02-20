@@ -1,7 +1,7 @@
 "use client";
 
 import { profile } from "@/content/profile";
-import { type Locale } from "@/lib/i18n";
+import { type Locale, localeNames } from "@/lib/i18n";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 
@@ -20,7 +20,7 @@ type Messages = {
   contact: Record<string, string>;
 };
 
-const navKeys = ["home", "about", "stats", "experience", "skills", "projects", "certifications", "languages", "education", "contact"];
+const navKeys = ["home", "experience", "skills", "projects", "certifications", "languages", "contact"];
 
 function CurrentYear() {
   return <>{new Date().getFullYear()}</>;
@@ -52,6 +52,7 @@ function ThemeToggle() {
 
 function LanguageToggle({ locale }: { locale: Locale }) {
   const [previousLocale, setPreviousLocale] = useState<Locale | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     // Get previous locale from localStorage on mount
@@ -61,37 +62,64 @@ function LanguageToggle({ locale }: { locale: Locale }) {
     }
   }, [locale]);
 
-  // When on English, show button to switch to the previous language (or Arabic as fallback)
-  if (locale === "en") {
-    const targetLocale = previousLocale || "ar";
-    const label = targetLocale === "ar" ? "AR" : targetLocale.toUpperCase();
+  const allLocales: Locale[] = ["en", "ar", "es", "fr", "hi", "ml"];
+  const localeLabels: Record<Locale, string> = {
+    en: "EN",
+    ar: "AR",
+    es: "ES",
+    fr: "FR",
+    hi: "HI",
+    ml: "ML",
+  };
 
-    return (
-      <Link
-        href={`/${targetLocale}`}
-        className="btn"
-        aria-label={`Switch to ${targetLocale}`}
-        onClick={() => {
-          localStorage.setItem("previousLocale", "en");
-        }}
-      >
-        {label}
-      </Link>
-    );
-  }
+  const currentLabel = localeLabels[locale];
 
-  // For all other languages (ar, es, fr, hi, ml), save current locale and toggle to English
+  const handleLanguageClick = (targetLocale: Locale) => {
+    if (locale !== "en") {
+      localStorage.setItem("previousLocale", locale);
+    } else {
+      localStorage.setItem("previousLocale", targetLocale);
+    }
+  };
+
   return (
-    <Link
-      href="/en"
-      className="btn"
-      aria-label="Switch to English"
-      onClick={() => {
-        localStorage.setItem("previousLocale", locale);
-      }}
+    <div
+      className="language-dropdown"
     >
-      EN
-    </Link>
+      <button
+        className="btn language-btn"
+        aria-label="Select language"
+        type="button"
+        onClick={() => setIsOpen(!isOpen)}
+        onMouseEnter={() => setIsOpen(true)}
+      >
+        {currentLabel}
+        <span className="dropdown-arrow">▾</span>
+      </button>
+
+      {isOpen && (
+        <ul
+          className="language-list"
+          onMouseLeave={() => setIsOpen(false)}
+        >
+          {allLocales.map((loc) => (
+            <li key={loc}>
+              <Link
+                href={loc === "en" ? "/en" : `/${loc}`}
+                className={`language-option ${locale === loc ? "active" : ""}`}
+                onClick={() => {
+                  handleLanguageClick(loc);
+                  setIsOpen(false);
+                }}
+              >
+                <span className="language-code">{localeLabels[loc]}</span>
+                <span className="language-name">{localeNames[loc]}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
   );
 }
 
