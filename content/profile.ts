@@ -67,9 +67,19 @@ export const profile = {
   ],
   experiences: [
     {
+      company: "TRecs Software Labs",
+      role: "Staff Full Stack Engineer",
+      period: "Feb 2026 – Present",
+      location: "Dubai, UAE",
+      achievements: [
+        "Developming a green filed project for Aviation industry to analyse aircraft engines and create interactive reports using Rich UI and LLMs"
+      ],
+      logo: "/logos/trecs.png"
+    },
+    {
       company: "zeqi",
       role: "Consultant",
-      period: "Jan 2026 – Present",
+      period: "Jan 2026 – Feb 2026",
       location: "Dubai, UAE",
       achievements: [
         "Building the next generation of e-commerce solutions with Gen AI.",
