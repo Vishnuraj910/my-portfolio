@@ -1,0 +1,90 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "stats": "Highlights",
+    "experience": "Experience",
+    "skills": "Skills",
+    "projects": "Projects",
+    "certifications": "Certifications",
+    "languages": "Languages",
+    "education": "Education",
+    "contact": "Contact"
+  },
+  "hero": {
+    "eyebrow": "Dubai, UAE",
+    "headline": "FinTech Cloud Solution Architect & MERN Stack Engineering designing and delivering secure, scalable enterprise solutions that align with complex business needs. Expert in security-first architecture design, vendor management, and leading cross-functional teams. Adept at developing strategic technical roadmaps and executing phased deployments of mission-critical platforms.",
+    "summary": "Engineering leader with 13+ years of experience delivering secure, cloud-native, and AI-augmented platforms across fintech, aviation operations, and enterprise systems. Proven in scaling high-performing teams, building mission-critical products, and driving measurable business impact.",
+    "value": "Building resilient fintech and AI-powered products that scale globally.",
+    "viewProjects": "View Projects",
+    "downloadResume": "Download Resume (PDF)",
+    "contact": "Contact"
+  },
+  "sections": {
+    "about": "About",
+    "stats": "Career Highlights",
+    "experience": "Experience",
+    "skills": "Skills",
+    "projects": "Projects",
+    "certifications": "Certifications",
+    "languages": "Languages",
+    "education": "Education",
+    "contact": "Contact Me"
+  },
+  "stats": {
+    "yearsExperience": "Years Experience",
+    "certifications": "Certifications",
+    "companies": "Companies",
+    "projectsDelivered": "Projects Delivered"
+  },
+  "skills": {
+    "all": "All",
+    "cloudDevOps": "Cloud & DevOps",
+    "frontend": "Frontend",
+    "backend": "Backend",
+    "aiMachineLearning": "AI & Machine Learning",
+    "security": "Security",
+    "fintech": "FinTech",
+    "professional": "Professional",
+    "toolsOthers": "Tools & Others"
+  },
+  "projects": {
+    "viewProject": "View Project →"
+  },
+  "certifications": {
+    "all": "All",
+    "aws": "AWS",
+    "security": "Security",
+    "aiMl": "AI/ML",
+    "architecture": "Architecture",
+    "newestFirst": "Newest First",
+    "oldestFirst": "Oldest First",
+    "expires": "Expires:"
+  },
+  "languages": {
+    "title": "Languages"
+  },
+  "education": {
+    "in": "in"
+  },
+  "quickLinks": {
+    "linkedIn": "LinkedIn ↗",
+    "gitHub": "GitHub ↗",
+    "aboutMe": "About.Me ↗",
+    "awsCertified": "AWS Certified",
+    "csm": "CSM®"
+  },
+  "common": {
+    "years": "years"
+  },
+  "contact": {
+    "name": "Name",
+    "email": "Email",
+    "subject": "Subject",
+    "message": "Message",
+    "submit": "Send Message",
+    "success": "Message sent successfully. I will get back to you soon.",
+    "error": "Unable to send message. Please try again.",
+    "captcha": "Bot protection failed. Please refresh and retry."
+  }
+}
