@@ -72,7 +72,7 @@ export const profile = {
       period: "Feb 2026 – Present",
       location: "Dubai, UAE",
       achievements: [
-        "Developming a green filed project for Aviation industry to analyse aircraft engines and create interactive reports using Rich UI and LLMs"
+        "Developing a green filed project for Aviation industry to analyse aircraft engines and create interactive reports using Rich UI and LLMs"
       ],
       logo: "/logos/trecs.png"
     },
