@@ -1,5 +1,5 @@
 import { jsxs, Fragment, jsx } from "react/jsx-runtime";
-import { l as localeNames, R as Route } from "./router-C8fkbzT_.js";
+import { l as localeNames, R as Route } from "./router-rK95T5tk.js";
 import { useState, useMemo, useEffect, useRef } from "react";
 import "@tanstack/react-router";
 const profile = {
@@ -27,9 +27,19 @@ const profile = {
   ],
   experiences: [
     {
+      company: "TRecs Software Labs",
+      role: "Staff Full Stack Engineer",
+      period: "Feb 2026 – Present",
+      location: "Dubai, UAE",
+      achievements: [
+        "Developing a green filed project for Aviation industry to analyze aircraft engines and create interactive reports using Rich UI and LLMs"
+      ],
+      logo: "/logos/trecs.png"
+    },
+    {
       company: "zeqi",
       role: "Consultant",
-      period: "Jan 2026 – Present",
+      period: "Jan 2026 – Feb 2026",
       location: "Dubai, UAE",
       achievements: [
         "Building the next generation of e-commerce solutions with Gen AI.",

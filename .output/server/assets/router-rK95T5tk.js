@@ -240,7 +240,7 @@ const messages = { en, ar, es, fr, hi, ml };
 function getMessages(locale) {
   return messages[locale];
 }
-const $$splitComponentImporter = () => import("./_locale-qTAKYbPH.js");
+const $$splitComponentImporter = () => import("./_locale-Coz3fmhh.js");
 const Route$1 = createFileRoute("/$locale")({
   beforeLoad: async ({
     params

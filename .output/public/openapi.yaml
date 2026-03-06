@@ -1,0 +1,289 @@
+openapi: 3.0.3
+info:
+  title: Vishnuraj Portfolio API
+  description: Machine-readable API for Vishnuraj Rajagopal's professional portfolio. Provides access to profile information, work experience, projects, and contact functionality.
+  version: 1.0.0
+  contact:
+    email: vishnuraj910@gmail.com
+    url: https://vishnuraj.me
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+  - url: https://vishnuraj.me
+    description: Production server
+  - url: http://localhost:3000
+    description: Development server
+
+tags:
+  - name: profile
+    description: Professional profile information
+  - name: experience
+    description: Work experience and history
+  - name: projects
+    description: Technical projects and portfolio
+  - name: skills
+    description: Technical and professional skills
+  - name: contact
+    description: Contact and communication
+
+paths:
+  /api/health:
+    get:
+      tags:
+        - health
+      summary: Health check endpoint
+      description: Returns the health status of the API
+      operationId: getHealth
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: healthy
+                  timestamp:
+                    type: string
+                    format: date-time
+
+  /api/contact:
+    post:
+      tags:
+        - contact
+      summary: Submit contact form
+      description: Send a contact message to Vishnuraj Rajagopal
+      operationId: submitContact
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - email
+                - message
+              properties:
+                name:
+                  type: string
+                  description: Sender's full name
+                  example: John Doe
+                email:
+                  type: string
+                  format: email
+                  description: Sender's email address
+                  example: john@example.com
+                message:
+                  type: string
+                  description: Contact message
+                  example: Interested in discussing a project opportunity.
+                subject:
+                  type: string
+                  description: Optional subject line
+                  example: Project Inquiry
+      responses:
+        '200':
+          description: Message sent successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Message sent successfully
+        '400':
+          description: Invalid request body
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: Invalid request
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: Too many requests
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: Server error
+
+  /api/altcha/challenge:
+    post:
+      tags:
+        - security
+      summary: ALTCHA anti-bot challenge
+      description: Verify ALTCHA challenge for bot protection
+      operationId: verifyAltchaChallenge
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - challenge
+              properties:
+                challenge:
+                  type: string
+                  description: ALTCHA challenge token
+      responses:
+        '200':
+          description: Challenge verified
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  verified:
+                    type: boolean
+        '400':
+          description: Challenge failed
+
+  /llm.json:
+    get:
+      tags:
+        - profile
+      summary: Get machine-readable profile
+      description: Returns the complete professional profile in JSON format for AI agents
+      operationId: getProfileJson
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /llm.txt:
+    get:
+      tags:
+        - profile
+      summary: Get machine-readable profile (text)
+      description: Returns the complete professional profile in text format for AI agents
+      operationId: getProfileText
+      responses:
+        '200':
+          description: Successful response
+          content:
+            text/plain:
+              schema:
+                type: string
+
+components:
+  schemas:
+    Profile:
+      type: object
+      properties:
+        name:
+          type: string
+        title:
+          type: string
+        location:
+          type: string
+        email:
+          type: string
+        linkedin:
+          type: string
+        github:
+          type: string
+        yearsOfExperience:
+          type: string
+        summary:
+          type: string
+
+    WorkExperience:
+      type: object
+      properties:
+        company:
+          type: string
+        title:
+          type: string
+        location:
+          type: string
+        startDate:
+          type: string
+        endDate:
+          type: string
+        description:
+          type: string
+
+    Project:
+      type: object
+      properties:
+        name:
+          type: string
+        year:
+          type: integer
+        description:
+          type: string
+        techStack:
+          type: array
+          items:
+            type: string
+
+    Skill:
+      type: object
+      properties:
+        category:
+          type: string
+        skills:
+          type: array
+          items:
+            type: string
+
+    ContactRequest:
+      type: object
+      required:
+        - name
+        - email
+        - message
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        message:
+          type: string
+        subject:
+          type: string
+
+    ContactResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
