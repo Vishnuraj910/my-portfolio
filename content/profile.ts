@@ -67,7 +67,7 @@ export const profile = {
   ],
   experiences: [
     {
-      company: "TRecs",
+      company: "TRecs Software Labs",
       role: "Staff Full Stack Engineer",
       period: "Feb 2026 – Present",
       location: "Dubai, UAE",
