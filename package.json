@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
-    "start": "vite start",
+    "start": "vite preview",
+    "deploy": "npm run build && wrangler deploy",
     "lint": "eslint",
     "docker:build": "docker build -t my-portfolio:latest .",
     "docker:up": "docker-compose up -d",
@@ -19,7 +20,7 @@
   "dependencies": {
     "@microsoft/clarity": "^1.0.2",
     "@tanstack/react-router": "^1.117.0",
-    "@tanstack/react-start": "^1.117.0",
+    "@tanstack/react-start": "^1.166.2",
     "@vercel/analytics": "^1.6.1",
     "framer-motion": "^12.34.0",
     "react": "^19.0.0",
@@ -33,6 +34,7 @@
     "@vitejs/plugin-react": "^4.3.4",
     "eslint": "^9.0.0",
     "typescript": "^5.7.0",
+    "vinxi": "^0.5.11",
     "vite": "^7.0.0",
     "vite-tsconfig-paths": "^5.1.4"
   }

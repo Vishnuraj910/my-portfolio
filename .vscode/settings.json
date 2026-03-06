@@ -75,5 +75,10 @@
   // -----------------------------
   // Optional: improve TS server perf on big repos
   // -----------------------------
-  "typescript.tsserver.maxTsServerMemory": 4096
+  "typescript.tsserver.maxTsServerMemory": 4096,
+  "cSpell.words": [
+    "fintech",
+    "Rajagopal",
+    "Vishnuraj"
+  ]
 }

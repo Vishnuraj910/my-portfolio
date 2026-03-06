@@ -1,18 +1,29 @@
 import { tanstackStart } from '@tanstack/react-start/plugin/vite'
-import viteReact from '@vitejs/plugin-react'
+import react from '@vitejs/plugin-react'
+import { resolve } from 'path'
 import { defineConfig } from 'vite'
-import tsConfigPaths from 'vite-tsconfig-paths'
 
 export default defineConfig({
   server: {
-    port: 3000,
+    port: 3000
   },
   plugins: [
-    tsConfigPaths(),
     tanstackStart({
-      routeFileIgnorePattern: /^\/api\//,
+      server: {
+        build: {
+          staticNodeEnv: true,
+        },
+      },
     }),
-    // react's vite plugin must come after start's vite plugin
-    viteReact(),
+    react(),
   ],
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, 'src'),
+      '@/lib': resolve(__dirname, 'src/lib'),
+      '@/content': resolve(__dirname, 'src/content'),
+      '@/messages': resolve(__dirname, 'src/messages'),
+      '@/components': resolve(__dirname, 'src/components'),
+    },
+  },
 })
