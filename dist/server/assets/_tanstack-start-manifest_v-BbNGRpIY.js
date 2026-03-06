@@ -1,0 +1,4 @@
+const tsrStartManifest = () => ({ "routes": { "__root__": { "filePath": "/Users/vishnurajrajagopal/Desktop/Development/NextJS/my-portfolio/src/routes/__root.tsx", "children": ["/", "/$locale"], "preloads": ["/assets/main-Bkb4Gm41.js"], "assets": [{ "tag": "link", "attrs": { "rel": "stylesheet", "href": "/assets/main-BIU12af9.css", "type": "text/css" } }] }, "/": { "filePath": "/Users/vishnurajrajagopal/Desktop/Development/NextJS/my-portfolio/src/routes/index.tsx" }, "/$locale": { "filePath": "/Users/vishnurajrajagopal/Desktop/Development/NextJS/my-portfolio/src/routes/$locale.tsx", "assets": [{ "tag": "link", "attrs": { "rel": "stylesheet", "href": "/assets/main-BIU12af9.css", "type": "text/css" } }], "preloads": ["/assets/_locale-DasMns3P.js"] } }, "clientEntry": "/assets/main-Bkb4Gm41.js" });
+export {
+  tsrStartManifest
+};

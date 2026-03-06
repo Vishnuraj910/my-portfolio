@@ -1,6 +1,11 @@
 import { jsxs, jsx } from "react/jsx-runtime";
 import { createRootRoute, HeadContent, Outlet, Scripts, createFileRoute, lazyRouteComponent, redirect, createRouter as createRouter$1 } from "@tanstack/react-router";
 const Route$2 = createRootRoute({
+  beforeLoad: async () => {
+    const themeScript = document.createElement("script");
+    themeScript.innerHTML = `(() => { try { const stored = localStorage.getItem('theme'); const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches; const theme = stored || (systemDark ? 'dark' : 'light'); document.documentElement.dataset.theme = theme; } catch(e) {} })();`;
+    document.head.appendChild(themeScript);
+  },
   head: () => ({
     meta: [
       {
@@ -55,14 +60,6 @@ function RootComponent() {
   return /* @__PURE__ */ jsxs("html", { lang: "en", suppressHydrationWarning: true, children: [
     /* @__PURE__ */ jsx("head", { children: /* @__PURE__ */ jsx(HeadContent, {}) }),
     /* @__PURE__ */ jsxs("body", { children: [
-      /* @__PURE__ */ jsx(
-        "script",
-        {
-          dangerouslySetInnerHTML: {
-            __html: `(() => { try { const stored = localStorage.getItem('theme'); const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches; const theme = stored || (systemDark ? 'dark' : 'light'); document.documentElement.dataset.theme = theme; } catch(e) {} })();`
-          }
-        }
-      ),
       /* @__PURE__ */ jsx(Outlet, {}),
       /* @__PURE__ */ jsx(Scripts, {})
     ] })
@@ -240,7 +237,7 @@ const messages = { en, ar, es, fr, hi, ml };
 function getMessages(locale) {
   return messages[locale];
 }
-const $$splitComponentImporter = () => import("./_locale-Coz3fmhh.js");
+const $$splitComponentImporter = () => import("./_locale-DlM1k4zc.js");
 const Route$1 = createFileRoute("/$locale")({
   beforeLoad: async ({
     params

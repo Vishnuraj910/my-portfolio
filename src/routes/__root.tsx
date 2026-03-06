@@ -7,6 +7,12 @@ import {
 import '../globals.css'
 
 export const Route = createRootRoute({
+  beforeLoad: async () => {
+    // Theme script moved to beforeLoad to avoid side effects in component
+    const themeScript = document.createElement('script')
+    themeScript.innerHTML = `(() => { try { const stored = localStorage.getItem('theme'); const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches; const theme = stored || (systemDark ? 'dark' : 'light'); document.documentElement.dataset.theme = theme; } catch(e) {} })();`
+    document.head.appendChild(themeScript)
+  },
   head: () => ({
     meta: [
       {
@@ -65,11 +71,6 @@ function RootComponent() {
         <HeadContent />
       </head>
       <body>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(() => { try { const stored = localStorage.getItem('theme'); const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches; const theme = stored || (systemDark ? 'dark' : 'light'); document.documentElement.dataset.theme = theme; } catch(e) {} })();`,
-          }}
-        />
         <Outlet />
         <Scripts />
       </body>

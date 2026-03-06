@@ -1,5 +1,5 @@
 import { jsxs, Fragment, jsx } from "react/jsx-runtime";
-import { l as localeNames, R as Route } from "./router-rK95T5tk.js";
+import { l as localeNames, R as Route } from "./router-DgZZfIxL.js";
 import { useState, useMemo, useEffect, useRef } from "react";
 import "@tanstack/react-router";
 const profile = {
