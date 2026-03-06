@@ -413,7 +413,7 @@ export const profile = {
       name: "Building AI Agents with MongoDB",
       authority: "MongoDB",
       url: "https://www.credly.com/badges/a2f99844-b30c-4d11-8072-493aaa0093e8/public_url",
-      expires: "Feb 2026",
+      expires: "Feb 2029",
       date: "2025-02",
       licenseNumber: "a2f99844-b30c-4d11-8072-493aaa0093e8",
       logo: "/logos/mongodb-logo-png_seeklogo-481256.png"
@@ -422,7 +422,7 @@ export const profile = {
       name: "Data Resilience in MongoDB Self-Managed Deployments",
       authority: "MongoDB",
       url: "https://www.credly.com/badges/b64d0736-f64e-4528-8622-aecf3ec86b40/linked_in_profile",
-      expires: "Feb 2026",
+      expires: "Feb 2029",
       date: "2025-02",
       licenseNumber: "b64d0736-f64e-4528-8622-aecf3ec86b40",
       logo: "/logos/mongodb-logo-png_seeklogo-481256.png"
@@ -431,7 +431,7 @@ export const profile = {
       name: "From Relational Model (SQL) to MongoDB's Document Model",
       authority: "MongoDB",
       url: "https://www.credly.com/badges/5dc649e5-514b-4214-8898-a9ba35d4702b/linked_in_profile",
-      expires: "Feb 2026",
+      expires: "Feb 2029",
       date: "2025-02",
       licenseNumber: "5dc649e5-514b-4214-8898-a9ba35d4702b",
       logo: "/logos/mongodb-logo-png_seeklogo-481256.png"
@@ -440,7 +440,7 @@ export const profile = {
       name: "ISO 27001:2022-Compliant Cybersecurity",
       authority: "Project Management Institute",
       url: "https://www.linkedin.com/learning/certificates/cfe895ec4b4e94bb1231ca6cf8e14eb0c7afa92654b7d29a36a42da9292afba6",
-      expires: "Mar 2025",
+      expires: "Mar 2030",
       date: "2024-03",
       logo: "/logos/png-transparent-pmi-hd-logo.png"
     },
@@ -448,7 +448,7 @@ export const profile = {
       name: "ISO 27001:2022-Compliant Cybersecurity: The Annex A Controls",
       authority: "Project Management Institute",
       url: "https://www.linkedin.com/learning/certificates/5bb5251d01de0df3753c5d42f71b9eb93c8b4482790251c62ee05d88434e4f37",
-      expires: "Mar 2025",
+      expires: "Mar 2030",
       date: "2024-03",
       logo: "/logos/png-transparent-pmi-hd-logo.png"
     },
@@ -456,7 +456,7 @@ export const profile = {
       name: "Microservices Foundations Professional Certificate by Kong",
       authority: "Kong Inc.",
       url: "https://www.linkedin.com/learning/certificates/092ec1c08e66ea7281f2fb8a9c613277be2570fc815d26cb8c4d2a583e3be0f9",
-      expires: "Mar 2025",
+      expires: "Mar 2027",
       date: "2024-03",
       logo: "/logos/Kong_inc.png"
     },
@@ -464,7 +464,7 @@ export const profile = {
       name: "Docker Foundations Professional Certificate",
       authority: "Docker, Inc",
       url: "https://www.linkedin.com/learning/certificates/53222a8cf49d2ef3407480f00f4a67496fa9dfb7d4c0665ffc4e12c1715f2933",
-      expires: "Mar 2025",
+      expires: "Mar 2027",
       date: "2024-03",
       logo: "/logos/docker.jpg"
     },
@@ -472,7 +472,7 @@ export const profile = {
       name: "Learning Terraform",
       authority: "LinkedIn",
       url: "https://www.linkedin.com/learning/certificates/0d09ad8ddbd8b05bd0d73fb4852b2cefc4ba72ccaece1319d58c599c785352a5",
-      expires: "Mar 2025",
+      expires: "Mar 2027",
       date: "2024-03",
       logo: "/logos/LinkedIn_icon.svg.webp"
     },
@@ -480,7 +480,7 @@ export const profile = {
       name: "JavaScript Foundations Professional Certificate by Mozilla",
       authority: "Mozilla",
       url: "https://www.linkedin.com/learning/certificates/dd705c405fa8cb59241f08258419fd05961ea38c30738c226e62b98afd55a1bd",
-      expires: "Apr 2025",
+      expires: "Apr 2029",
       date: "2024-04",
       logo: "/logos/Firefox_logo,_2019.svg.png"
     },
@@ -488,7 +488,7 @@ export const profile = {
       name: "Software Architecture Foundations",
       authority: "LinkedIn",
       url: "https://www.linkedin.com/learning/certificates/565cd8371e6373c04f328259d2e57bc74169e193c61d90aeefffc2569739a330",
-      expires: "Apr 2025",
+      expires: "Apr 2029",
       date: "2024-04",
       logo: "/logos/LinkedIn_icon.svg.webp"
     },
@@ -496,14 +496,14 @@ export const profile = {
       name: "Model Context Protocol (MCP): Hands-On with Agentic AI",
       authority: "LinkedIn",
       url: "https://www.linkedin.com/learning/certificates/586be03dc08890edeb708ae43fe118bb4a9eb4d4dc178734f73920ad65066512",
-      expires: "Apr 2025",
+      expires: "Apr 2029",
       date: "2024-04",
       logo: "/logos/LinkedIn_icon.svg.webp"
     },
     {
       name: "Security Awareness Foundations (SAF)",
       authority: "KnowBe4",
-      expires: "Jul 2025",
+      expires: "Jul 2030",
       date: "2024-07",
       logo: "/logos/KnowBe4-Logo-Alternate.webp"
     },
@@ -511,7 +511,7 @@ export const profile = {
       name: "KodeKloud - Kubernetes Crash Course",
       authority: "KodeKloud",
       url: "https://learn.kodekloud.com/certificate/b2d0b979-ce50-41b8-8ebb-49a0d5ac23f1",
-      expires: "Mar 2025",
+      expires: "Mar 2030",
       date: "2024-03",
       logo: "/logos/kodecloud.webp"
     },
@@ -519,7 +519,7 @@ export const profile = {
       name: "The Complete Guide to Becoming a Software Architect",
       authority: "Udemy",
       url: "https://ude.my/UC-a40d795c-22f2-4343-88ba-1d02e86036c8",
-      expires: "Nov 2024",
+      expires: "Nov 2030",
       date: "2023-11",
       logo: "/logos/Udemy_logo.svg.png"
     },
@@ -527,7 +527,7 @@ export const profile = {
       name: "Software Architecture Security - The Complete Guide",
       authority: "Udemy",
       url: "https://ude.my/UC-7c493232-176a-498a-b4a7-1c9f355f5010/",
-      expires: "Nov 2024",
+      expires: "Nov 2030",
       date: "2023-11",
       logo: "/logos/Udemy_logo.svg.png"
     },
@@ -535,7 +535,7 @@ export const profile = {
       name: "Ultimate AWS Certified AI Practitioner AIF-C01",
       authority: "Udemy",
       url: "http://ude.my/UC-0e299ace-f1d6-4cbf-bd19-724ac6edb6c6",
-      expires: "Nov 2024",
+      expires: "Nov 2030",
       date: "2023-11",
       logo: "/logos/Udemy_logo.svg.png"
     },
@@ -543,7 +543,7 @@ export const profile = {
       name: "AI-Driven Cybersecurity",
       authority: "Udemy",
       url: "https://ude.my/UC-4325d176-b856-4ff6-a7f9-e356ea97df6d",
-      expires: "Nov 2024",
+      expires: "Nov 2030",
       date: "2023-11",
       logo: "/logos/Udemy_logo.svg.png"
     },
@@ -551,7 +551,7 @@ export const profile = {
       name: "The Project Management Course: Beginner to PROject Manager",
       authority: "Udemy",
       url: "https://ude.my/UC-79d1390e-772c-45e9-819f-b4ebac6d9d45",
-      expires: "Nov 2022",
+      expires: "Nov 2030",
       date: "2021-11",
       logo: "/logos/Udemy_logo.svg.png"
     },
@@ -559,7 +559,7 @@ export const profile = {
       name: "LangChain- Develop LLM powered applications with LangChain",
       authority: "Udemy",
       url: "https://ude.my/UC-c25deaa0-1154-46bb-869e-b94a48ef0360/",
-      expires: "Dec 2024",
+      expires: "Dec 2028",
       date: "2023-12",
       logo: "/logos/Udemy_logo.svg.png"
     },
@@ -567,7 +567,7 @@ export const profile = {
       name: "Generative AI for NodeJs: OpenAI, LangChain - TypeScript",
       authority: "Udemy",
       url: "https://ude.my/UC-50637385-07d7-4843-bf45-1e8ac8b7b4f7/",
-      expires: "Dec 2024",
+      expires: "Dec 2028",
       date: "2023-12",
       logo: "/logos/Udemy_logo.svg.png"
     },
@@ -575,7 +575,7 @@ export const profile = {
       name: "Database AI Agents: Complete Guide",
       authority: "Udemy",
       url: "https://ude.my/UC-4dfcde0f-879b-4e41-af73-e73e2e6e3a48/",
-      expires: "Dec 2024",
+      expires: "Dec 2026",
       date: "2023-12",
       logo: "/logos/Udemy_logo.svg.png"
     },
@@ -583,7 +583,7 @@ export const profile = {
       name: "Software Architecture: Patterns for Developers",
       authority: "LinkedIn",
       url: "https://www.linkedin.com/learning/certificates/393233b938501205f787984fe708ae7257cc82ed840197d3fa5e77fe4c2ed00e",
-      expires: "Dec 2024",
+      expires: "Dec 2026",
       date: "2023-12",
       logo: "/logos/LinkedIn_icon.svg.webp"
     },
@@ -591,7 +591,7 @@ export const profile = {
       name: "Cloud Architecture: Core Concepts",
       authority: "National Association of State Boards of Accountancy (NASBA)",
       url: "https://www.linkedin.com/learning/certificates/c1530c62275ac8ea36aad6e249d21e9e18f528eeab4028ab2a012aad4ddede4e",
-      expires: "Dec 2024",
+      expires: "Dec 2028",
       date: "2023-12",
       logo: "/logos/nasbalogo_nyif.png"
     },
@@ -599,7 +599,7 @@ export const profile = {
       name: "Solution Architecture choosing a Database: PostgreSQL, MySQL, Mongo, and Cloud",
       authority: "LinkedIn",
       url: "https://www.linkedin.com/learning/certificates/9724f6d822d07f24e4d38e7c341ff78cc68ec8dd2434a55f6ba1c93c09732bce",
-      expires: "Dec 2024",
+      expires: "Dec 2027",
       date: "2023-12",
       logo: "/logos/LinkedIn_icon.svg.webp"
     },
@@ -607,7 +607,7 @@ export const profile = {
       name: "Software Architecture: Domain-Driven Design",
       authority: "LinkedIn",
       url: "https://www.linkedin.com/learning/certificates/361248cbde1a45c598aa5ba7bb5b21bb5f7ee4ee64d081e21c9169a91dac34d2",
-      expires: "Dec 2024",
+      expires: "Dec 2027",
       date: "2023-12",
       logo: "/logos/LinkedIn_icon.svg.webp"
     },
@@ -615,7 +615,7 @@ export const profile = {
       name: "Redis Essential Training",
       authority: "LinkedIn",
       url: "https://www.linkedin.com/learning/certificates/df21fca6ed53a2ae1ddb465f5849964067c3f72dfa6a19a27abbb5a7058b8721",
-      expires: "Dec 2024",
+      expires: "Dec 2028",
       date: "2023-12",
       logo: "/logos/LinkedIn_icon.svg.webp"
     },
@@ -623,7 +623,7 @@ export const profile = {
       name: "Microservices: Design Patterns",
       authority: "LinkedIn",
       url: "https://www.linkedin.com/learning/certificates/edf5b329b850409cd20ee8420a71368e7b69ebbaa0d6442f09f46d9cd478bed5",
-      expires: "Mar 2024",
+      expires: "Mar 2030",
       date: "2023-03",
       logo: "/logos/LinkedIn_icon.svg.webp"
     },
@@ -631,7 +631,7 @@ export const profile = {
       name: "Apache Kafka Essentials",
       authority: "LinkedIn",
       url: "https://www.linkedin.com/learning/certificates/724635530dba663e9ccb0a72ff6f73c7142ec26178d8a05cce06e97d27b42cf6",
-      expires: "Mar 2024",
+      expires: "Mar 2030",
       date: "2023-03",
       logo: "/logos/LinkedIn_icon.svg.webp"
     },
@@ -639,7 +639,7 @@ export const profile = {
       name: "ChatBots: Messenger ChatBot - DialogFlow and nodejs",
       authority: "Udemy",
       url: "https://ude.my/UC-515afc5b-3710-4868-8495-eda5b2aeab28/",
-      expires: "Aug 2023",
+      expires: "Aug 2030",
       date: "2022-08",
       logo: "/logos/Udemy_logo.svg.png"
     },
@@ -647,7 +647,7 @@ export const profile = {
       name: "Vim Masterclass",
       authority: "Udemy",
       url: "http://ude.my/UC-8ace14de-a490-41c3-8cbb-e6b23115bc95",
-      expires: "Jan 2023",
+      expires: "Jan 2030",
       date: "2022-01",
       logo: "/logos/Udemy_logo.svg.png"
     }
