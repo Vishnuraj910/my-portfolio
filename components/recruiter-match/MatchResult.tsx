@@ -2,6 +2,12 @@
 
 import type { MatchResult as MatchResultData } from "@/lib/match";
 
+const VERDICT_ICON: Record<MatchResultData["verdict"], string> = {
+  fit: "✓",
+  maybe: "?",
+  nofit: "✕",
+};
+
 const VERDICT_COPY: Record<MatchResultData["verdict"], { title: string; blurb: string }> = {
   fit: {
     title: "Fit",
@@ -29,6 +35,9 @@ export function MatchResult({ result, onSendLead, onClose }: MatchResultProps) {
   return (
     <div className="rm-result">
       <div className={`rm-verdict rm-verdict-${result.verdict}`}>
+        <span className="rm-verdict-icon" aria-hidden="true">
+          {VERDICT_ICON[result.verdict]}
+        </span>
         <span className="rm-verdict-score">{result.score}</span>
         <span className="rm-verdict-title">{copy.title}</span>
       </div>
