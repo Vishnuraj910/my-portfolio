@@ -1,14 +1,23 @@
 "use client";
 
 import type { Question } from "@/content/recruiter-criteria";
+import { IndustryAutocomplete } from "./IndustryAutocomplete";
 
 type WizardStepProps = {
   question: Question;
   value: string | string[] | undefined;
   onChange: (value: string | string[]) => void;
+  otherValue: string;
+  onOtherChange: (value: string) => void;
 };
 
-export function WizardStep({ question, value, onChange }: WizardStepProps) {
+export function WizardStep({
+  question,
+  value,
+  onChange,
+  otherValue,
+  onOtherChange,
+}: WizardStepProps) {
   const selected: string[] = Array.isArray(value) ? value : value ? [value] : [];
 
   const toggleMulti = (optionValue: string) => {
@@ -17,6 +26,11 @@ export function WizardStep({ question, value, onChange }: WizardStepProps) {
       : [...selected, optionValue];
     onChange(next);
   };
+
+  const showOtherInput =
+    !question.multiSelect &&
+    question.otherInput !== undefined &&
+    selected[0] === question.otherInput.triggerValue;
 
   return (
     <div className="rm-step">
@@ -44,6 +58,15 @@ export function WizardStep({ question, value, onChange }: WizardStepProps) {
           );
         })}
       </div>
+      {showOtherInput && question.otherInput && (
+        <IndustryAutocomplete
+          value={otherValue}
+          onChange={onOtherChange}
+          label={question.otherInput.label}
+          placeholder={question.otherInput.placeholder}
+          suggestions={question.otherInput.suggestions}
+        />
+      )}
     </div>
   );
 }

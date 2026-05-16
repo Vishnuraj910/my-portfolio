@@ -32,7 +32,41 @@ export type Question = {
   strengthLabel?: string;
   gapLabel?: string;
   options: CriteriaOption[];
+  otherInput?: {
+    triggerValue: string;
+    label: string;
+    placeholder: string;
+    suggestions: string[];
+  };
 };
+
+export const uaeIndustries: string[] = [
+  "Oil & Gas",
+  "Banking & Financial Services",
+  "Real Estate & Construction",
+  "Tourism & Hospitality",
+  "Aviation & Aerospace",
+  "Logistics & Supply Chain",
+  "Retail & E-commerce",
+  "Healthcare & Pharmaceuticals",
+  "Technology & IT",
+  "Telecommunications",
+  "Renewable & Clean Energy",
+  "Manufacturing & Industrial",
+  "Media & Entertainment",
+  "Education & EdTech",
+  "Government & Public Sector",
+  "Insurance",
+  "Maritime & Shipping",
+  "Trading & Commodities",
+  "Professional Services & Consulting",
+  "Food & Beverage",
+  "Automotive",
+  "Mining & Metals",
+  "Defense & Security",
+  "Agriculture & AgriTech",
+  "Cryptocurrency & Blockchain",
+];
 
 export const questions: Question[] = [
   {
@@ -54,6 +88,12 @@ export const questions: Question[] = [
       { value: "aviation", label: "Aviation", score: 12, strengthReason: "Aviation — delivered Etihad flight-ops platform" },
       { value: "other", label: "Other industry", score: 6, gapReason: "Outside core fintech/aviation domains — open to explore" },
     ],
+    otherInput: {
+      triggerValue: "other",
+      label: "Which industry? (optional)",
+      placeholder: "Search or type an industry…",
+      suggestions: uaeIndustries,
+    },
   },
   {
     id: "location",

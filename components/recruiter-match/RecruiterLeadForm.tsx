@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 type RecruiterLeadFormProps = {
   answers: Answers;
   result: MatchResult;
+  otherIndustry: string;
   onDone: () => void;
 };
 
@@ -21,8 +22,20 @@ function labelFor(
   return labels.length ? labels.join(", ") : "Not answered";
 }
 
-function buildMessage(answers: Answers, result: MatchResult, company: string, note: string) {
-  const lines = questions.map((q) => `${q.prompt} ${labelFor(answers[q.id], q.options)}`);
+function buildMessage(
+  answers: Answers,
+  result: MatchResult,
+  company: string,
+  note: string,
+  otherIndustry: string,
+) {
+  const lines = questions.map((q) => {
+    let line = `${q.prompt} ${labelFor(answers[q.id], q.options)}`;
+    if (q.id === "domain" && answers.domain === "other" && otherIndustry.trim()) {
+      line += ` — ${otherIndustry.trim()}`;
+    }
+    return line;
+  });
   return [
     `Company: ${company}`,
     "",
@@ -35,7 +48,12 @@ function buildMessage(answers: Answers, result: MatchResult, company: string, no
   ].join("\n");
 }
 
-export function RecruiterLeadForm({ answers, result, onDone }: RecruiterLeadFormProps) {
+export function RecruiterLeadForm({
+  answers,
+  result,
+  otherIndustry,
+  onDone,
+}: RecruiterLeadFormProps) {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [error, setError] = useState("");
   const [isClient, setIsClient] = useState(false);
@@ -85,7 +103,7 @@ export function RecruiterLeadForm({ answers, result, onDone }: RecruiterLeadForm
           name: form.name,
           email: form.email,
           subject: `Role Fit Check — ${form.company || "Recruiter enquiry"}`,
-          message: buildMessage(answers, result, form.company, form.note),
+          message: buildMessage(answers, result, form.company, form.note, otherIndustry),
           altchaPayload,
           locale: "en",
           browserData,

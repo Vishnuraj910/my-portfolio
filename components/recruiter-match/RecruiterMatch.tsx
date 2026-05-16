@@ -16,6 +16,7 @@ export function RecruiterMatch() {
   const [phase, setPhase] = useState<Phase>("wizard");
   const [stepIndex, setStepIndex] = useState(0);
   const [answers, setAnswers] = useState<Answers>({});
+  const [otherIndustry, setOtherIndustry] = useState("");
   const [advancing, setAdvancing] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const modalRef = useRef<HTMLDivElement>(null);
@@ -37,6 +38,7 @@ export function RecruiterMatch() {
     setPhase("wizard");
     setStepIndex(0);
     setAnswers({});
+    setOtherIndustry("");
   };
 
   const close = () => {
@@ -82,7 +84,10 @@ export function RecruiterMatch() {
 
   const setAnswer = (value: string | string[]) => {
     setAnswers((prev) => ({ ...prev, [currentQuestion.id]: value }));
-    if (!currentQuestion.multiSelect) {
+    const revealsOtherInput =
+      !currentQuestion.multiSelect &&
+      currentQuestion.otherInput?.triggerValue === value;
+    if (!currentQuestion.multiSelect && !revealsOtherInput) {
       if (advanceTimer.current) clearTimeout(advanceTimer.current);
       setAdvancing(true);
       advanceTimer.current = setTimeout(() => {
@@ -90,6 +95,8 @@ export function RecruiterMatch() {
         setAdvancing(false);
         next();
       }, AUTO_ADVANCE_MS);
+    } else {
+      clearAdvance();
     }
   };
 
@@ -148,6 +155,8 @@ export function RecruiterMatch() {
                   question={currentQuestion}
                   value={currentAnswer}
                   onChange={setAnswer}
+                  otherValue={otherIndustry}
+                  onOtherChange={setOtherIndustry}
                 />
 
                 {advancing ? (
@@ -192,7 +201,12 @@ export function RecruiterMatch() {
             )}
 
             {phase === "lead" && (
-              <RecruiterLeadForm answers={answers} result={result} onDone={close} />
+              <RecruiterLeadForm
+                answers={answers}
+                result={result}
+                otherIndustry={otherIndustry}
+                onDone={close}
+              />
             )}
           </div>
         </div>

@@ -792,6 +792,50 @@ body {
   to { width: 100%; }
 }
 
+.rm-other-input {
+  margin-top: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.rm-autocomplete {
+  position: relative;
+}
+
+.rm-autocomplete .input {
+  width: 100%;
+}
+
+.rm-autocomplete-list {
+  margin: 0.35rem 0 0;
+  padding: 0.25rem;
+  list-style: none;
+  max-height: 196px;
+  overflow-y: auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+}
+
+.rm-autocomplete-option {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 0.5rem 0.6rem;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  font-size: 0.88rem;
+}
+
+.rm-autocomplete-option:hover {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
 .rm-verdict {
   display: flex;
   flex-direction: column;
