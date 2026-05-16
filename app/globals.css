@@ -215,6 +215,13 @@ h1, h2, h4 { font-weight: 700; letter-spacing: -.01em; }
   background-color: var(--surface);
   position: relative;
   filter: grayscale(.35);
+  transition: filter .3s ease, border-color .3s ease;
+}
+/* hover: full-colour image, lifted above the CRT scanline overlay */
+.hero-image:hover {
+  filter: grayscale(0);
+  border-color: var(--accent);
+  z-index: 70;
 }
 .hero-image::before {
   content: "● ● ●   ~/vishnuraj — portrait.jpg";
