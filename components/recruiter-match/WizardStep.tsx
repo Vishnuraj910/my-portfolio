@@ -35,7 +35,10 @@ export function WizardStep({ question, value, onChange }: WizardStepProps) {
                 question.multiSelect ? toggleMulti(option.value) : onChange(option.value)
               }
             >
-              <span className="rm-option-label">{option.label}</span>
+              <span className="rm-option-text">
+                <span className="rm-option-label">{option.label}</span>
+                {option.sublabel && <span className="rm-option-sub">{option.sublabel}</span>}
+              </span>
               {isActive && <span className="rm-option-check">✓</span>}
             </button>
           );

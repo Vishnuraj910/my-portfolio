@@ -15,6 +15,7 @@ export type QuestionId =
 export type CriteriaOption = {
   value: string;
   label: string;
+  sublabel?: string;
   score: number;
   dealBreaker?: boolean;
   capVerdict?: Verdict;
@@ -81,11 +82,11 @@ export const questions: Question[] = [
     prompt: "What is the monthly salary (AED)?",
     maxScore: 15,
     options: [
-      { value: "below35", label: "Below 35,000", score: 0, dealBreaker: true, gapReason: "Below the 35k AED/month minimum" },
-      { value: "35to40", label: "35,000 – 40,000", score: 6, gapReason: "At the lower end — meets the 35k minimum" },
-      { value: "40to50", label: "40,000 – 50,000", score: 9, strengthReason: "Meets salary expectation" },
-      { value: "50to60", label: "50,000 – 60,000", score: 12, strengthReason: "Above salary expectation" },
-      { value: "above60", label: "60,000+", score: 15, strengthReason: "Well above salary expectation" },
+      { value: "below35", label: "Below 35,000", sublabel: "≈ under $9.5k / mo", score: 0, dealBreaker: true, gapReason: "Below the 35k AED/month minimum" },
+      { value: "35to40", label: "35,000 – 40,000", sublabel: "≈ $9.5k – $10.9k / mo", score: 6, gapReason: "At the lower end — meets the 35k minimum" },
+      { value: "40to50", label: "40,000 – 50,000", sublabel: "≈ $10.9k – $13.6k / mo", score: 9, strengthReason: "Meets salary expectation" },
+      { value: "50to60", label: "50,000 – 60,000", sublabel: "≈ $13.6k – $16.3k / mo", score: 12, strengthReason: "Above salary expectation" },
+      { value: "above60", label: "60,000+", sublabel: "≈ $16.3k+ / mo", score: 15, strengthReason: "Well above salary expectation" },
     ],
   },
   {
