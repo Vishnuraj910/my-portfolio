@@ -44,7 +44,7 @@ Each is something the recruiter selects about their role:
 
 1. Role level — IC / Eng Manager / Either
 2. Domain — Fintech / Aviation / Other
-3. Location — Dubai / Sharjah / Abu Dhabi / Other UAE / Outside UAE
+3. Location — Remote / Dubai / Sharjah / Abu Dhabi / Other UAE / Outside UAE
 4. Work mode — Remote / Hybrid / On-site
 5. Monthly salary — <35k / 35-40k / 40-50k / 50-60k / 60k+ AED
 6. Employment type — Permanent / Contract

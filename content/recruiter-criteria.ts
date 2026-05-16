@@ -60,6 +60,7 @@ export const questions: Question[] = [
     prompt: "Where is the role based?",
     maxScore: 15,
     options: [
+      { value: "remote", label: "Remote", score: 15, strengthReason: "Remote role — fully equipped home setup in the UAE" },
       { value: "dubai", label: "Dubai", score: 15, strengthReason: "Dubai — home base" },
       { value: "sharjah", label: "Sharjah", score: 15, strengthReason: "Sharjah — within preferred commute" },
       { value: "abudhabi", label: "Abu Dhabi", score: 10, capVerdict: "good", gapReason: "Abu Dhabi — workable if other terms align" },
