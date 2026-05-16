@@ -379,7 +379,7 @@ export function PortfolioPage({ locale, messages }: { locale: Locale; messages: 
             <a href={profile.linkedin} target="_blank" rel="noreferrer">{messages.quickLinks.linkedIn}</a>
             <a href={profile.github} target="_blank" rel="noreferrer">{messages.quickLinks.gitHub}</a>
             <a href={profile.aboutMe} target="_blank" rel="noreferrer">{messages.quickLinks.aboutMe}</a>
-            <a href={`mailto:${profile.email}`}>{profile.email}</a>
+            <a href="#contact">{messages.hero.contact}</a>
             <span className="social-badge">{messages.quickLinks.awsCertified}</span>
             <span className="social-badge">{messages.quickLinks.csm}</span>
           </div>
@@ -597,7 +597,7 @@ export function PortfolioPage({ locale, messages }: { locale: Locale; messages: 
           <div className="chips">
             <a className="chip" href={profile.linkedin} target="_blank" rel="noreferrer">{messages.quickLinks.linkedIn.replace(" ↗", "")}</a>
             <a className="chip" href={profile.github} target="_blank" rel="noreferrer">{messages.quickLinks.gitHub.replace(" ↗", "")}</a>
-            <a className="chip" href={`mailto:${profile.email}`}>{messages.contact.email}</a>
+            <a className="chip" href="#contact">{messages.hero.contact}</a>
             <a className="chip" href="/llm.txt" target="_blank" rel="noreferrer">LLM.txt</a>
             <span className="chip">{profile.location}</span>
           </div>

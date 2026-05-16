@@ -10,15 +10,15 @@
     },
     "candidate": {
       "name": "Vishnuraj Rajagopal",
-      "headline": "Solutions Architect | Full Stack Lead | FinTech | AI | CSM®",
+      "headline": "Solutions Architect | Full Stack Lead | FinTech | Aviation | AI | CSM®",
       "location": "Dubai, UAE",
-      "email": "vishnuraj910@gmail.com",
+      "contact": "https://vishnuraj.me/#contact",
       "yearsOfExperience": "13+"
     },
     "overview": {
-      "title": "Solutions Architect | Full Stack Lead | FinTech | AI | CSM®",
+      "title": "Solutions Architect | Full Stack Lead | FinTech | Aviation | AI | CSM®",
       "location": "Dubai, UAE",
-      "email": "vishnuraj910@gmail.com",
+      "contact": "https://vishnuraj.me/#contact",
       "linkedin": "https://www.linkedin.com/in/vishnuraj910",
       "github": "https://github.com/Vishnuraj910",
       "aboutMe": "https://about.me/vishnurajrajagopal"
@@ -446,7 +446,7 @@
       "Recruiters and talent acquisition specialists in tech and fintech sectors"
     ],
     "contact": {
-      "email": "vishnuraj910@gmail.com",
+      "form": "https://vishnuraj.me/#contact",
       "linkedin": "https://www.linkedin.com/in/vishnuraj910",
       "github": "https://github.com/Vishnuraj910",
       "website": "https://about.me/vishnurajrajagopal"

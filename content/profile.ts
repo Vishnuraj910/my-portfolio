@@ -40,9 +40,8 @@ export type Education = {
 
 export const profile = {
   name: "Vishnuraj Rajagopal",
-  title: "Solutions Architect | Full Stack Lead | FinTech | AI | CSM®",
+  title: "Solutions Architect | Full Stack Lead | FinTech | Aviation | AI | CSM®",
   location: "Dubai, UAE",
-  email: "vishnuraj910@gmail.com",
   linkedin: "https://www.linkedin.com/in/vishnuraj910",
   github: "https://github.com/Vishnuraj910",
   aboutMe: "https://about.me/vishnurajrajagopal",
