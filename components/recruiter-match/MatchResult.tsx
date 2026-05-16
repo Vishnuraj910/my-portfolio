@@ -3,21 +3,17 @@
 import type { MatchResult as MatchResultData } from "@/lib/match";
 
 const VERDICT_COPY: Record<MatchResultData["verdict"], { title: string; blurb: string }> = {
-  strong: {
-    title: "Strong match",
+  fit: {
+    title: "Fit",
     blurb: "This role lines up well with Vishnuraj's preferences. Worth a conversation.",
   },
-  good: {
-    title: "Good match",
-    blurb: "A solid fit overall, with a few points worth discussing.",
-  },
-  partial: {
-    title: "Partial match",
-    blurb: "Some alignment, but several preferences are not met. Reach out to explore.",
+  maybe: {
+    title: "Maybe",
+    blurb: "Some alignment, with several points worth discussing. Reach out to explore.",
   },
   nofit: {
     title: "Not a fit",
-    blurb: "This role conflicts with one or more of Vishnuraj's non-negotiables.",
+    blurb: "This role does not meet enough of Vishnuraj's preferences or conflicts with a non-negotiable.",
   },
 };
 

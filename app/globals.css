@@ -863,9 +863,8 @@ body {
   font-size: 0.85rem;
 }
 
-.rm-verdict-strong { background: rgba(34, 197, 94, 0.16); color: #22c55e; }
-.rm-verdict-good { background: rgba(79, 156, 249, 0.16); color: #4f9cf9; }
-.rm-verdict-partial { background: rgba(234, 179, 8, 0.16); color: #ca9a06; }
+.rm-verdict-fit { background: rgba(34, 197, 94, 0.16); color: #22c55e; }
+.rm-verdict-maybe { background: rgba(234, 179, 8, 0.16); color: #ca9a06; }
 .rm-verdict-nofit { background: rgba(239, 68, 68, 0.16); color: #ef4444; }
 
 .rm-result-blurb {

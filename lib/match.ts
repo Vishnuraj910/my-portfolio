@@ -12,12 +12,11 @@ export type MatchResult = {
   gaps: string[];
 };
 
-const VERDICT_ORDER: Verdict[] = ["nofit", "partial", "good", "strong"];
+const VERDICT_ORDER: Verdict[] = ["nofit", "maybe", "fit"];
 
 function verdictFromScore(score: number): Verdict {
-  if (score >= 85) return "strong";
-  if (score >= 65) return "good";
-  if (score >= 40) return "partial";
+  if (score >= 81) return "fit";
+  if (score >= 61) return "maybe";
   return "nofit";
 }
 

@@ -9,7 +9,7 @@
 Add a recruiter-facing feature to the portfolio: a button that opens a modal
 wizard. A recruiter answers 10 questions about a role they are hiring for. The
 app computes a match against Vishnuraj's stated preferences and shows an honest
-verdict (Strong / Good / Partial / Not a fit) with reasons. The recruiter can
+verdict (Fit / Maybe / Not a fit) with reasons. The recruiter can
 optionally send the role + match result to Vishnuraj via the existing contact
 email pipeline, generating a qualified lead.
 
@@ -109,7 +109,7 @@ Any one ⇒ verdict `nofit`, score capped, honest reason shown:
 ### Weighted contributions (when no deal-breaker)
 
 - **Location:** Dubai/Sharjah = full; Abu Dhabi = partial (caps verdict at
-  "good", flagged); other UAE = reduced.
+  "maybe", flagged); other UAE = reduced.
 - **Work mode:** Remote/Hybrid = full; On-site = reduced (not a reject).
 - **Domain:** Fintech/Aviation = bonus; Other = neutral.
 - **Org type:** Enterprise/Startup both fine; AI-friendly + learning-support
@@ -122,10 +122,9 @@ Any one ⇒ verdict `nofit`, score capped, honest reason shown:
 
 ### Verdict bands
 
-- `strong` — score ≥ 85
-- `good` — 65-84
-- `partial` — 40-64
-- `nofit` — < 40, or any deal-breaker triggered
+- `fit` — score 81-100
+- `maybe` — score 61-80
+- `nofit` — score 0-60, or any deal-breaker triggered
 
 ### Result presentation
 

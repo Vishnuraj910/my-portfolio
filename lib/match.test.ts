@@ -15,9 +15,9 @@ const best: Answers = {
 };
 
 describe("computeMatch", () => {
-  it("returns a strong verdict for an ideal role", () => {
+  it("returns a fit verdict for an ideal role", () => {
     const result = computeMatch(best);
-    expect(result.verdict).toBe("strong");
+    expect(result.verdict).toBe("fit");
     expect(result.score).toBe(100);
     expect(result.dealBreaker).toBe(false);
   });
@@ -45,9 +45,9 @@ describe("computeMatch", () => {
     expect(result.dealBreaker).toBe(false);
   });
 
-  it("caps an otherwise-strong Abu Dhabi role at good", () => {
+  it("caps an otherwise-fit Abu Dhabi role at maybe", () => {
     const result = computeMatch({ ...best, location: "abudhabi" });
-    expect(result.verdict).toBe("good");
+    expect(result.verdict).toBe("maybe");
     expect(result.dealBreaker).toBe(false);
   });
 
@@ -57,7 +57,7 @@ describe("computeMatch", () => {
     expect(half).toBeLessThan(full);
   });
 
-  it("produces a partial verdict for a mediocre role", () => {
+  it("produces a nofit verdict for a low-scoring role", () => {
     const result = computeMatch({
       roleLevel: "ic",
       domain: "other",
@@ -70,7 +70,24 @@ describe("computeMatch", () => {
       orgType: "enterprise-trad",
       techStack: ["ai"],
     });
-    expect(result.verdict).toBe("partial");
+    expect(result.verdict).toBe("nofit");
+  });
+
+  it("produces a maybe verdict for a mid-scoring role", () => {
+    const result = computeMatch({
+      roleLevel: "either",
+      domain: "fintech",
+      location: "dubai",
+      workMode: "hybrid",
+      salary: "35to40",
+      employment: "permanent",
+      visa: "self",
+      insurance: "basic",
+      orgType: "enterprise-trad",
+      techStack: ["ai", "tsnode"],
+    });
+    expect(result.verdict).toBe("maybe");
+    expect(result.dealBreaker).toBe(false);
   });
 
   it("collects strengths and gaps", () => {

@@ -1,4 +1,4 @@
-export type Verdict = "strong" | "good" | "partial" | "nofit";
+export type Verdict = "fit" | "maybe" | "nofit";
 
 export type QuestionId =
   | "roleLevel"
@@ -107,7 +107,7 @@ export const questions: Question[] = [
       { value: "remote", label: "Remote", score: 15, strengthReason: "Remote role — fully equipped home setup in the UAE" },
       { value: "dubai", label: "Dubai", score: 15, strengthReason: "Dubai — home base" },
       { value: "sharjah", label: "Sharjah", score: 15, strengthReason: "Sharjah — within preferred commute" },
-      { value: "abudhabi", label: "Abu Dhabi", score: 10, capVerdict: "good", gapReason: "Abu Dhabi — workable if other terms align" },
+      { value: "abudhabi", label: "Abu Dhabi", score: 10, capVerdict: "maybe", gapReason: "Abu Dhabi — workable if other terms align" },
       { value: "otheruae", label: "Other Emirate", score: 6, gapReason: "Further from preferred Dubai/Sharjah base" },
       { value: "outside", label: "Outside UAE", score: 0, dealBreaker: true, gapReason: "Outside UAE — not open to relocation" },
     ],
