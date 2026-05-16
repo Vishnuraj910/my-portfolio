@@ -913,9 +913,15 @@ body {
   100% { box-shadow: 0 0 0 0 transparent; }
 }
 
+.rm-result-fit { --rm-accent: #22c55e; }
+.rm-result-maybe { --rm-accent: #ca9a06; }
+.rm-result-nofit { --rm-accent: #ef4444; }
+
 .rm-result-blurb {
   font-size: 0.9rem;
   margin-bottom: 1rem;
+  padding-left: 0.7rem;
+  border-left: 3px solid var(--rm-accent, var(--accent));
 }
 
 .rm-result-list { margin-bottom: 1rem; }
@@ -925,7 +931,8 @@ body {
   font-size: 0.8rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--muted);
+  color: var(--rm-accent, var(--muted));
+  font-weight: 700;
 }
 
 .rm-result-list ul {
@@ -935,6 +942,10 @@ body {
 }
 
 .rm-result-list li { margin-bottom: 0.25rem; }
+
+.rm-result-list li::marker {
+  color: var(--rm-accent, var(--accent));
+}
 
 .rm-result-actions,
 .rm-lead-success {
