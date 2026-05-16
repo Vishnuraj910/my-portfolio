@@ -11,6 +11,11 @@ type Phase = "wizard" | "result" | "lead";
 
 const AUTO_ADVANCE_MS = 3000;
 
+// A remote role makes the work-arrangement question redundant, so skip it.
+function isStepSkipped(index: number, answers: Answers): boolean {
+  return questions[index]?.id === "workMode" && answers.location === "remote";
+}
+
 export function RecruiterMatch() {
   const [open, setOpen] = useState(false);
   const [phase, setPhase] = useState<Phase>("wizard");
@@ -21,6 +26,11 @@ export function RecruiterMatch() {
   const triggerRef = useRef<HTMLButtonElement>(null);
   const modalRef = useRef<HTMLDivElement>(null);
   const advanceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const answersRef = useRef(answers);
+
+  useEffect(() => {
+    answersRef.current = answers;
+  }, [answers]);
 
   const result = useMemo(() => computeMatch(answers), [answers]);
   const liveScore = result.score;
@@ -71,19 +81,46 @@ export function RecruiterMatch() {
   const currentQuestion = questions[stepIndex];
   const currentAnswer = answers[currentQuestion?.id];
   const isAnswered = currentQuestion?.multiSelect ? true : currentAnswer !== undefined;
-  const isLastStep = stepIndex === questions.length - 1;
+
+  const visibleSteps = questions
+    .map((_, i) => i)
+    .filter((i) => !isStepSkipped(i, answers));
+  const totalSteps = visibleSteps.length;
+  const currentPos = visibleSteps.indexOf(stepIndex);
+  const isLastStep = currentPos === totalSteps - 1;
 
   const next = () => {
     clearAdvance();
-    if (isLastStep) {
+    const ans = answersRef.current;
+    let i = stepIndex + 1;
+    while (i < questions.length && isStepSkipped(i, ans)) i += 1;
+    if (i >= questions.length) {
       setPhase("result");
     } else {
-      setStepIndex((i) => i + 1);
+      setStepIndex(i);
     }
   };
 
+  const back = () => {
+    clearAdvance();
+    const ans = answersRef.current;
+    let i = stepIndex - 1;
+    while (i > 0 && isStepSkipped(i, ans)) i -= 1;
+    setStepIndex(Math.max(0, i));
+  };
+
   const setAnswer = (value: string | string[]) => {
-    setAnswers((prev) => ({ ...prev, [currentQuestion.id]: value }));
+    setAnswers((prev) => {
+      const updated: Answers = { ...prev, [currentQuestion.id]: value };
+      if (currentQuestion.id === "location") {
+        if (value === "remote") {
+          updated.workMode = "remote";
+        } else if (prev.location === "remote") {
+          delete updated.workMode;
+        }
+      }
+      return updated;
+    });
     const revealsOtherInput =
       !currentQuestion.multiSelect &&
       currentQuestion.otherInput?.triggerValue === value;
@@ -98,11 +135,6 @@ export function RecruiterMatch() {
     } else {
       clearAdvance();
     }
-  };
-
-  const back = () => {
-    clearAdvance();
-    setStepIndex((i) => Math.max(0, i - 1));
   };
 
   return (
@@ -140,12 +172,12 @@ export function RecruiterMatch() {
                   <div className="rm-progress-bar">
                     <div
                       className="rm-progress-fill"
-                      style={{ width: `${((stepIndex + 1) / questions.length) * 100}%` }}
+                      style={{ width: `${((currentPos + 1) / totalSteps) * 100}%` }}
                     />
                   </div>
                   <div className="rm-progress-meta">
                     <span>
-                      Step {stepIndex + 1} / {questions.length}
+                      Step {currentPos + 1} / {totalSteps}
                     </span>
                     <span className="rm-live-score">Match so far: {liveScore}</span>
                   </div>
@@ -159,9 +191,9 @@ export function RecruiterMatch() {
                   onOtherChange={setOtherIndustry}
                 />
 
-                {advancing ? (
+                {advancing && (
                   <div className="rm-autoadvance" role="status">
-                    <span>Locked in — moving to the next step…</span>
+                    <span>Locked in — auto-advancing in a moment…</span>
                     <div className="rm-autoadvance-bar">
                       <div
                         key={String(currentAnswer)}
@@ -169,26 +201,26 @@ export function RecruiterMatch() {
                       />
                     </div>
                   </div>
-                ) : (
-                  <div className="rm-nav">
-                    <button
-                      type="button"
-                      className="btn"
-                      onClick={back}
-                      disabled={stepIndex === 0}
-                    >
-                      Back
-                    </button>
-                    <button
-                      type="button"
-                      className="btn btn-primary"
-                      onClick={next}
-                      disabled={!isAnswered}
-                    >
-                      {isLastStep ? "See result" : "Next"}
-                    </button>
-                  </div>
                 )}
+
+                <div className="rm-nav">
+                  <button
+                    type="button"
+                    className="btn"
+                    onClick={back}
+                    disabled={currentPos === 0}
+                  >
+                    Back
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={next}
+                    disabled={!isAnswered}
+                  >
+                    {isLastStep ? "See result" : "Next"}
+                  </button>
+                </div>
               </div>
             )}
 

@@ -766,6 +766,10 @@ body {
   gap: 0.5rem;
 }
 
+.rm-autoadvance + .rm-nav {
+  margin-top: 0.75rem;
+}
+
 .rm-autoadvance span {
   font-size: 0.85rem;
   color: var(--accent);
