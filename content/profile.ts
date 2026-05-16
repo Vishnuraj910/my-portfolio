@@ -214,15 +214,19 @@ export const profile = {
       "NoSQL"
     ],
     "AI & Machine Learning": [
-      "Artificial Intelligence (AI)",
-      "Machine Learning",
+      "Agentic Coding",
+      "Skills",
+      "Claude Code",
+      "OpenAI Codex",
+      "OpenCode",
+      "Ollama",
       "GenAI",
       "RAG",
       "LangChain",
       "LangGraph",
       "TensorFlow",
       "Prompt Engineering",
-      "Chatbot Development",
+      "AI Chatbot Development",
       "Dialogflow"
     ],
     "Security": [
