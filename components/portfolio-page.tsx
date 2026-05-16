@@ -3,6 +3,7 @@
 import { RecruiterMatch } from "@/components/recruiter-match/RecruiterMatch";
 import { profile } from "@/content/profile";
 import { type Locale, localeNames } from "@/lib/i18n";
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 
@@ -328,7 +329,7 @@ export function PortfolioPage({ locale, messages }: { locale: Locale; messages: 
       <header className="header">
         <div className="container nav-wrap">
           <a href="#home" className="logo">
-            <img src="/icon.png" alt="Vishnuraj" width={40} height={40} />
+            <Image src="/icon.png" alt="Vishnuraj" width={40} height={40} priority />
           </a>
           <nav className="nav-desktop">
             <ul className="nav-list">
@@ -419,10 +420,13 @@ export function PortfolioPage({ locale, messages }: { locale: Locale; messages: 
               <article key={`${item.company}-${index}`} className="card timeline-card reveal">
                 <button className="timeline-head" type="button" onClick={() => setActiveExperience(activeExperience === index ? null : index)}>
                   {item.logo && (
-                    <img
+                    <Image
                       src={item.logo}
                       alt={`${item.company} logo`}
                       className="company-logo"
+                      width={48}
+                      height={48}
+                      loading="lazy"
                       onError={(e) => {
                         (e.target as HTMLImageElement).style.display = 'none';
                       }}
@@ -514,10 +518,13 @@ export function PortfolioPage({ locale, messages }: { locale: Locale; messages: 
             {filteredCerts.map((cert, index) => (
               <div key={`${cert.name}-${index}`} className="card cert-card">
                 {cert.logo ? (
-                  <img
+                  <Image
                     src={cert.logo}
                     alt={`${cert.authority} logo`}
                     className="cert-logo"
+                    width={48}
+                    height={48}
+                    loading="lazy"
                     onError={(e) => {
                       (e.target as HTMLImageElement).style.display = 'none';
                     }}

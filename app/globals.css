@@ -598,7 +598,7 @@ h1, h2, h4 { font-weight: 700; letter-spacing: -.01em; }
   font-size: .72rem;
   font-weight: 500;
 }
-.cert-expires::before { content: "exp: "; color: var(--muted); }
+.cert-expires::before { content: "› "; color: var(--muted); }
 
 /* ===================== LANGUAGES ===================== */
 .languages-grid {
