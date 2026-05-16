@@ -90,7 +90,7 @@ export const questions: Question[] = [
     options: [
       { value: "fintech", label: "Fintech", score: 12, strengthReason: "Fintech — 9+ years across Visa and Sokin" },
       { value: "aviation", label: "Aviation", score: 12, strengthReason: "Aviation — delivered Etihad flight-ops platform" },
-      { value: "other", label: "Other industry", score: 6, gapReason: "Outside core fintech/aviation domains — open to explore" },
+      { value: "other", label: "Other industry", score: 9, gapReason: "Outside core fintech/aviation domains — open to explore" },
     ],
     otherInput: {
       triggerValue: "other",
@@ -179,7 +179,7 @@ export const questions: Question[] = [
     prompt: "Which of these does the role use?",
     helper: "Select all that apply.",
     multiSelect: true,
-    maxScore: 5,
+    maxScore: 3,
     strengthLabel: "Strong tech-stack overlap with the role",
     gapLabel: "Limited tech-stack overlap with the role",
     options: [
