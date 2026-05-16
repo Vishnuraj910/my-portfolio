@@ -1,61 +1,17 @@
 "use client";
 
-import { questions } from "@/content/recruiter-criteria";
-import type { Answers, MatchResult } from "@/lib/match";
+import type { Answers } from "@/lib/match";
 import { useEffect, useRef, useState } from "react";
 
 type RecruiterLeadFormProps = {
   answers: Answers;
-  result: MatchResult;
   otherIndustry: string;
   otherTechStack: string;
   onDone: () => void;
 };
 
-function labelFor(
-  value: string | string[] | undefined,
-  optionValues: { value: string; label: string }[],
-) {
-  const values = Array.isArray(value) ? value : value ? [value] : [];
-  const labels = values
-    .map((v) => optionValues.find((o) => o.value === v)?.label)
-    .filter((l): l is string => Boolean(l));
-  return labels.length ? labels.join(", ") : "Not answered";
-}
-
-function buildMessage(
-  answers: Answers,
-  result: MatchResult,
-  company: string,
-  note: string,
-  otherIndustry: string,
-  otherTechStack: string,
-) {
-  const lines = questions.map((q) => {
-    let line = `${q.prompt} ${labelFor(answers[q.id], q.options)}`;
-    if (q.id === "domain" && answers.domain === "other" && otherIndustry.trim()) {
-      line += ` — ${otherIndustry.trim()}`;
-    }
-    if (q.id === "techStack" && otherTechStack.trim()) {
-      line += ` — also: ${otherTechStack.trim()}`;
-    }
-    return line;
-  });
-  return [
-    `Company: ${company}`,
-    "",
-    "Role details:",
-    ...lines,
-    "",
-    `Match verdict: ${result.verdict} (${result.score}/100)`,
-    "",
-    `Recruiter note: ${note || "(none)"}`,
-  ].join("\n");
-}
-
 export function RecruiterLeadForm({
   answers,
-  result,
   otherIndustry,
   otherTechStack,
   onDone,
@@ -109,17 +65,17 @@ export function RecruiterLeadForm({
           name: form.name,
           email: form.email,
           subject: `Role Fit Check — ${form.company || "Recruiter enquiry"}`,
-          message: buildMessage(
-            answers,
-            result,
-            form.company,
-            form.note,
-            otherIndustry,
-            otherTechStack,
-          ),
+          message: `Role fit check submission from ${form.company || "a recruiter"}.`,
           altchaPayload,
           locale: "en",
           browserData,
+          recruiterMatch: {
+            answers,
+            company: form.company,
+            note: form.note,
+            otherIndustry,
+            otherTechStack,
+          },
         }),
       });
       const data = (await response.json()) as { error?: string };

@@ -33,7 +33,7 @@ export function MatchResult({ result, onSendLead, onClose }: MatchResultProps) {
   const copy = VERDICT_COPY[result.verdict];
 
   return (
-    <div className="rm-result">
+    <div className={`rm-result rm-result-${result.verdict}`}>
       <div className={`rm-verdict rm-verdict-${result.verdict}`}>
         <span className="rm-verdict-icon" aria-hidden="true">
           {VERDICT_ICON[result.verdict]}
