@@ -1,5 +1,6 @@
 "use client";
 
+import { RecruiterMatch } from "@/components/recruiter-match/RecruiterMatch";
 import { profile } from "@/content/profile";
 import { type Locale, localeNames } from "@/lib/i18n";
 import Link from "next/link";
@@ -365,7 +366,7 @@ export function PortfolioPage({ locale, messages }: { locale: Locale; messages: 
             <h2>{profile.title}</h2>
             <p className="hero-copy">{messages.hero.headline}</p>
             <div className="cta-row">
-              <a href="#projects" className="btn btn-primary">{messages.hero.viewProjects}</a>
+              <RecruiterMatch />
               <a href="/resume-vishnuraj.pdf" className="btn" download>{messages.hero.downloadResume}</a>
               <a href="#contact" className="btn">{messages.hero.contact}</a>
             </div>
