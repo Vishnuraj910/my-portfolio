@@ -1,6 +1,7 @@
 "use client";
 
 import type { Question } from "@/content/recruiter-criteria";
+import { useId } from "react";
 import { IndustryAutocomplete } from "./IndustryAutocomplete";
 
 type WizardStepProps = {
@@ -9,6 +10,8 @@ type WizardStepProps = {
   onChange: (value: string | string[]) => void;
   otherValue: string;
   onOtherChange: (value: string) => void;
+  freeTextValue: string;
+  onFreeTextChange: (value: string) => void;
 };
 
 export function WizardStep({
@@ -17,7 +20,10 @@ export function WizardStep({
   onChange,
   otherValue,
   onOtherChange,
+  freeTextValue,
+  onFreeTextChange,
 }: WizardStepProps) {
+  const freeTextId = useId();
   const selected: string[] = Array.isArray(value) ? value : value ? [value] : [];
 
   const toggleMulti = (optionValue: string) => {
@@ -66,6 +72,23 @@ export function WizardStep({
           placeholder={question.otherInput.placeholder}
           suggestions={question.otherInput.suggestions}
         />
+      )}
+      {question.freeTextInput && (
+        <div className="rm-other-input">
+          <label className="rm-helper" htmlFor={freeTextId}>
+            {question.freeTextInput.label}
+          </label>
+          <input
+            id={freeTextId}
+            type="text"
+            className="input"
+            placeholder={question.freeTextInput.placeholder}
+            value={freeTextValue}
+            maxLength={200}
+            autoComplete="off"
+            onChange={(e) => onFreeTextChange(e.target.value)}
+          />
+        </div>
       )}
     </div>
   );

@@ -22,6 +22,7 @@ export function RecruiterMatch() {
   const [stepIndex, setStepIndex] = useState(0);
   const [answers, setAnswers] = useState<Answers>({});
   const [otherIndustry, setOtherIndustry] = useState("");
+  const [otherTechStack, setOtherTechStack] = useState("");
   const [advancing, setAdvancing] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const modalRef = useRef<HTMLDivElement>(null);
@@ -49,6 +50,7 @@ export function RecruiterMatch() {
     setStepIndex(0);
     setAnswers({});
     setOtherIndustry("");
+    setOtherTechStack("");
   };
 
   const close = () => {
@@ -189,6 +191,8 @@ export function RecruiterMatch() {
                   onChange={setAnswer}
                   otherValue={otherIndustry}
                   onOtherChange={setOtherIndustry}
+                  freeTextValue={otherTechStack}
+                  onFreeTextChange={setOtherTechStack}
                 />
 
                 {advancing && (
@@ -237,6 +241,7 @@ export function RecruiterMatch() {
                 answers={answers}
                 result={result}
                 otherIndustry={otherIndustry}
+                otherTechStack={otherTechStack}
                 onDone={close}
               />
             )}

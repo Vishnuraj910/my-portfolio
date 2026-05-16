@@ -8,6 +8,7 @@ type RecruiterLeadFormProps = {
   answers: Answers;
   result: MatchResult;
   otherIndustry: string;
+  otherTechStack: string;
   onDone: () => void;
 };
 
@@ -28,11 +29,15 @@ function buildMessage(
   company: string,
   note: string,
   otherIndustry: string,
+  otherTechStack: string,
 ) {
   const lines = questions.map((q) => {
     let line = `${q.prompt} ${labelFor(answers[q.id], q.options)}`;
     if (q.id === "domain" && answers.domain === "other" && otherIndustry.trim()) {
       line += ` — ${otherIndustry.trim()}`;
+    }
+    if (q.id === "techStack" && otherTechStack.trim()) {
+      line += ` — also: ${otherTechStack.trim()}`;
     }
     return line;
   });
@@ -52,6 +57,7 @@ export function RecruiterLeadForm({
   answers,
   result,
   otherIndustry,
+  otherTechStack,
   onDone,
 }: RecruiterLeadFormProps) {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
@@ -103,7 +109,14 @@ export function RecruiterLeadForm({
           name: form.name,
           email: form.email,
           subject: `Role Fit Check — ${form.company || "Recruiter enquiry"}`,
-          message: buildMessage(answers, result, form.company, form.note, otherIndustry),
+          message: buildMessage(
+            answers,
+            result,
+            form.company,
+            form.note,
+            otherIndustry,
+            otherTechStack,
+          ),
           altchaPayload,
           locale: "en",
           browserData,

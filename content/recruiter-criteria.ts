@@ -38,6 +38,10 @@ export type Question = {
     placeholder: string;
     suggestions: string[];
   };
+  freeTextInput?: {
+    label: string;
+    placeholder: string;
+  };
 };
 
 export const uaeIndustries: string[] = [
@@ -186,5 +190,9 @@ export const questions: Question[] = [
       { value: "orm", label: "Prisma / SQLAlchemy", score: 0 },
       { value: "cloud", label: "AWS / Azure / GCP", score: 0 },
     ],
+    freeTextInput: {
+      label: "Other tools or stack you need? (optional)",
+      placeholder: "e.g. Kubernetes, Terraform, Kafka, Go…",
+    },
   },
 ];
