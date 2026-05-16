@@ -40,9 +40,8 @@ export type Education = {
 
 export const profile = {
   name: "Vishnuraj Rajagopal",
-  title: "Solutions Architect | Full Stack Lead | FinTech | AI | CSM®",
+  title: "Solutions Architect | Full Stack Lead | FinTech | Aviation | AI | CSM®",
   location: "Dubai, UAE",
-  email: "vishnuraj910@gmail.com",
   linkedin: "https://www.linkedin.com/in/vishnuraj910",
   github: "https://github.com/Vishnuraj910",
   aboutMe: "https://about.me/vishnurajrajagopal",
@@ -173,6 +172,22 @@ export const profile = {
     }
   ] as Experience[],
   skills: {
+     "AI & Machine Learning": [
+      "Agentic Coding",
+      "Skills",
+      "Claude Code",
+      "OpenAI Codex",
+      "OpenCode",
+      "Ollama",
+      "GenAI",
+      "RAG",
+      "LangChain",
+      "LangGraph",
+      "TensorFlow",
+      "Prompt Engineering",
+      "AI Chatbot Development",
+      "Dialogflow"
+    ],
     "Cloud & DevOps": [
       "Amazon Web Services (AWS)",
       "Cloud Computing",
@@ -214,18 +229,7 @@ export const profile = {
       "MySQL",
       "NoSQL"
     ],
-    "AI & Machine Learning": [
-      "Artificial Intelligence (AI)",
-      "Machine Learning",
-      "GenAI",
-      "RAG",
-      "LangChain",
-      "LangGraph",
-      "TensorFlow",
-      "Prompt Engineering",
-      "Chatbot Development",
-      "Dialogflow"
-    ],
+
     "Security": [
       "Cybersecurity",
       "ISO 27001",

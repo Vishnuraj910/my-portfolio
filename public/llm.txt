@@ -5,9 +5,9 @@
 ## Overview
 
 **Name:** Vishnuraj Rajagopal  
-**Title:** Solutions Architect | Full Stack Lead | FinTech | AI | CSM®  
+**Title:** Solutions Architect | Full Stack Lead | FinTech | Aviation | AI | CSM®  
 **Location:** Dubai, UAE  
-**Email:** vishnuraj910@gmail.com  
+**Contact:** Use the contact form at https://vishnuraj.me/#contact
 **LinkedIn:** https://www.linkedin.com/in/vishnuraj910  
 **GitHub:** https://github.com/Vishnuraj910  
 **About Me:** https://about.me/vishnurajrajagopal
@@ -23,9 +23,9 @@
 
 ## Candidate
 - Name: Vishnuraj Rajagopal
-- Headline: Solutions Architect | Full Stack Lead | FinTech | AI | CSM®
+- Headline: Solutions Architect | Full Stack Lead | FinTech | Aviation | AI | CSM®
 - Location: Dubai, UAE
-- Email: vishnuraj910@gmail.com
+- Contact: Use the contact form at https://vishnuraj.me/#contact
 - Years of Experience: 13+
 
 ---
@@ -301,7 +301,7 @@ Solutions Architect, Full Stack Lead, FinTech, AI, AWS, Cloud Architecture, Secu
 
 ## Contact Information
 
-- **Email:** vishnuraj910@gmail.com
+- **Contact:** Use the contact form at https://vishnuraj.me/#contact
 - **LinkedIn:** https://www.linkedin.com/in/vishnuraj910
 - **GitHub:** https://github.com/Vishnuraj910
 - **Personal Website:** https://about.me/vishnurajrajagopal

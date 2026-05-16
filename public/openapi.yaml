@@ -4,8 +4,7 @@ info:
   description: Machine-readable API for Vishnuraj Rajagopal's professional portfolio. Provides access to profile information, work experience, projects, and contact functionality.
   version: 1.0.0
   contact:
-    email: vishnuraj910@gmail.com
-    url: https://vishnuraj.me
+    url: https://vishnuraj.me/#contact
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT

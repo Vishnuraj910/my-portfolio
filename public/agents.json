@@ -4,9 +4,9 @@
   "description": "AI Agent configuration for Vishnuraj Rajagopal's professional portfolio. This file defines how AI agents should interact with and understand the portfolio data.",
   "profile": {
     "name": "Vishnuraj Rajagopal",
-    "title": "Solutions Architect | Full Stack Lead | FinTech | AI | CSM®",
+    "title": "Solutions Architect | Full Stack Lead | FinTech | Aviation | AI | CSM®",
     "location": "Dubai, UAE",
-    "email": "vishnuraj910@gmail.com",
+    "contact": "https://vishnuraj.me/#contact",
     "website": "https://vishnuraj.me",
     "linkedin": "https://www.linkedin.com/in/vishnuraj910",
     "github": "https://github.com/Vishnuraj910",
@@ -143,7 +143,7 @@
       "portfolio_details": "Visit https://vishnuraj.me for full portfolio",
       "code_samples": "Check GitHub: https://github.com/Vishnuraj910",
       "detailed_experience": "View full profile on LinkedIn",
-      "contact": "Email: vishnuraj910@gmail.com"
+      "contact": "Use the contact form at https://vishnuraj.me/#contact"
     }
   },
   "searchKeywords": {
