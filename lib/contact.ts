@@ -1,3 +1,13 @@
+import type { Answers } from "@/lib/match";
+
+export type RecruiterMatchPayload = {
+  answers: Answers;
+  company: string;
+  note: string;
+  otherIndustry: string;
+  otherTechStack: string;
+};
+
 export type ContactPayload = {
   name: string;
   email: string;
@@ -14,6 +24,7 @@ export type ContactPayload = {
     platform?: string;
     connectionType?: string;
   };
+  recruiterMatch?: RecruiterMatchPayload;
 };
 
 function sanitize(value: string) {
@@ -24,6 +35,19 @@ export function validateContactPayload(input: unknown): { data?: ContactPayload;
   if (!input || typeof input !== "object") return { errors: ["Invalid payload"] };
 
   const payload = input as Record<string, unknown>;
+
+  let recruiterMatch: RecruiterMatchPayload | undefined;
+  if (payload.recruiterMatch && typeof payload.recruiterMatch === "object") {
+    const rm = payload.recruiterMatch as Record<string, unknown>;
+    recruiterMatch = {
+      answers: (rm.answers && typeof rm.answers === "object" ? rm.answers : {}) as Answers,
+      company: sanitize(String(rm.company ?? "")),
+      note: sanitize(String(rm.note ?? "")),
+      otherIndustry: sanitize(String(rm.otherIndustry ?? "")),
+      otherTechStack: sanitize(String(rm.otherTechStack ?? ""))
+    };
+  }
+
   const data: ContactPayload = {
     name: sanitize(String(payload.name ?? "")),
     email: sanitize(String(payload.email ?? "")).toLowerCase(),
@@ -31,7 +55,8 @@ export function validateContactPayload(input: unknown): { data?: ContactPayload;
     message: sanitize(String(payload.message ?? "")),
     altchaPayload: String(payload.altchaPayload ?? ""),
     locale: sanitize(String(payload.locale ?? "en")),
-    browserData: payload.browserData as ContactPayload["browserData"]
+    browserData: payload.browserData as ContactPayload["browserData"],
+    recruiterMatch
   };
 
   const errors: string[] = [];

@@ -239,7 +239,6 @@ export function RecruiterMatch() {
             {phase === "lead" && (
               <RecruiterLeadForm
                 answers={answers}
-                result={result}
                 otherIndustry={otherIndustry}
                 otherTechStack={otherTechStack}
                 onDone={close}

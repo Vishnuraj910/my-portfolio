@@ -1,5 +1,6 @@
 import { verifyAltchaPayload } from "@/lib/altcha";
 import { validateContactPayload } from "@/lib/contact";
+import { buildRecruiterEmailHtml } from "@/lib/recruiter-email";
 import { NextRequest, NextResponse } from "next/server";
 
 type Entry = { count: number; ts: number };
@@ -106,17 +107,21 @@ export async function POST(request: NextRequest) {
 </table>
 `;
 
+    const body = parsed.data.recruiterMatch
+      ? `${buildRecruiterEmailHtml(parsed.data.name, parsed.data.email, parsed.data.recruiterMatch)}${formattedBrowserData}`
+      : `Name: <h2>${parsed.data.name}</h2>
+Email: <h2>${parsed.data.email}</h2>
+
+Message: <h3>${parsed.data.message}</h3>
+
+${formattedBrowserData}`;
+
     await sendViaResend({
       from: "Portfolio Contact <onboarding@resend.dev>",
       to,
       replyTo: parsed.data.email,
       subject: `[Portfolio] ${parsed.data.subject}`,
-      text: `Name: <h2>${parsed.data.name}</h2>
-Email: <h2>${parsed.data.email}</h2>
-
-Message: <h3>${parsed.data.message}</h3>
-
-${formattedBrowserData}`
+      text: body
     });
 
     return NextResponse.json({ ok: true });
