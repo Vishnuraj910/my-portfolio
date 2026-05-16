@@ -194,20 +194,23 @@ h1, h2, h4 { font-weight: 700; letter-spacing: -.01em; }
 /* ===================== HERO ===================== */
 .hero {
   grid-template-columns: 1fr 1.05fr;
-  align-items: center;
+  align-items: stretch;
   gap: 2.5rem;
   padding-top: 1rem;
 }
-.hero-left { display: flex; align-items: center; justify-content: center; }
+.hero-left { display: flex; align-items: stretch; justify-content: center; }
 
 /* photo framed as a terminal window */
 .hero-image {
   width: 100%;
-  min-height: 380px;
+  height: 100%;
+  min-height: 420px;
+  padding-top: 2.1rem;
   background-image: url('/background-removed-background-removed.png');
   background-size: contain;
   background-position: center bottom;
   background-repeat: no-repeat;
+  background-origin: content-box;
   border: 1px solid var(--border);
   background-color: var(--surface);
   position: relative;
