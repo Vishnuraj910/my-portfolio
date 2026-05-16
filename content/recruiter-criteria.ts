@@ -81,7 +81,8 @@ export const questions: Question[] = [
     prompt: "What is the monthly salary (AED)?",
     maxScore: 15,
     options: [
-      { value: "below40", label: "Below 40,000", score: 0, dealBreaker: true, gapReason: "Below the 40k AED/month minimum" },
+      { value: "below35", label: "Below 35,000", score: 0, dealBreaker: true, gapReason: "Below the 35k AED/month minimum" },
+      { value: "35to40", label: "35,000 – 40,000", score: 6, gapReason: "At the lower end — meets the 35k minimum" },
       { value: "40to50", label: "40,000 – 50,000", score: 9, strengthReason: "Meets salary expectation" },
       { value: "50to60", label: "50,000 – 60,000", score: 12, strengthReason: "Above salary expectation" },
       { value: "above60", label: "60,000+", score: 15, strengthReason: "Well above salary expectation" },

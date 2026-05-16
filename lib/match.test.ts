@@ -34,10 +34,15 @@ describe("computeMatch", () => {
     expect(result.verdict).toBe("nofit");
   });
 
-  it("flags below-40k salary as a deal-breaker", () => {
-    const result = computeMatch({ ...best, salary: "below40" });
+  it("flags below-35k salary as a deal-breaker", () => {
+    const result = computeMatch({ ...best, salary: "below35" });
     expect(result.dealBreaker).toBe(true);
     expect(result.verdict).toBe("nofit");
+  });
+
+  it("accepts a 35-40k salary without a deal-breaker", () => {
+    const result = computeMatch({ ...best, salary: "35to40" });
+    expect(result.dealBreaker).toBe(false);
   });
 
   it("caps an otherwise-strong Abu Dhabi role at good", () => {

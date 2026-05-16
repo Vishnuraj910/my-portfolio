@@ -46,7 +46,7 @@ Each is something the recruiter selects about their role:
 2. Domain — Fintech / Aviation / Other
 3. Location — Dubai / Sharjah / Abu Dhabi / Other UAE / Outside UAE
 4. Work mode — Remote / Hybrid / On-site
-5. Monthly salary — <40k / 40-50k / 50-60k / 60k+ AED
+5. Monthly salary — <35k / 35-40k / 40-50k / 50-60k / 60k+ AED
 6. Employment type — Permanent / Contract
 7. Visa sponsorship — Family / Self only / None
 8. Health insurance — Premium (family) / Basic / None
@@ -104,7 +104,7 @@ Any one ⇒ verdict `nofit`, score capped, honest reason shown:
 
 - Location **outside UAE**
 - **Contract** / non-permanent employment
-- Salary **below 40k AED/month**
+- Salary **below 35k AED/month**
 
 ### Weighted contributions (when no deal-breaker)
 

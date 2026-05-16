@@ -366,10 +366,9 @@ export function PortfolioPage({ locale, messages }: { locale: Locale; messages: 
             <h2>{profile.title}</h2>
             <p className="hero-copy">{messages.hero.headline}</p>
             <div className="cta-row">
-              <a href="#projects" className="btn btn-primary">{messages.hero.viewProjects}</a>
+              <RecruiterMatch />
               <a href="/resume-vishnuraj.pdf" className="btn" download>{messages.hero.downloadResume}</a>
               <a href="#contact" className="btn">{messages.hero.contact}</a>
-              <RecruiterMatch />
             </div>
           </div>
         </section>

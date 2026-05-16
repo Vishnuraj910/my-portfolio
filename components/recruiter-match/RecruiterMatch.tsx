@@ -68,7 +68,12 @@ export function RecruiterMatch() {
 
   return (
     <>
-      <button ref={triggerRef} type="button" className="btn" onClick={() => setOpen(true)}>
+      <button
+        ref={triggerRef}
+        type="button"
+        className="btn btn-primary"
+        onClick={() => setOpen(true)}
+      >
         Hiring? Check role fit
       </button>
 
