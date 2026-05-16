@@ -9,18 +9,31 @@ import { WizardStep } from "./WizardStep";
 
 type Phase = "wizard" | "result" | "lead";
 
+const AUTO_ADVANCE_MS = 3000;
+
 export function RecruiterMatch() {
   const [open, setOpen] = useState(false);
   const [phase, setPhase] = useState<Phase>("wizard");
   const [stepIndex, setStepIndex] = useState(0);
   const [answers, setAnswers] = useState<Answers>({});
+  const [advancing, setAdvancing] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const modalRef = useRef<HTMLDivElement>(null);
+  const advanceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const result = useMemo(() => computeMatch(answers), [answers]);
   const liveScore = result.score;
 
+  const clearAdvance = () => {
+    if (advanceTimer.current) {
+      clearTimeout(advanceTimer.current);
+      advanceTimer.current = null;
+    }
+    setAdvancing(false);
+  };
+
   const reset = () => {
+    clearAdvance();
     setPhase("wizard");
     setStepIndex(0);
     setAnswers({});
@@ -47,16 +60,19 @@ export function RecruiterMatch() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
+  useEffect(() => {
+    return () => {
+      if (advanceTimer.current) clearTimeout(advanceTimer.current);
+    };
+  }, []);
+
   const currentQuestion = questions[stepIndex];
   const currentAnswer = answers[currentQuestion?.id];
   const isAnswered = currentQuestion?.multiSelect ? true : currentAnswer !== undefined;
   const isLastStep = stepIndex === questions.length - 1;
 
-  const setAnswer = (value: string | string[]) => {
-    setAnswers((prev) => ({ ...prev, [currentQuestion.id]: value }));
-  };
-
   const next = () => {
+    clearAdvance();
     if (isLastStep) {
       setPhase("result");
     } else {
@@ -64,7 +80,23 @@ export function RecruiterMatch() {
     }
   };
 
-  const back = () => setStepIndex((i) => Math.max(0, i - 1));
+  const setAnswer = (value: string | string[]) => {
+    setAnswers((prev) => ({ ...prev, [currentQuestion.id]: value }));
+    if (!currentQuestion.multiSelect) {
+      if (advanceTimer.current) clearTimeout(advanceTimer.current);
+      setAdvancing(true);
+      advanceTimer.current = setTimeout(() => {
+        advanceTimer.current = null;
+        setAdvancing(false);
+        next();
+      }, AUTO_ADVANCE_MS);
+    }
+  };
+
+  const back = () => {
+    clearAdvance();
+    setStepIndex((i) => Math.max(0, i - 1));
+  };
 
   return (
     <>
@@ -118,24 +150,36 @@ export function RecruiterMatch() {
                   onChange={setAnswer}
                 />
 
-                <div className="rm-nav">
-                  <button
-                    type="button"
-                    className="btn"
-                    onClick={back}
-                    disabled={stepIndex === 0}
-                  >
-                    Back
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-primary"
-                    onClick={next}
-                    disabled={!isAnswered}
-                  >
-                    {isLastStep ? "See result" : "Next"}
-                  </button>
-                </div>
+                {advancing ? (
+                  <div className="rm-autoadvance" role="status">
+                    <span>Locked in — moving to the next step…</span>
+                    <div className="rm-autoadvance-bar">
+                      <div
+                        key={String(currentAnswer)}
+                        className="rm-autoadvance-fill"
+                      />
+                    </div>
+                  </div>
+                ) : (
+                  <div className="rm-nav">
+                    <button
+                      type="button"
+                      className="btn"
+                      onClick={back}
+                      disabled={stepIndex === 0}
+                    >
+                      Back
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      onClick={next}
+                      disabled={!isAnswered}
+                    >
+                      {isLastStep ? "See result" : "Next"}
+                    </button>
+                  </div>
+                )}
               </div>
             )}
 

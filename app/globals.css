@@ -759,6 +759,39 @@ body {
   margin-top: 1.25rem;
 }
 
+.rm-autoadvance {
+  margin-top: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.rm-autoadvance span {
+  font-size: 0.85rem;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.rm-autoadvance-bar {
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.rm-autoadvance-fill {
+  height: 100%;
+  width: 0;
+  background: var(--accent);
+  border-radius: 3px;
+  animation: rm-autoadvance-grow 3s linear forwards;
+}
+
+@keyframes rm-autoadvance-grow {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
 .rm-verdict {
   display: flex;
   flex-direction: column;
