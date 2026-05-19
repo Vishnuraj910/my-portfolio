@@ -176,20 +176,20 @@ h1, h2, h4 { font-weight: 700; letter-spacing: -.01em; }
   to { opacity: 1; transform: translateY(0); }
 }
 .language-option {
-  display: flex;
+  display: grid;
+  grid-template-columns: .6rem 2.2rem 1fr;
   align-items: center;
-  justify-content: space-between;
-  gap: .75rem;
-  padding: .5rem .6rem;
+  gap: .6rem;
+  padding: .5rem .65rem;
   color: var(--text);
   text-decoration: none;
   transition: background .12s ease, color .12s ease;
 }
-.language-option::before { content: "·"; color: var(--accent); }
+.language-option::before { content: "·"; color: var(--accent); text-align: center; }
 .language-option:hover { background: var(--accent-soft); color: var(--accent); }
 .language-option.active { background: var(--accent-soft); color: var(--accent); }
-.language-code { font-weight: 700; font-size: .82rem; }
-.language-name { font-size: .8rem; color: var(--muted); }
+.language-code { font-weight: 700; font-size: .82rem; text-align: left; }
+.language-name { font-size: .8rem; color: var(--muted); text-align: right; }
 
 /* ===================== HERO ===================== */
 .hero {
@@ -806,8 +806,9 @@ button.chip { cursor: pointer; }
 }
 
 /* ============================================================
-   RECRUITER MATCH — terminal-themed modal
+   RECRUITER MATCH — /hire-me route
    ============================================================ */
+/* ---- modal shell ---- */
 .rm-overlay {
   position: fixed;
   inset: 0;
@@ -818,7 +819,11 @@ button.chip { cursor: pointer; }
   padding: 1rem;
   z-index: 1000;
   backdrop-filter: blur(2px);
+  animation: rm-overlay-in .2s ease both;
 }
+.rm-overlay-closing { animation: rm-overlay-out .22s ease both; }
+@keyframes rm-overlay-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes rm-overlay-out { from { opacity: 1; } to { opacity: 0; } }
 
 .rm-modal {
   background: var(--surface);
@@ -830,8 +835,18 @@ button.chip { cursor: pointer; }
   overflow-y: auto;
   padding: 1.4rem;
   outline: none;
-  box-shadow: 0 0 40px -10px var(--accent);
+  box-shadow: 0 0 60px -14px var(--accent);
   font-family: inherit;
+  animation: rm-modal-in .26s cubic-bezier(.34, 1.3, .64, 1) both;
+}
+.rm-modal-closing { animation: rm-modal-out .22s ease both; }
+@keyframes rm-modal-in {
+  from { opacity: 0; transform: translateY(16px) scale(.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes rm-modal-out {
+  from { opacity: 1; transform: translateY(0) scale(1); }
+  to { opacity: 0; transform: translateY(10px) scale(.97); }
 }
 
 .rm-modal-head {
@@ -842,8 +857,8 @@ button.chip { cursor: pointer; }
   padding-bottom: .7rem;
   border-bottom: 1px dashed var(--border);
 }
-.rm-modal-head h3 { margin: 0; font-size: 1rem; }
-.rm-modal-head h3::before { content: "$ "; color: var(--accent); }
+.rm-modal-head h3 { margin: 0; font-size: .9rem; color: var(--muted); letter-spacing: .02em; }
+.rm-modal-head h3::before { content: "~/"; color: var(--accent); }
 
 .rm-close {
   background: none;
@@ -856,6 +871,56 @@ button.chip { cursor: pointer; }
   font-family: inherit;
 }
 .rm-close:hover { border-color: var(--danger); color: var(--danger); }
+
+/* ---- phase / step transitions ---- */
+.rm-phase { animation: rm-phase-in .26s ease both; }
+.rm-step-anim { animation: rm-phase-in .2s ease both; }
+@keyframes rm-phase-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---- welcome slide ---- */
+.rm-welcome { display: flex; flex-direction: column; gap: .8rem; }
+.rm-welcome-eyebrow {
+  margin: 0;
+  font-size: .72rem;
+  text-transform: uppercase;
+  letter-spacing: .16em;
+  color: var(--accent);
+}
+.rm-welcome-eyebrow::before { content: "// "; opacity: .7; }
+.rm-welcome-title { margin: 0; font-size: 1.4rem; color: var(--text); }
+.rm-welcome-copy { margin: 0; font-size: .9rem; line-height: 1.6; color: var(--muted); }
+.rm-welcome-meta {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  padding: .55rem .85rem;
+  border: 1px solid var(--accent);
+  background: var(--accent-soft);
+  font-size: .82rem;
+}
+.rm-welcome-meta-icon { font-size: 1rem; line-height: 1; }
+.rm-welcome-meta strong { color: var(--accent); }
+.rm-welcome-points {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+  font-size: .85rem;
+}
+.rm-welcome-points li { padding-left: 1.2rem; position: relative; }
+.rm-welcome-points li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-weight: 700;
+}
+.rm-welcome-cta { margin-top: .3rem; align-self: flex-start; }
 
 .rm-progress { margin-bottom: 1rem; }
 .rm-progress-bar {

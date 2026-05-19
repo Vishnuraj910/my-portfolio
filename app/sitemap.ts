@@ -5,7 +5,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     "/en",
     "/ar",
-  ].map((path) => ({ 
+    "/hire-me",
+  ].map((path) => ({
     url: `${base}${path}`, 
     lastModified: new Date(),
     changeFrequency: "weekly",
