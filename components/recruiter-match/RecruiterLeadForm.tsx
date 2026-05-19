@@ -90,9 +90,9 @@ export function RecruiterLeadForm({
   if (status === "success") {
     return (
       <div className="rm-lead-success">
-        <p className="success">Sent. Vishnuraj will get back to you soon.</p>
+        <p className="success">Got it — thanks! I&apos;ll get back to you soon.</p>
         <button type="button" className="btn" onClick={onDone}>
-          Close
+          Check another role
         </button>
       </div>
     );
@@ -107,7 +107,8 @@ export function RecruiterLeadForm({
       }}
     >
       <p className="rm-helper">
-        Share this role with Vishnuraj. He&apos;ll see your answers and the match result.
+        Send this role my way — I&apos;ll see your answers and the match result, and get back to
+        you so we can take it from there.
       </p>
       <input
         required
@@ -148,7 +149,7 @@ export function RecruiterLeadForm({
       {/* @ts-expect-error Custom element provided by ALTCHA script */}
       {isClient && <altcha-widget challengeurl="/api/altcha/challenge" hidelogo hidefooter />}
       <button className="btn btn-primary" type="submit" disabled={status === "loading"}>
-        {status === "loading" ? "..." : "Send to Vishnuraj"}
+        {status === "loading" ? "..." : "Send it over"}
       </button>
       {status === "error" && <p className="error">{error}</p>}
     </form>

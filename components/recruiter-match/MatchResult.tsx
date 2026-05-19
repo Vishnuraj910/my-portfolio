@@ -11,15 +11,15 @@ const VERDICT_ICON: Record<MatchResultData["verdict"], string> = {
 const VERDICT_COPY: Record<MatchResultData["verdict"], { title: string; blurb: string }> = {
   fit: {
     title: "Fit",
-    blurb: "This role lines up well with Vishnuraj's preferences. Worth a conversation.",
+    blurb: "This lines up well with what I'm looking for — I'd love to talk.",
   },
   maybe: {
     title: "Maybe",
-    blurb: "Some alignment, with several points worth discussing. Reach out to explore.",
+    blurb: "There's real overlap here. A few things worth talking through — reach out and let's explore.",
   },
   nofit: {
     title: "Not a fit",
-    blurb: "This role does not meet enough of Vishnuraj's preferences or conflicts with a non-negotiable.",
+    blurb: "This one doesn't line up with enough of what I'm after right now, or it crosses a non-negotiable.",
   },
 };
 
@@ -67,10 +67,10 @@ export function MatchResult({ result, onSendLead, onClose }: MatchResultProps) {
 
       <div className="rm-result-actions">
         <button type="button" className="btn btn-primary" onClick={onSendLead}>
-          Send this role to Vishnuraj
+          Send this role to me
         </button>
         <button type="button" className="btn" onClick={onClose}>
-          Close
+          Start over
         </button>
       </div>
     </div>

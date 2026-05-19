@@ -196,3 +196,6 @@ export const questions: Question[] = [
     },
   },
 ];
+
+/** Rough time to finish the full questionnaire, surfaced on the intro section. */
+export const ESTIMATED_MINUTES = 2;

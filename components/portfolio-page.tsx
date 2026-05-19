@@ -1,6 +1,6 @@
 "use client";
 
-import { RecruiterMatch } from "@/components/recruiter-match/RecruiterMatch";
+import { RoleFitModal } from "@/components/recruiter-match/RoleFitModal";
 import { profile } from "@/content/profile";
 import { type Locale, localeNames } from "@/lib/i18n";
 import Image from "next/image";
@@ -284,7 +284,15 @@ function ContactForm({ locale, labels }: { locale: Locale; labels: Record<string
   );
 }
 
-export function PortfolioPage({ locale, messages }: { locale: Locale; messages: Messages }) {
+export function PortfolioPage({
+  locale,
+  messages,
+  autoOpenRoleFit = false,
+}: {
+  locale: Locale;
+  messages: Messages;
+  autoOpenRoleFit?: boolean;
+}) {
   const [skillFilter, setSkillFilter] = useState<string>(messages.skills.all);
   const [activeExperience, setActiveExperience] = useState<number | null>(0);
   const [certFilter, setCertFilter] = useState<string>(messages.certifications.all);
@@ -367,7 +375,12 @@ export function PortfolioPage({ locale, messages }: { locale: Locale; messages: 
             <h2>{profile.title}</h2>
             <p className="hero-copy">{messages.hero.headline}</p>
             <div className="cta-row">
-              <RecruiterMatch />
+              <RoleFitModal
+                defaultOpen={autoOpenRoleFit}
+                triggerLabel="Hiring? Check role fit"
+                openHref={autoOpenRoleFit ? undefined : "/hire-me"}
+                closeHref={autoOpenRoleFit ? "/en" : undefined}
+              />
               <a href="/resume-vishnuraj.pdf" className="btn" download>{messages.hero.downloadResume}</a>
               <a href="#contact" className="btn">{messages.hero.contact}</a>
             </div>
@@ -554,7 +567,7 @@ export function PortfolioPage({ locale, messages }: { locale: Locale; messages: 
             {profile.languages.map((lang, index) => (
               <div key={`${lang.name}-${index}`} className="card language-card">
                 <div className="language-icon">
-                  {lang.name === 'English' ? '🇬🇧' : lang.name === 'Malayalam' ? '🇮🇳' : lang.name === 'Tamil' ? '🇮🇳' : lang.name === 'Hindi' ? '🇮🇳' : '🇪🇸'}
+                  {lang.name === 'English' ? '🇬🇧' : lang.name === 'Malayalam' ? '🇮🇳' : lang.name === 'Tamil' ? '🇮🇳' : lang.name === 'Hindi' ? '🇮🇳' : lang.name === 'Russian' ? '🇷🇺' : '🇪🇸'}
                 </div>
                 <div className="language-content">
                   <div className="language-name">{lang.name}</div>

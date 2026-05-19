@@ -688,6 +688,7 @@ export const profile = {
     { name: "Malayalam", proficiency: "Native or bilingual proficiency" },
     { name: "Hindi", proficiency: "Elementary proficiency" },
     { name: "Tamil", proficiency: "Limited working proficiency" },
-    { name: "Spanish", proficiency: "Elementary proficiency" }
+    { name: "Spanish", proficiency: "Elementary proficiency" },
+    { name: "Russian", proficiency: "Elementary proficiency" }
   ] as Language[]
 };
