@@ -296,6 +296,7 @@ export function PortfolioPage({
   const [skillFilter, setSkillFilter] = useState<string>(messages.skills.all);
   const [activeExperience, setActiveExperience] = useState<number | null>(0);
   const [certFilter, setCertFilter] = useState<string>(messages.certifications.all);
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [certSort, setCertSort] = useState<"desc" | "asc">("desc");
 
   const filteredSkills = useMemo(() => {
@@ -351,7 +352,14 @@ export function PortfolioPage({
             </ul>
           </nav>
           <div className="nav-mobile">
-            <button className="mobile-menu-btn" aria-label="Menu">
+            <button
+              type="button"
+              className={`mobile-menu-btn ${mobileNavOpen ? "is-open" : ""}`}
+              aria-label="Menu"
+              aria-expanded={mobileNavOpen}
+              aria-controls="mobile-nav-panel"
+              onClick={() => setMobileNavOpen((v) => !v)}
+            >
               <span></span>
               <span></span>
               <span></span>
@@ -362,6 +370,28 @@ export function PortfolioPage({
             <ThemeToggle />
           </div>
         </div>
+        {mobileNavOpen && (
+          <div
+            id="mobile-nav-panel"
+            className="mobile-nav-panel"
+            role="dialog"
+            aria-modal="true"
+          >
+            <ul className="nav-list mobile-nav-list container">
+              {navKeys.map((key) => (
+                <li key={key}>
+                  <a
+                    href={`#${key}`}
+                    className="nav-link"
+                    onClick={() => setMobileNavOpen(false)}
+                  >
+                    {messages.nav[key]}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </header>
 
       <main className="container stack">
