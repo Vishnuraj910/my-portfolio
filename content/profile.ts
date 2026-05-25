@@ -1,3 +1,10 @@
+export type SubRole = {
+  role: string;
+  period: string;
+  location: string;
+  achievements: string[];
+};
+
 export type Experience = {
   company: string;
   role: string;
@@ -5,6 +12,7 @@ export type Experience = {
   location: string;
   achievements: string[];
   logo?: string;
+  roles?: SubRole[];
 };
 
 export type Certification = {
@@ -112,37 +120,35 @@ export const profile = {
     {
       company: "VISA Inc",
       role: "Staff Software Engineer",
-      period: "Aug 2023 – Jan 2025",
+      period: "Jul 2016 – Jan 2025",
       location: "Dubai, UAE",
       achievements: [
         "Designing and developing custom low-level fintech cloud and mobile solutions.",
         "Providing end-to-end planning, implementation, and support to VPs and Senior Directors."
       ],
-      logo: "/logos/visa.jpg"
-    },
-    {
-      company: "VISA Inc",
-      role: "Senior Software Engineer",
-      period: "Apr 2019 – Aug 2023",
-      location: "Dubai, UAE",
-      achievements: [
-        "Collaborating with internal and external client teams to design software solutions.",
-        "Ensuring security best practices, code quality, and test coverage.",
-        "Ensuring application availability and disaster recovery."
-      ],
-      logo: "/logos/visa.jpg"
-    },
-    {
-      company: "VISA Inc",
-      role: "Software Engineer",
-      period: "Jul 2016 – Mar 2019",
-      location: "Dubai, UAE",
-      achievements: [
-        "Built innovative solutions with Visa products and partner solutions.",
-        "Solved complex business needs to improve operational efficiency and consumer retention.",
-        "Worked with cross-region teams to bring innovations to Dubai innovation center."
-      ],
-      logo: "/logos/visa.jpg"
+      logo: "/logos/visa.jpg",
+      roles: [
+        {
+          role: "Senior Software Engineer",
+          period: "Apr 2019 – Aug 2023",
+          location: "Dubai, UAE",
+          achievements: [
+            "Collaborating with internal and external client teams to design software solutions.",
+            "Ensuring security best practices, code quality, and test coverage.",
+            "Ensuring application availability and disaster recovery."
+          ]
+        },
+        {
+          role: "Software Engineer",
+          period: "Jul 2016 – Mar 2019",
+          location: "Dubai, UAE",
+          achievements: [
+            "Built innovative solutions with Visa products and partner solutions.",
+            "Solved complex business needs to improve operational efficiency and consumer retention.",
+            "Worked with cross-region teams to bring innovations to Dubai innovation center."
+          ]
+        }
+      ]
     },
     {
       company: "OASYS Information Technology L.L.C",

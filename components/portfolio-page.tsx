@@ -457,6 +457,19 @@ export function PortfolioPage({
                     <ul>
                       {item.achievements.map((achievement, i) => <li key={i}>{achievement}</li>)}
                     </ul>
+                    {item.roles && item.roles.length > 0 && (
+                      <div className="timeline-subroles">
+                        {item.roles.map((sub, si) => (
+                          <div key={`${sub.role}-${si}`} className="timeline-subrole">
+                            <h5 className="timeline-subrole-title">{sub.role}</h5>
+                            <p className="muted timeline-period">{sub.period} · {sub.location}</p>
+                            <ul>
+                              {sub.achievements.map((achievement, ai) => <li key={ai}>{achievement}</li>)}
+                            </ul>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 )}
               </article>
