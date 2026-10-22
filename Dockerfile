@@ -10,7 +10,7 @@ COPY package.json package-lock.json* ./
 
 # Install dependencies
 # Use npm ci for reproducible builds in production
-RUN npm ci --legacy-peer-deps
+RUN npm ci
 
 # ===========================================
 # Stage 2: Builder
