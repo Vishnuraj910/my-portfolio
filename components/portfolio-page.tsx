@@ -53,16 +53,7 @@ function ThemeToggle() {
 }
 
 function LanguageToggle({ locale }: { locale: Locale }) {
-  const [previousLocale, setPreviousLocale] = useState<Locale | null>(null);
   const [isOpen, setIsOpen] = useState(false);
-
-  useEffect(() => {
-    // Get previous locale from localStorage on mount
-    const saved = localStorage.getItem("previousLocale");
-    if (saved && saved !== locale) {
-      setPreviousLocale(saved as Locale);
-    }
-  }, [locale]);
 
   const allLocales: Locale[] = ["en", "ar", "es", "fr", "hi", "ml"];
   const localeLabels: Record<Locale, string> = {
@@ -129,7 +120,6 @@ function ContactForm({ locale, labels }: { locale: Locale; labels: Record<string
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [error, setError] = useState<string>("");
   const [captchaReady, setCaptchaReady] = useState(false);
-  const [captchaVerified, setCaptchaVerified] = useState(false);
   const [isClient, setIsClient] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
   const [formData, setFormData] = useState({
@@ -157,17 +147,8 @@ function ContactForm({ locale, labels }: { locale: Locale; labels: Record<string
     checkReady();
     timer = setInterval(checkReady, 250);
 
-    const form = formRef.current;
-    const widget = form?.querySelector("altcha-widget");
-      const onStateChange = (event: Event) => {
-        const detail = (event as CustomEvent<{ state?: string }>).detail;
-        setCaptchaVerified(detail?.state === "verified");
-      };
-    widget?.addEventListener("statechange", onStateChange);
-
     return () => {
       if (timer) clearInterval(timer);
-      widget?.removeEventListener("statechange", onStateChange);
     };
   }, []);
 
@@ -213,7 +194,6 @@ function ContactForm({ locale, labels }: { locale: Locale; labels: Record<string
       if (!response.ok) throw new Error(data.error || labels.error);
 
       setStatus("success");
-      setCaptchaVerified(false);
       setFormData({ name: "", email: "", subject: "", message: "" });
     } catch (submissionError) {
       setStatus("error");
