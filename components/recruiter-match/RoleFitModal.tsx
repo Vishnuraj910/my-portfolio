@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useEffectEvent, useRef, useState } from "react";
 import { RoleFitWizard } from "./RoleFitWizard";
 
 const CLOSE_ANIMATION_MS = 240;
@@ -57,11 +57,14 @@ export function RoleFitModal({
     };
   }, []);
 
+  // Escape handler reads the latest closeModal without re-running the open effect.
+  const onEscape = useEffectEvent(closeModal);
+
   useEffect(() => {
     if (!open) return;
     document.body.style.overflow = "hidden";
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") closeModal();
+      if (e.key === "Escape") onEscape();
     };
     document.addEventListener("keydown", onKey);
     modalRef.current?.focus();
